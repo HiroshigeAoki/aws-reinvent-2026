@@ -1,0 +1,46 @@
+{
+  "timezone": "America/Los_Angeles",
+  "transfer_minutes": 45,
+  "items": [
+    {
+      "id": "DVT206",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "DVT212-S",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "SVS303-R",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "GHJ301-S",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "GHJ212",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "API304-R",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "SEC362",
+      "year": 2026,
+      "status": "candidate"
+    },
+    {
+      "id": "MAM419-R",
+      "year": 2026,
+      "status": "candidate"
+    }
+  ]
+}

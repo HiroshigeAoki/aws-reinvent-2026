@@ -1,0 +1,9 @@
+[project]
+name = "aws-reinvent-2026-notes"
+version = "0.1.0"
+description = "Unofficial personal preparation and learning notes for AWS re:Invent 2026"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false

@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-30",
+  "scope": "selected candidates, not the full catalog",
+  "event": {
+    "year": 2026,
+    "timezone": "America/Los_Angeles",
+    "starts_on": "2026-11-30",
+    "ends_on": "2026-12-04",
+    "url": "https://aws.amazon.com/events/reinvent/"
+  },
+  "sessions": [
+    {
+      "id": "DVT206",
+      "year": 2026,
+      "title": "10x or bust: How Amazon's Frontier teams ship with Kiro",
+      "title_ja": "Kiroを使うチームの開発習慣",
+      "format": "Breakout session",
+      "level": 200,
+      "venue": "Caesars Forum",
+      "starts_at": "2026-11-30T08:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=DVT206",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "coding",
+        "Kiro"
+      ],
+      "why_ja": "AI開発の速度と品質を支える作業習慣を、自分の開発手順と比較する。"
+    },
+    {
+      "id": "DVT212-S",
+      "year": 2026,
+      "title": "100 Million Bugs Later: A Field Report From the Agentic Era (sponsored by CodeRabbit)",
+      "title_ja": "AIが生成する変更のレビューと品質管理",
+      "format": "Breakout session",
+      "level": 200,
+      "venue": "Caesars Palace",
+      "starts_at": "2026-11-30T16:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=DVT212-S",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "review",
+        "quality"
+      ],
+      "why_ja": "生成コードをどう検証し、どの変更に人の判断を入れるかを考える。",
+      "sponsor": "CodeRabbit"
+    },
+    {
+      "id": "SVS303-R",
+      "year": 2026,
+      "title": "AI-driven serverless development with Kiro",
+      "title_ja": "Kiroでサーバーレス実装を試す",
+      "format": "Workshop",
+      "level": 300,
+      "venue": "Caesars Palace",
+      "starts_at": "2026-11-30T12:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SVS303-R",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "coding",
+        "serverless",
+        "hands-on"
+      ],
+      "why_ja": "認証やテストを含む実装演習で、AIを使う開発手順を試す。"
+    },
+    {
+      "id": "GHJ301-S",
+      "year": 2026,
+      "title": "AWS GameDay - Agentic AI & AI Application Monitoring ft. New Relic",
+      "title_ja": "AI運用と監視のGameDay",
+      "format": "Gamified learning",
+      "level": 300,
+      "venue": "Caesars Palace",
+      "starts_at": "2026-12-01T14:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=GHJ301-S",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "GameDay",
+        "observability",
+        "hands-on"
+      ],
+      "why_ja": "チームで課題を解き、AIアプリの信頼性と観測について学ぶ。",
+      "sponsor": "New Relic"
+    },
+    {
+      "id": "GHJ212",
+      "year": 2026,
+      "title": "AWS AI League: Build agents with AgentCore (Agentic Football Cup)",
+      "title_ja": "AgentCoreでエージェントの連携を試す",
+      "format": "Gamified learning",
+      "level": 200,
+      "venue": null,
+      "starts_at": null,
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=GHJ212",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "AgentCore",
+        "GameDay",
+        "hands-on"
+      ],
+      "why_ja": "演習を通して、エージェントの役割分担と連携を考える。"
+    },
+    {
+      "id": "API304-R",
+      "year": 2026,
+      "title": "API Gateway unleashed",
+      "title_ja": "APIの実装と運用を演習する",
+      "format": "Workshop",
+      "level": 300,
+      "venue": "Caesars Forum",
+      "starts_at": "2026-12-03T08:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=API304-R",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "API",
+        "IaC",
+        "security",
+        "hands-on"
+      ],
+      "why_ja": "入力検証・認証・監視を含むAPI設計を手を動かして確認する。"
+    },
+    {
+      "id": "SEC362",
+      "year": 2026,
+      "title": "Authentication, authorization, and audit for agentic AI on AWS",
+      "title_ja": "AIエージェントの認証と権限を実装する",
+      "format": "Workshop",
+      "level": 300,
+      "venue": "Wynn/Encore",
+      "starts_at": "2026-12-03T08:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SEC362",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "security",
+        "identity",
+        "hands-on"
+      ],
+      "why_ja": "権限の委譲や最小権限を実装する際の判断材料を得る。"
+    },
+    {
+      "id": "MAM419-R",
+      "year": 2026,
+      "title": "Accelerate legacy Java modernization with custom AI-powered transformations",
+      "title_ja": "AIでJavaの更新とテストを試す",
+      "format": "Workshop",
+      "level": 400,
+      "venue": "Caesars Palace",
+      "starts_at": "2026-12-01T12:00:00-08:00",
+      "ends_at": null,
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=MAM419-R",
+      "checked_on": "2026-09-30",
+      "topics": [
+        "AI",
+        "modernization",
+        "testing",
+        "hands-on"
+      ],
+      "why_ja": "移行作業の自動化とテストの組み合わせを学ぶ。Javaの前提知識が合うか参加前に確認する。"
+    }
+  ]
+}

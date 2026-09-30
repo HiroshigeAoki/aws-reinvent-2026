@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+private/
+local-data/
+.auth/
+.playwright-cli/
+*.mp4
+*.m4a
+*.webm
+.DS_Store
