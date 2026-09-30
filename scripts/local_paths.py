@@ -22,3 +22,7 @@ def summary_path(year: int, session_id: str) -> Path:
 
 def streams_path() -> Path:
     return LOCAL_DATA / "streams.json"
+
+
+def catalog_full_path() -> Path:
+    return LOCAL_DATA / "catalog-full.sqlite"

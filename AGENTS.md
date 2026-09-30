@@ -1,5 +1,6 @@
 # Working rules
 
+- If `AGENTS.local.md` exists, follow it for local-only workflows (full catalog pick, etc.).
 - This is an unofficial personal learning and event-planning repository. Keep documentation in Japanese and code comments concise.
 - Read README.md and docs/content-policy.md before edits. Use only public information in committed notes. Keep personal logistics under ignored `private/`.
 - Consult the official catalog before adding or changing a session. Preserve session ID, year, source URL, and `checked_on`. Never infer a reservation, duration, venue, speaker, or availability.

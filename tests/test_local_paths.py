@@ -5,6 +5,7 @@ import unittest
 from scripts.local_paths import (
     LOCAL_DATA,
     ROOT,
+    catalog_full_path,
     local_data_root,
     streams_path,
     summary_path,
@@ -30,6 +31,9 @@ class LocalPathsTests(unittest.TestCase):
 
     def test_streams_path(self):
         self.assertEqual(streams_path(), LOCAL_DATA / "streams.json")
+
+    def test_catalog_full_path(self):
+        self.assertEqual(catalog_full_path(), LOCAL_DATA / "catalog-full.sqlite")
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ local-data/
 .auth/
 .playwright-cli/
 docs/plans/
+AGENTS.local.md
 *.mp4
 *.m4a
 *.webm
