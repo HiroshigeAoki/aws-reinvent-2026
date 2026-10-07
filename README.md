@@ -41,7 +41,7 @@ python3 scripts/site.py publish   # 上に加えて gera update と html-artifac
 |---|---|
 | `data/catalog.json` | 選定入力 |
 | `data/events.json` | 公式イベントの日時・参加予定 |
-| `data/guide.json` | 会場・移動・過去 Tips（出典と年付き） |
+| `data/guide.json` | 会場・移動・過去 Tips（出典と年付き）。`places` と `aliases` は地名ラベルの対象 |
 | `docs/events.md` | `render` 生成 |
 | `docs/catalog.md` / `sessions/` | `render` 生成 |
 | `planning/` | 優先・予定 |

@@ -27,7 +27,11 @@
       "lon": -115.16934,
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/",
-      "maps_query": "The Venetian Resort Las Vegas"
+      "maps_query": "The Venetian Resort Las Vegas",
+      "aliases": [
+        "Venetian",
+        "ベネチアン"
+      ]
     },
     {
       "id": "caesars_palace",
@@ -56,7 +60,10 @@
       "lon": -115.1694,
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/",
-      "label_dy": -14
+      "label_dy": -14,
+      "aliases": [
+        "MGM"
+      ]
     }
   ],
   "transport": [
@@ -1088,7 +1095,11 @@
       "name": "Harrah's/The LINQ",
       "lat": 36.1188,
       "lon": -115.1685,
-      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail",
+      "aliases": [
+        "Harrah's/LINQ",
+        "LINQ"
+      ]
     },
     {
       "id": "mono_lvcc",
@@ -1309,5 +1320,88 @@
   ],
   "map_board": {
     "to": "mgm_grand"
-  }
+  },
+  "places": [
+    {
+      "name": "Las Vegas Festival Grounds",
+      "kind": "event"
+    },
+    {
+      "name": "Allegiant Stadium",
+      "kind": "event"
+    },
+    {
+      "name": "Harrah's",
+      "kind": "hotel",
+      "maps_query": "Harrah's Las Vegas"
+    },
+    {
+      "name": "Mandalay Bay",
+      "kind": "hotel"
+    },
+    {
+      "name": "ARIA",
+      "kind": "hotel",
+      "maps_query": "ARIA Resort & Casino, Las Vegas"
+    },
+    {
+      "name": "ベラージオ",
+      "kind": "hotel",
+      "maps_query": "Bellagio Fountains, Las Vegas"
+    },
+    {
+      "name": "LAS",
+      "kind": "airport",
+      "maps_query": "Harry Reid International Airport"
+    },
+    {
+      "name": "Terminal 1",
+      "kind": "airport",
+      "aliases": [
+        "T1"
+      ],
+      "maps_query": "Harry Reid International Airport Terminal 1"
+    },
+    {
+      "name": "Terminal 3",
+      "kind": "airport",
+      "aliases": [
+        "T3"
+      ],
+      "maps_query": "Harry Reid International Airport Terminal 3"
+    },
+    {
+      "name": "LAX",
+      "kind": "airport",
+      "maps_query": "Los Angeles International Airport"
+    },
+    {
+      "name": "Fremont Street",
+      "kind": "spot",
+      "maps_query": "Fremont Street Experience, Las Vegas"
+    },
+    {
+      "name": "Container Park",
+      "kind": "spot",
+      "maps_query": "Downtown Container Park, Las Vegas"
+    },
+    {
+      "name": "AREA15",
+      "kind": "spot"
+    },
+    {
+      "name": "Sphere",
+      "kind": "spot",
+      "maps_query": "Sphere, Las Vegas"
+    },
+    {
+      "name": "Pinball Hall of Fame",
+      "kind": "spot"
+    },
+    {
+      "name": "Welcome to Las Vegas",
+      "kind": "spot",
+      "maps_query": "Welcome to Fabulous Las Vegas Sign"
+    }
+  ]
 }

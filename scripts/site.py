@@ -8,6 +8,7 @@ from datetime import date, datetime
 from html import escape
 import json
 import math
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -36,8 +37,8 @@ TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル",
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 
 CSS = """
-:root{--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
-@media (prefers-color-scheme:dark){:root{--bg:#16181c;--card:#1f2228;--fg:#e6e6e6;--mut:#9aa1ab;--line:#30343b;--acc:#f0a35e;--acc2:#6cc3e6;--warn:#ffb27a;--warnbg:#3a2717;--chip:#2a2e35;--ok:#7ed69b}}
+:root{--venuebg:#fbe3cf;--venuefg:#8a3d06;--stnbg:#dcedf4;--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
+@media (prefers-color-scheme:dark){:root{--venuebg:#4a2c14;--venuefg:#ffc999;--stnbg:#163846;--bg:#16181c;--card:#1f2228;--fg:#e6e6e6;--mut:#9aa1ab;--line:#30343b;--acc:#f0a35e;--acc2:#6cc3e6;--warn:#ffb27a;--warnbg:#3a2717;--chip:#2a2e35;--ok:#7ed69b}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.75 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
 a{color:var(--acc2)}
@@ -85,6 +86,11 @@ svg.map .board .board-mono{fill:var(--acc2);font-weight:700}
 svg.map .board .board-walk{fill:var(--mut)}
 svg.map .board .board-shuttle{fill:var(--fg);font-size:11px}
 svg.map .board .role{font-size:10.5px}
+a.pl,span.pl{display:inline-block;padding:0 .45em;margin:0 .12em;border-radius:5px;line-height:1.55;font-size:.92em;white-space:nowrap;text-decoration:none;color:var(--fg);background:var(--chip);border:1px solid var(--line)}
+a.pl:hover{border-color:currentColor}
+a.pl:focus-visible{outline:2px solid var(--acc2);outline-offset:1px}
+a.pl-v,span.pl-v{background:var(--venuebg);border-color:transparent;color:var(--venuefg);font-weight:600}
+a.pl-st,span.pl-st{background:var(--stnbg);border-color:transparent;color:var(--acc2)}
 details.more{margin:4px 0 12px}
 details.more summary{cursor:pointer;color:var(--acc2);font-size:.9rem;padding:4px 0}
 details.more summary:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
@@ -196,6 +202,47 @@ def page(title: str, head_meta: str, body: str) -> str:
 def maps_url(venue: dict[str, Any]) -> str:
     query = venue.get("maps_query") or f'{venue["name"]}, Las Vegas, NV'
     return "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query)
+
+
+PLACE_CLASSES = {"venue": "pl pl-v", "station": "pl pl-st"}
+
+
+def place_index(guide: dict[str, Any] | None) -> list[tuple[str, str, str]]:
+    """(text, css class, Google Maps URL) for every place name, longest first."""
+    if not guide:
+        return []
+    found: dict[str, tuple[str, str, str]] = {}
+    def add(names, kind, entry):
+        url = maps_url(entry)
+        for name in names:
+            if name and name not in found:
+                found[name] = (name, PLACE_CLASSES.get(kind, "pl"), url)
+    for venue in guide.get("venues", []):
+        add([venue["name"], *venue.get("aliases", [])], "venue", venue)
+    for point in guide.get("map_points", []):
+        if point.get("kind") == "monorail":
+            query = {"name": point["name"], "maps_query": f'{point["name"]} Station, Las Vegas Monorail'}
+            add([f'{n}駅' for n in (point["name"], *point.get("aliases", []))], "station", query)
+    for place in guide.get("places", []):
+        add([place["name"], *place.get("aliases", [])], place.get("kind"), place)
+    return sorted(found.values(), key=lambda p: -len(p[0]))
+
+
+def rich(text: Any, places: list[tuple[str, str, str]]) -> str:
+    """Escape text and turn each known place name into a sticker linking to Google Maps."""
+    text = str(text)
+    if not places:
+        return h(text)
+    lookup = {name: (cls, url) for name, cls, url in places}
+    pattern = re.compile("(?<![A-Za-z0-9])(" + "|".join(re.escape(name) for name, _, _ in places) + ")(?![A-Za-z0-9])")
+    out, last = [], 0
+    for match in pattern.finditer(text):
+        cls, url = lookup[match.group(1)]
+        out.append(h(text[last:match.start()]))
+        out.append(f'<a class="{cls}" href="{h(url)}" rel="noopener">{h(match.group(1))}</a>')
+        last = match.end()
+    out.append(h(text[last:]))
+    return "".join(out)
 
 
 def has_point(entry: dict[str, Any]) -> bool:
@@ -332,6 +379,7 @@ def distance_table(guide: dict[str, Any]) -> str:
     venues = [v for v in guide.get("venues", []) if has_point(v)]
     if len(venues) < 2:
         return ""
+    places = place_index(guide)
     line = guide.get("monorail") or {}
     wait = line.get("headway_max", 0)
     rows = ['<div class="scroll"><table><tr><th>区間</th><th>直線</th><th>徒歩</th>'
@@ -355,7 +403,7 @@ def distance_table(guide: dict[str, Any]) -> str:
                 pick = "モノレール / シャトル"
             else:
                 pick = "徒歩（シャトルは路線次第）"
-            rows.append(f"<tr><td>{h(a['name'])} ↔ {h(b['name'])}</td><td class=\"tm\">{d / 1000:.1f}km</td>"
+            rows.append(f"<tr><td>{rich(a['name'], places)} ↔ {rich(b['name'], places)}</td><td class=\"tm\">{d / 1000:.1f}km</td>"
                         f'<td class="tm">約{walk}分</td><td class="tm">{mono}</td><td>{shuttle}</td><td>{pick}</td></tr>')
     rows.append("</table></div>")
     return "\n".join(rows)
@@ -365,6 +413,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     """General info only: no session IDs, no intents, no personal notes."""
     zone = timezone(events["timezone"], "timezone")
     year = 2026
+    places = place_index(guide)
     nav = "".join(f'<a href="#{a}">{t}</a>' for a, t in
                   (("events", "日別イベント"), ("day", "1日の流れ"), ("map", "会場マップ"), ("move", "移動"), ("tips", "Tips"), ("links", "リンク")))
     body = [
@@ -372,7 +421,9 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         f'<p class="lead">ラスベガスで2026-11-30〜12-04に開催（受付は11/29から）。時刻はすべて現地時間（PST、UTC−8）。最終更新は{h(built_on)}。</p>',
         f"<nav>{nav}</nav>",
         '<div class="note">公式発表前の項目は「未確認」と書いています。'
-        '過去年の情報には年を付けました。2026年は変わることがあるので、最終確認は公式ページと公式アプリで行ってください。</div>',
+        '過去年の情報には年を付けました。2026年は変わることがあるので、最終確認は公式ページと公式アプリで行ってください。'
+        '<br>地名は色付きのラベルにしています。<span class="pl pl-v">会場</span>は橙、<span class="pl pl-st">モノレール駅</span>は青、'
+        '<span class="pl">空港やほかの場所</span>は灰色で、押すとGoogleマップが開きます。</div>',
         '<h2 id="events">日別イベント</h2>',
         f'<p class="mut">確認日は{h(events["checked_on"])}。セッション以外の全体イベントです。</p>',
     ]
@@ -393,14 +444,14 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
                 title += f'<br><span class="en">{h(entry["title"])}</span>'
             body.append(
                 f'<tr><td class="tm">{h(clock(start, end, zone))}</td><td>{title}</td>'
-                f'<td>{h(EVENT_CATEGORIES[entry["category"]])}</td><td>{h(entry["venue"] or "未確認")}</td>'
-                f'<td>{h(EVENT_REGISTRATION[entry["registration"]])}</td><td>{h(entry.get("public_note_ja") or "—")}</td></tr>'
+                f'<td>{h(EVENT_CATEGORIES[entry["category"]])}</td><td>{rich(entry["venue"] or "未確認", places)}</td>'
+                f'<td>{h(EVENT_REGISTRATION[entry["registration"]])}</td><td>{rich(entry.get("public_note_ja") or "—", places)}</td></tr>'
             )
         body.append("</table></div>")
     if guide.get("day_flow"):
         body.append('<h2 id="day">1日の流れ（例）</h2><div class="scroll"><table><tr><th>時刻</th><th>内容</th><th>出典</th></tr>')
         for step in guide["day_flow"]:
-            body.append(f'<tr><td class="tm">{h(step["time"])}</td><td>{h(step["what_ja"])}</td>'
+            body.append(f'<tr><td class="tm">{h(step["time"])}</td><td>{rich(step["what_ja"], places)}</td>'
                         f'<td>{year_badge(step.get("year"), year)} {link(step["source"], "出典")}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="map">会場マップ</h2>')
@@ -415,7 +466,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
                     f'{year_badge(line.get("year"), year)} <span class="src">{link(line["source"], "出典")}</span></p>')
     example = guide.get("shuttle_example")
     if example:
-        body.append(f'<p class="mut">シャトル: 2026年の路線・所要時間は未公表（「秋に公開予定」）。参考に、{h(example["note_ja"])} '
+        body.append(f'<p class="mut">シャトル: 2026年の路線・所要時間は未公表（「秋に公開予定」）。参考に、{rich(example["note_ja"], places)} '
                     f'{year_badge(example.get("year"), year)} <span class="src">{link(example["source"], "出典")}</span></p>')
     body.append('<details class="more"><summary>全15区間の距離と時間を表で見る</summary>'
                 '<p class="mut">モノレールは「最寄り駅までの徒歩＋公式の駅間所要時間＋駅から会場までの徒歩」で、幅は電車待ち（0〜最大の運行間隔）です。</p>')
@@ -424,13 +475,13 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     if guide.get("venues"):
         body.append('<div class="scroll"><table><tr><th>会場</th><th>主な用途</th><th>年</th></tr>')
         for venue in guide["venues"]:
-            body.append(f'<tr><td>{link(maps_url(venue), venue["name"])}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
-                        f'<td>{h(venue["role_ja"])}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
+            body.append(f'<tr><td>{rich(venue["name"], places)}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
+                        f'<td>{rich(venue["role_ja"], places)}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="move">移動</h2><div class="cards">')
     for item in guide.get("transport", []):
-        body.append(f'<div class="c"><h4>{h(item["title_ja"])} {year_badge(item.get("year"), year)}</h4>'
-                    f'<p>{h(item["body_ja"])}</p><div class="src">{link(item["source"], "出典")}</div></div>')
+        body.append(f'<div class="c"><h4>{rich(item["title_ja"], places)} {year_badge(item.get("year"), year)}</h4>'
+                    f'<p>{rich(item["body_ja"], places)}</p><div class="src">{link(item["source"], "出典")}</div></div>')
     body.append("</div>")
     names = {v["id"]: v["name"] for v in guide.get("venues", [])}
     if guide.get("walk_times"):
@@ -438,8 +489,8 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         for walk in guide["walk_times"]:
             minutes = f'{walk["minutes"]}分' if walk.get("minutes") is not None else "未確認"
             mode = {"walk": "徒歩", "shuttle": "シャトル", "monorail": "モノレール"}.get(walk.get("mode"), walk.get("mode") or "—")
-            body.append(f'<tr><td>{h(names.get(walk["from"], walk["from"]))} ↔ {h(names.get(walk["to"], walk["to"]))}</td>'
-                        f'<td>{h(mode)}</td><td class="tm">{h(minutes)}</td><td>{h(walk.get("note_ja") or "—")} '
+            body.append(f'<tr><td>{rich(names.get(walk["from"], walk["from"]), places)} ↔ {rich(names.get(walk["to"], walk["to"]), places)}</td>'
+                        f'<td>{h(mode)}</td><td class="tm">{h(minutes)}</td><td>{rich(walk.get("note_ja") or "—", places)} '
                         f'<span class="src">{link(walk["source"], "出典")}</span></td><td>{year_badge(walk.get("year"), year)}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="tips">過去の参加者のTips</h2>'
@@ -454,12 +505,12 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
             sources = " ".join(link(url, f"出典{i + 1}") for i, url in enumerate(tip["sources"]))
             if tip.get("origin") == "handover":
                 sources = '<span class="badge b-ev">社内の引き継ぎ</span> ' + sources
-            body.append(f'<div class="c"><h4>{h(tip["title_ja"])}</h4><p>{h(tip["body_ja"])}</p>'
+            body.append(f'<div class="c"><h4>{rich(tip["title_ja"], places)}</h4><p>{rich(tip["body_ja"], places)}</p>'
                         f'<div class="src">{year_badge(tip.get("year"), year)} {sources}</div></div>')
         body.append("</div>")
     body.append('<h2 id="links">リンク</h2><ul>')
     for item in guide.get("links", []):
-        body.append(f'<li>{link(item["url"], item["title"])}: {h(item["why_ja"])}</li>')
+        body.append(f'<li>{link(item["url"], item["title"])}: {rich(item["why_ja"], places)}</li>')
     for source in events["sources"]:
         body.append(f'<li>{link(source["url"], source["label_ja"])}</li>')
     body.append("</ul>")
@@ -470,7 +521,8 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
 
 
 def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: dict[str, Any],
-                   shared_url: str | None, created: str, built_on: str) -> str:
+                   shared_url: str | None, created: str, built_on: str, guide: dict[str, Any] | None = None) -> str:
+    places = place_index(guide)
     report = check_schedule(catalog, schedule, events)
     zone = timezone(schedule["timezone"], "schedule.timezone")
     sessions = {(s["year"], s["id"]): s for s in catalog["sessions"]}
@@ -484,11 +536,11 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
             continue
         status = '<span class="badge b-ok">予約済み</span>' if item["status"] == "reserved" else '<span class="badge">計画</span>'
         if is_text(item.get("review_ja")):
-            status += f' <span class="badge b-rev">見直し中</span><br><span class="mut">{h(item["review_ja"])}</span>'
+            status += f' <span class="badge b-rev">見直し中</span><br><span class="mut">{rich(item["review_ja"], places)}</span>'
         title = (f'<span class="id">{h(session["id"])}</span> {link(session["url"], session.get("title_ja") or session["title"])}'
                  f'<br><span class="en">{h(session["title"])} · {h(session["format"])} {h(session["level"])}</span>')
         rows.append((start, f'<tr><td class="tm">{h(clock(start, end, zone))}</td><td>{title}</td>'
-                            f'<td>{h(session["venue"] or "未確認")}</td><td>{status}</td></tr>'))
+                            f'<td>{rich(session["venue"] or "未確認", places)}</td><td>{status}</td></tr>'))
     session_list = [s for _, s in active]
     for entry in events["events"]:
         start = parse_time(entry["starts_at"], "starts_at")
@@ -499,7 +551,7 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         note = " / ".join(x for x in (entry["note_ja"], relation if relation not in {"なし", "—"} else None) if x)
         rows.append((start, f'<tr><td class="tm">{h(clock(start, end, zone))}</td>'
                             f'<td><span class="badge b-ev">イベント</span> {link(entry["url"], entry["title_ja"] or entry["title"])}'
-                            f'<br><span class="mut">{h(note)}</span></td><td>{h(entry["venue"] or "未確認")}</td>'
+                            f'<br><span class="mut">{rich(note, places)}</span></td><td>{rich(entry["venue"] or "未確認", places)}</td>'
                             f'<td>{h(EVENT_INTENT[entry["intent"]])}</td></tr>'))
     reviewing = [(item, s) for item, s in active if is_text(item.get("review_ja"))]
     shared = link(shared_url, "共有版の現地ガイド（会場マップ・移動・Tips・全体イベント）") if shared_url else "共有版: 未公開"
@@ -513,7 +565,7 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
     if reviewing:
         body.append("<h2>見直し中の予約</h2><ul>")
         for item, s in reviewing:
-            body.append(f'<li><span class="id">{h(s["id"])}</span> {h(s.get("title_ja") or s["title"])}: {h(item["review_ja"])}</li>')
+            body.append(f'<li><span class="id">{h(s["id"])}</span> {h(s.get("title_ja") or s["title"])}: {rich(item["review_ja"], places)}</li>')
         body.append("</ul>")
     current = None
     for start, row in sorted(rows, key=lambda r: r[0]):
@@ -532,7 +584,7 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         body.append("<h2>時刻未定で気になるイベント</h2><ul>")
         for e in undated:
             body.append(f'<li>{link(e["url"], e["title_ja"] or e["title"])}（{h(day_label(e["date"]) if e["date"] else "日付未定")}）'
-                        f' {h(EVENT_INTENT[e["intent"]])}: {h(e["note_ja"] or "")}</li>')
+                        f' {h(EVENT_INTENT[e["intent"]])}: {rich(e["note_ja"] or "", places)}</li>')
         body.append("</ul>")
     body.append(f'<footer>カタログ確認日は{h(catalog["checked_on"])}、イベント確認日は{h(events["checked_on"])}。'
                 "生成元は data/catalog.json・data/events.json・planning/schedule.json。</footer>")
@@ -557,7 +609,7 @@ def build(config: dict[str, Any]) -> tuple[Path, Path]:
     shared_path.parent.mkdir(parents=True, exist_ok=True)
     shared_path.write_text(build_shared(events, guide, built_on), encoding="utf-8")
     created = config.get("personal_created") or datetime.now().astimezone().isoformat(timespec="seconds")
-    personal_path.write_text(build_personal(catalog, events, schedule, config.get("shared_url"), created, built_on),
+    personal_path.write_text(build_personal(catalog, events, schedule, config.get("shared_url"), created, built_on, guide),
                              encoding="utf-8")
     return shared_path, personal_path
 

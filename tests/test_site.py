@@ -25,7 +25,7 @@ def events(**overrides):
 def guide(**overrides):
     result = {
         "checked_on": "2026-10-07",
-        "venues": [{"id": "venetian", "name": "The Venetian", "role_ja": "基調講演", "lat": 36.12, "lon": -115.17,
+        "venues": [{"id": "venetian", "name": "The Venetian", "aliases": ["Venetian"], "role_ja": "基調講演", "lat": 36.12, "lon": -115.17,
                     "year": 2026, "source": "https://example.com/venues"},
                    {"id": "mgm", "name": "MGM Grand", "role_ja": "セッション", "lat": 36.10, "lon": -115.17,
                     "year": 2025, "source": "https://example.com/venues"}],
@@ -94,6 +94,16 @@ class SharedPageTests(unittest.TestCase):
         self.assertIn("MGM Grandまで", html)
 
 
+    def test_place_names_render_as_linked_stickers(self):
+        g = guide(places=[{"name": "Harrah's", "kind": "hotel", "maps_query": "Harrah's Las Vegas"}],
+                  tips=[{"id": "x", "category": "食事", "title_ja": "朝食", "year": 2025, "sources": ["https://example.com"],
+                         "body_ja": "Harrah's泊でもThe Venetianで食べた。<i>"}])
+        html = build_shared(events(), g, "2026-10-07")
+        self.assertIn('class="pl pl-v" href="https://www.google.com/maps/search/?api=1&amp;query=The+Venetian%2C+Las+Vegas%2C+NV"', html)
+        self.assertIn(">Harrah&#x27;s</a>泊でも", html)
+        self.assertIn("&lt;i&gt;", html)
+
+
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):
         reviewed = dict(item("A101", "reserved"), review_ja="イベント次第でキャンセル")
@@ -103,6 +113,12 @@ class PersonalPageTests(unittest.TestCase):
         self.assertIn("イベント次第でキャンセル", html)
         self.assertIn('href="https://example.com/shared"', html)
         self.assertIn("A101 のあとに行く", html)
+
+    def test_personal_page_venues_are_stickers(self):
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              "https://example.com/shared", "2026-10-07T14:00:00+09:00", "2026-10-07", guide())
+        self.assertIn('class="pl pl-v"', html)
+        self.assertIn('>Venetian</a>', html)
 
     def test_review_note_must_be_text(self):
         with self.assertRaises(ValidationError):
