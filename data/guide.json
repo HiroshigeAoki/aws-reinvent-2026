@@ -1358,7 +1358,10 @@
     {
       "name": "ベラージオ",
       "kind": "hotel",
-      "maps_query": "Bellagio Fountains, Las Vegas"
+      "maps_query": "Bellagio Fountains, Las Vegas",
+      "aliases": [
+        "Bellagio"
+      ]
     },
     {
       "name": "LAS",
@@ -1413,6 +1416,136 @@
       "name": "Welcome to Las Vegas",
       "kind": "spot",
       "maps_query": "Welcome to Fabulous Las Vegas Sign"
+    },
+    {
+      "name": "Excalibur",
+      "kind": "hotel",
+      "maps_query": "Excalibur Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "Treasure Island",
+      "kind": "hotel",
+      "maps_query": "Treasure Island Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "Rio",
+      "kind": "hotel",
+      "maps_query": "Rio Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "Flamingo",
+      "kind": "hotel",
+      "maps_query": "Flamingo Las Vegas"
+    },
+    {
+      "name": "Westgate",
+      "kind": "hotel",
+      "maps_query": "Westgate Las Vegas Resort & Casino"
+    },
+    {
+      "name": "New York-New York",
+      "kind": "hotel",
+      "maps_query": "New York-New York Hotel, Las Vegas"
+    },
+    {
+      "name": "Cosmopolitan",
+      "kind": "hotel",
+      "maps_query": "The Cosmopolitan of Las Vegas"
+    },
+    {
+      "name": "Palms",
+      "kind": "hotel",
+      "maps_query": "Palms Casino Resort, Las Vegas"
+    },
+    {
+      "name": "Planet Hollywood",
+      "kind": "hotel",
+      "maps_query": "Planet Hollywood Las Vegas"
+    },
+    {
+      "name": "Circus Circus",
+      "kind": "hotel",
+      "maps_query": "Circus Circus Las Vegas"
+    },
+    {
+      "name": "El Cortez",
+      "kind": "hotel",
+      "maps_query": "El Cortez Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "The D",
+      "kind": "hotel",
+      "maps_query": "The D Las Vegas"
+    },
+    {
+      "name": "Golden Gate",
+      "kind": "hotel",
+      "maps_query": "Golden Gate Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "Main Street Station",
+      "kind": "hotel",
+      "maps_query": "Main Street Station Casino, Las Vegas"
+    },
+    {
+      "name": "Plaza",
+      "kind": "hotel",
+      "maps_query": "Plaza Hotel & Casino, Las Vegas"
+    },
+    {
+      "name": "OYO",
+      "kind": "hotel",
+      "maps_query": "OYO Hotel & Casino Las Vegas"
+    },
+    {
+      "name": "Ellis Island",
+      "kind": "hotel",
+      "maps_query": "Ellis Island Casino, Las Vegas"
+    },
+    {
+      "name": "LINQ Promenade",
+      "kind": "spot",
+      "maps_query": "The LINQ Promenade, Las Vegas"
+    },
+    {
+      "name": "Mob Museum",
+      "kind": "spot",
+      "maps_query": "The Mob Museum, Las Vegas"
+    },
+    {
+      "name": "Neon Museum",
+      "kind": "spot",
+      "maps_query": "The Neon Museum, Las Vegas"
+    },
+    {
+      "name": "National Atomic Testing Museum",
+      "kind": "spot",
+      "maps_query": "National Atomic Testing Museum, Las Vegas"
+    },
+    {
+      "name": "Red Rock Canyon",
+      "kind": "spot",
+      "maps_query": "Red Rock Canyon National Conservation Area"
+    },
+    {
+      "name": "Hoover Dam",
+      "kind": "spot",
+      "maps_query": "Hoover Dam"
+    },
+    {
+      "name": "Boulder City",
+      "kind": "spot",
+      "maps_query": "Boulder City, NV"
+    },
+    {
+      "name": "Las Vegas North Premium Outlets",
+      "kind": "spot",
+      "maps_query": "Las Vegas North Premium Outlets"
+    },
+    {
+      "name": "Las Vegas South Premium Outlets",
+      "kind": "spot",
+      "maps_query": "Las Vegas South Premium Outlets"
     }
   ]
 }

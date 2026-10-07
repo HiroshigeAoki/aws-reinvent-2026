@@ -122,6 +122,16 @@ class SharedPageTests(unittest.TestCase):
         self.assertNotIn("宿泊先", build_shared(events(), guide(), "2026-10-07"))
 
 
+    def test_official_badge_needs_aws_sources(self):
+        g = guide(tips=[{"id": "a", "category": "食事", "title_ja": "公式", "body_ja": "x", "year": 2026,
+                         "sources": ["https://aws.amazon.com/events/reinvent/faqs/"]},
+                        {"id": "b", "category": "食事", "title_ja": "記事", "body_ja": "y", "year": 2026,
+                         "sources": ["https://news.example.com/a"]}])
+        html = build_shared(events(), g, "2026-10-07")
+        self.assertEqual(html.count("2026公式"), 1)
+        self.assertIn("2026年の情報", html)
+
+
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):
         reviewed = dict(item("A101", "reserved"), review_ja="イベント次第でキャンセル")

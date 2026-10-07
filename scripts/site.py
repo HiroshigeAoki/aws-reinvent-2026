@@ -14,7 +14,7 @@ import shutil
 import subprocess
 import sys
 from typing import Any
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlparse
 
 if __package__:
     from .reinvent import (
@@ -33,7 +33,7 @@ OUT_DIR = ROOT / "local-data" / "site"
 CONFIG = ROOT / "local-data" / "site.json"
 MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
 WEEKDAYS = "月火水木金土日"
-TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間")
+TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間", "ショー", "カジノ", "観光・買い物")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 
 # Venue colors: (light bg, light text, dark bg, dark text). Venues pick one by name in guide.json.
@@ -116,6 +116,7 @@ svg.map .stay{fill:var(--ok);font-size:11px;font-weight:600;text-decoration:none
 .stay-box h3{margin:10px 0 4px}
 .stay-box ul{margin:0;padding-left:1.2em}
 .stay-box li{margin:4px 0}
+nav.toc{font-size:.85rem;margin:0 0 4px}
 details.more{margin:4px 0 12px}
 details.more summary{cursor:pointer;color:var(--acc2);font-size:.9rem;padding:4px 0}
 details.more summary:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
@@ -212,10 +213,20 @@ def merge_guides(public: Any, private: Any) -> dict[str, Any]:
     return merged
 
 
-def year_badge(year: Any, current: int) -> str:
+OFFICIAL_HOSTS = ("aws.amazon.com", "awsevents.com")
+
+
+def is_official(urls: list[str]) -> bool:
+    hosts = [urlparse(u).hostname or "" for u in urls if u]
+    return bool(hosts) and all(any(host == o or host.endswith("." + o) for o in OFFICIAL_HOSTS) for host in hosts)
+
+
+def year_badge(year: Any, current: int, sources: Any = None) -> str:
+    """'公式' only when every source is an AWS page; blogs and news of the same year stay '年の情報'."""
     if year is None:
         return '<span class="badge">年不明</span>'
-    if year == current:
+    urls = [sources] if isinstance(sources, str) else list(sources or [])
+    if year == current and is_official(urls):
         return f'<span class="badge b-ok">{year}公式</span>'
     return f'<span class="badge">{h(year)}年の情報</span>'
 
@@ -487,7 +498,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         body.append('<h2 id="day">1日の流れ（例）</h2><div class="scroll"><table><tr><th>時刻</th><th>内容</th><th>出典</th></tr>')
         for step in guide["day_flow"]:
             body.append(f'<tr><td class="tm">{h(step["time"])}</td><td>{rich(step["what_ja"], places)}</td>'
-                        f'<td>{year_badge(step.get("year"), year)} {link(step["source"], "出典")}</td></tr>')
+                        f'<td>{year_badge(step.get("year"), year, step.get("source"))} {link(step["source"], "出典")}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="map">会場マップ</h2>')
     body.append('<p class="mut">緯度経度から描いた縮尺付きの図です。点線は歩ける区間で、徒歩の分数を添えています。'
@@ -498,11 +509,11 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     line = guide.get("monorail")
     if line:
         body.append(f'<p class="mut">モノレール: 駅間1〜4分、全線約15分、{line["headway_min"]}〜{line["headway_max"]}分間隔。'
-                    f'{year_badge(line.get("year"), year)} <span class="src">{link(line["source"], "出典")}</span></p>')
+                    f'{year_badge(line.get("year"), year, line.get("source"))} <span class="src">{link(line["source"], "出典")}</span></p>')
     example = guide.get("shuttle_example")
     if example:
         body.append(f'<p class="mut">シャトル: 2026年の路線・所要時間は未公表（「秋に公開予定」）。参考に、{rich(example["note_ja"], places)} '
-                    f'{year_badge(example.get("year"), year)} <span class="src">{link(example["source"], "出典")}</span></p>')
+                    f'{year_badge(example.get("year"), year, example.get("source"))} <span class="src">{link(example["source"], "出典")}</span></p>')
     body.append('<details class="more"><summary>全15区間の距離と時間を表で見る</summary>'
                 '<p class="mut">モノレールは「最寄り駅までの徒歩＋公式の駅間所要時間＋駅から会場までの徒歩」で、幅は電車待ち（0〜最大の運行間隔）です。</p>')
     body.append(distance_table(guide))
@@ -511,7 +522,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         body.append('<div class="scroll"><table><tr><th>会場</th><th>主な用途</th><th>年</th></tr>')
         for venue in guide["venues"]:
             body.append(f'<tr><td>{rich(venue["name"], places)}{' <span class="badge b-stay">宿泊先</span>' if venue["id"] == (guide.get("stay") or {}).get("venue") else ""}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
-                        f'<td>{rich(venue["role_ja"], places)}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
+                        f'<td>{rich(venue["role_ja"], places)}</td><td>{year_badge(venue.get("year"), year, venue.get("source"))}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="move">移動</h2>')
     stay = guide.get("stay")
@@ -522,7 +533,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         body.append("</ul></div>")
     body.append('<div class="cards">')
     for item in guide.get("transport", []):
-        body.append(f'<div class="c"><h4>{rich(item["title_ja"], places)} {year_badge(item.get("year"), year)}</h4>'
+        body.append(f'<div class="c"><h4>{rich(item["title_ja"], places)} {year_badge(item.get("year"), year, item.get("source"))}</h4>'
                     f'<p>{rich(item["body_ja"], places)}</p><div class="src">{link(item["source"], "出典")}</div></div>')
     body.append("</div>")
     names = {v["id"]: v["name"] for v in guide.get("venues", [])}
@@ -533,22 +544,22 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
             mode = {"walk": "徒歩", "shuttle": "シャトル", "monorail": "モノレール"}.get(walk.get("mode"), walk.get("mode") or "—")
             body.append(f'<tr><td>{rich(names.get(walk["from"], walk["from"]), places)} ↔ {rich(names.get(walk["to"], walk["to"]), places)}</td>'
                         f'<td>{h(mode)}</td><td class="tm">{h(minutes)}</td><td>{rich(walk.get("note_ja") or "—", places)} '
-                        f'<span class="src">{link(walk["source"], "出典")}</span></td><td>{year_badge(walk.get("year"), year)}</td></tr>')
+                        f'<span class="src">{link(walk["source"], "出典")}</span></td><td>{year_badge(walk.get("year"), year, walk.get("source"))}</td></tr>')
         body.append("</table></div>")
     body.append('<h2 id="tips">過去の参加者のTips</h2>'
                 '<p class="mut">過去の参加レポートで繰り返し挙がっている点を要約しました。出典を開くと元の記事を読めます。</p>')
     tips = guide.get("tips", [])
-    for category in TIP_CATEGORIES:
+    used = [c for c in TIP_CATEGORIES if any(t["category"] == c for t in tips)]
+    body.append('<nav class="toc">' + "".join(f'<a href="#tip-{i}">{h(c)}</a>' for i, c in enumerate(used)) + "</nav>")
+    for i, category in enumerate(used):
         selected = [t for t in tips if t["category"] == category]
-        if not selected:
-            continue
-        body.append(f'<h3>{h(category)}</h3><div class="cards">')
+        body.append(f'<h3 id="tip-{i}">{h(category)}</h3><div class="cards">')
         for tip in selected:
             sources = " ".join(link(url, f"出典{i + 1}") for i, url in enumerate(tip["sources"]))
             if tip.get("origin") == "handover":
                 sources = '<span class="badge b-ev">社内の引き継ぎ</span> ' + sources
             body.append(f'<div class="c"><h4>{rich(tip["title_ja"], places)}</h4><p>{rich(tip["body_ja"], places)}</p>'
-                        f'<div class="src">{year_badge(tip.get("year"), year)} {sources}</div></div>')
+                        f'<div class="src">{year_badge(tip.get("year"), year, tip.get("sources"))} {sources}</div></div>')
         body.append("</div>")
     body.append('<h2 id="links">リンク</h2><ul>')
     for item in guide.get("links", []):
