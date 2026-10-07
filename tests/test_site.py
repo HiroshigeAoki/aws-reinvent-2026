@@ -148,6 +148,21 @@ class PersonalPageTests(unittest.TestCase):
         self.assertIn('class="pl pl-v"', html)
         self.assertIn('>Venetian</a>', html)
 
+    def test_private_plans_show_only_on_personal_page(self):
+        plan = {"title_ja": "招待パーティー", "starts_at": "2026-12-02T19:00:00-08:00",
+                "ends_at": "2026-12-02T21:00:00-08:00", "venue": "Example Hall", "note_ja": "申込済み"}
+        merged = merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [plan]})
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", merged)
+        self.assertIn("招待パーティー", html)
+        self.assertIn("申込済み", html)
+        self.assertIn("非公開", html)
+        self.assertNotIn("招待パーティー", build_shared(events(), merged, "2026-10-07"))
+
+    def test_private_plans_need_title_and_times(self):
+        with self.assertRaises(ValidationError):
+            merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [{"title_ja": "x", "starts_at": "nope"}]})
+
     def test_review_note_must_be_text(self):
         with self.assertRaises(ValidationError):
             check_schedule(catalog(session()), schedule(dict(item("A101", "reserved"), review_ja=3)))

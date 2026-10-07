@@ -180,6 +180,17 @@ def validate_guide(guide: Any) -> dict[str, Any]:
                 errors.append(f"{label}.year: 整数か null が必要です")
             if collection == "tips" and entry.get("category") not in TIP_CATEGORIES:
                 errors.append(f"{label}.category: {' / '.join(TIP_CATEGORIES)} のいずれかが必要です")
+    for index, plan in enumerate(guide.get("plans", [])):
+        label = f"guide.plans[{index}]"
+        if not (isinstance(plan, dict) and is_text(plan.get("title_ja"))):
+            errors.append(f"{label}.title_ja: 空でない文字列が必要です")
+            continue
+        try:
+            if parse_time(plan.get("starts_at"), f"{label}.starts_at") is None:
+                errors.append(f"{label}.starts_at: 時刻が必要です")
+            parse_time(plan.get("ends_at"), f"{label}.ends_at")
+        except ValidationError as exc:
+            errors.append(str(exc))
     stay = guide.get("stay")
     if stay is not None and not (isinstance(stay, dict) and is_text(stay.get("venue"))
                                  and all(is_text(p) for p in stay.get("points_ja", []))):
@@ -210,6 +221,8 @@ def merge_guides(public: Any, private: Any) -> dict[str, Any]:
         merged[collection] = list(guide.get(collection, [])) + list(private.get(collection, []))
     if private.get("stay"):
         merged["stay"] = private["stay"]
+    # Personal plans (invitations, free time) live only in the overlay; build_shared never reads them.
+    merged["plans"] = list(private.get("plans", []))
     return merged
 
 
@@ -606,6 +619,14 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
                             f'<td><span class="badge b-ev">イベント</span> {link(entry["url"], entry["title_ja"] or entry["title"])}'
                             f'<br><span class="mut">{rich(note, places)}</span></td><td>{rich(entry["venue"] or "未確認", places)}</td>'
                             f'<td>{h(EVENT_INTENT[entry["intent"]])}</td></tr>'))
+    for plan in (guide or {}).get("plans", []):
+        start = parse_time(plan["starts_at"], "starts_at")
+        end = parse_time(plan.get("ends_at"), "ends_at")
+        title = link(plan["url"], plan["title_ja"]) if is_text(plan.get("url")) else h(plan["title_ja"])
+        rows.append((start, f'<tr><td class="tm">{h(clock(start, end, zone))}</td>'
+                            f'<td><span class="badge b-ev">非公開</span> {title}'
+                            f'<br><span class="mut">{rich(plan.get("note_ja") or "", places)}</span></td>'
+                            f'<td>{rich(plan.get("venue") or "未確認", places)}</td><td>行く</td></tr>'))
     reviewing = [(item, s) for item, s in active if is_text(item.get("review_ja"))]
     shared = link(shared_url, "共有版の現地ガイド（会場マップ・移動・Tips・全体イベント）") if shared_url else "共有版: 未公開"
     body = [
