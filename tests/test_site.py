@@ -180,6 +180,42 @@ class PersonalPageTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [{"title_ja": "x", "starts_at": "nope"}]})
 
+    def test_prep_tasks_list_before_the_days_and_badge_the_session(self):
+        prep = [{"task_ja": "ドキュメントを読む<b>", "done": True}, {"task_ja": "質問を書く", "done": False}]
+        html = build_personal(catalog(session()), events(), schedule(dict(item("A101", "reserved"), prep=prep)),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07 10:00 JST")
+        self.assertIn('<h2 id="prep">予習</h2>', html)
+        self.assertIn("ドキュメントを読む&lt;b&gt;", html)
+        self.assertIn('<li class="done">', html)
+        self.assertIn("54日", html)
+        self.assertIn('<a class="badge b-prep" href="#prep-A101">予習 1/2</a>', html)
+        self.assertLess(html.index('id="prep"'), html.index("11/30（月）"))
+
+    def test_finished_prep_shows_as_done(self):
+        prep = [{"task_ja": "読む", "done": True}]
+        html = build_personal(catalog(session()), events(), schedule(dict(item("A101", "reserved"), prep=prep)),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07")
+        self.assertIn('href="#prep-A101">予習済み</a>', html)
+
+    def test_no_prep_section_without_tasks(self):
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07")
+        self.assertNotIn('id="prep"', html)
+
+    def test_prep_plans_get_their_own_badge(self):
+        block = {"kind": "prep", "title_ja": "翌日のハンズオンを見直す", "starts_at": "2026-11-29T21:00:00-08:00",
+                 "ends_at": "2026-11-29T21:30:00-08:00", "venue": "MGM Grand"}
+        merged = merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [block]})
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", merged)
+        self.assertIn('<span class="badge b-prep">予習</span> 翌日のハンズオンを見直す', html)
+
+    def test_prep_tasks_must_be_valid(self):
+        for prep in ("読む", [{"task_ja": "", "done": False}], [{"task_ja": "読む", "done": "no"}],
+                     [{"task_ja": "読む", "done": False, "url": 3}]):
+            with self.assertRaises(ValidationError):
+                check_schedule(catalog(session()), schedule(dict(item("A101", "reserved"), prep=prep)))
+
     def test_review_note_must_be_text(self):
         with self.assertRaises(ValidationError):
             check_schedule(catalog(session()), schedule(dict(item("A101", "reserved"), review_ja=3)))

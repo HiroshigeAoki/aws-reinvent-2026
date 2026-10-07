@@ -36,7 +36,8 @@ WEEKDAYS = "月火水木金土日"
 TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間", "ショー", "カジノ", "観光・買い物")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 # Private plan kind -> (badge class, badge label, status column).
-PLAN_KINDS = {None: ("b-ev", "非公開", "行く"), "meal": ("b-meal", "食事", "目安"), "travel": ("b-trip", "移動", "確定")}
+PLAN_KINDS = {None: ("b-ev", "非公開", "行く"), "meal": ("b-meal", "食事", "目安"), "travel": ("b-trip", "移動", "確定"),
+              "prep": ("b-prep", "予習", "目安")}
 
 # Venue colors: (light bg, light text, dark bg, dark text). Venues pick one by name in guide.json.
 VENUE_COLORS = {
@@ -76,7 +77,20 @@ td.tm{white-space:nowrap;font-variant-numeric:tabular-nums}
 .mut{color:var(--mut)}
 .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc)}
 .badge{display:inline-block;font-size:.74rem;border-radius:4px;padding:0 6px;border:1px solid currentColor;white-space:nowrap}
-.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}.b-meal{color:var(--venuefg);background:var(--venuebg)}.b-trip{color:var(--fg);background:var(--chip)}
+.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}.b-meal{color:var(--venuefg);background:var(--venuebg)}.b-trip{color:var(--fg);background:var(--chip)}.b-prep{color:var(--acc2);text-decoration:none}a.b-prep.ok{color:var(--ok)}
+.prep-lead{margin:0 0 10px}.prep-lead b{font-size:1.35rem;font-variant-numeric:tabular-nums;color:var(--acc2)}
+ol.prep{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+ol.prep>li{position:relative;padding:4px 0 14px 18px;scroll-margin-top:12px}
+ol.prep>li::before{content:"";position:absolute;left:-7px;top:10px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--acc2)}
+ol.prep>li.all::before{background:var(--ok);border-color:var(--ok)}
+ol.prep>li:target{background:var(--card);border-radius:0 8px 8px 0}
+.prep-when{font-size:.82rem;color:var(--mut);font-variant-numeric:tabular-nums}
+.prep-count{float:right;font-size:.82rem;color:var(--mut);font-variant-numeric:tabular-nums}
+ul.todo{list-style:none;margin:4px 0 0;padding:0;font-size:.92rem}
+ul.todo li{padding-left:1.5em;text-indent:-1.5em}
+ul.todo li::before{content:"\\2610";display:inline-block;width:1.5em;text-indent:0;color:var(--acc2)}
+ul.todo li.done{color:var(--mut);text-decoration:line-through}
+ul.todo li.done::before{content:"\\2611";color:var(--ok)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
 .c h4{font-size:.98rem;margin:0 0 4px;line-height:1.45}
@@ -588,6 +602,36 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     return page("re:Invent 2026 現地ガイド", meta, "\n".join(body))
 
 
+def prep_section(active: list[tuple[dict[str, Any], dict[str, Any]]], rows: list[tuple[datetime, str]],
+                 built_on: str, zone) -> list[str]:
+    """Checklist of study tasks per session, in session order, counted down to the first day on the page."""
+    preps = sorted(((item, s) for item, s in active if item.get("prep")), key=lambda pair: pair[1]["starts_at"])
+    if not preps:
+        return []
+    total = sum(len(item["prep"]) for item, _ in preps)
+    done = sum(task["done"] for item, _ in preps for task in item["prep"])
+    first = min(start for start, _ in rows).astimezone(zone).date()
+    days = (first - date.fromisoformat(built_on[:10])).days
+    countdown = f"現地初日の{h(day_label(first.isoformat()))}まで<b>{days}日</b>。" if days > 0 else ""
+    body = ['<h2 id="prep">予習</h2>',
+            f'<p class="prep-lead">{countdown}{len(preps)}セッションで{total}件、済みは{done}件。</p>', '<ol class="prep">']
+    for item, session in preps:
+        start = parse_time(session["starts_at"], "starts_at")
+        count = sum(task["done"] for task in item["prep"])
+        when = f'{day_label(start.astimezone(zone).date().isoformat())} {clock(start, None, zone)}' if start else "時刻未定"
+        finished = ' class="all"' if count == len(item["prep"]) else ""
+        body.append(f'<li id="prep-{h(session["id"])}"{finished}>'
+                    f'<span class="prep-count">{count}/{len(item["prep"])}</span>'
+                    f'<span class="prep-when">{h(when)}</span> <span class="id">{h(session["id"])}</span> '
+                    f'{h(session.get("title_ja") or session["title"])}<ul class="todo">')
+        for task in item["prep"]:
+            text = link(task["url"], task["task_ja"]) if task.get("url") else h(task["task_ja"])
+            body.append(f'<li class="done">{text}</li>' if task["done"] else f"<li>{text}</li>")
+        body.append("</ul></li>")
+    body.append("</ol>")
+    return body
+
+
 def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: dict[str, Any],
                    shared_url: str | None, created: str, built_on: str, guide: dict[str, Any] | None = None) -> str:
     places = place_index(guide)
@@ -603,6 +647,11 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         if start is None:
             continue
         status = '<span class="badge b-ok">予約済み</span>' if item["status"] == "reserved" else '<span class="badge">計画</span>'
+        if item.get("prep"):
+            done = sum(task["done"] for task in item["prep"])
+            finished = done == len(item["prep"])
+            label = "予習済み" if finished else f"予習 {done}/{len(item['prep'])}"
+            status += f' <a class="badge b-prep{" ok" if finished else ""}" href="#prep-{h(session["id"])}">{label}</a>'
         if is_text(item.get("review_ja")):
             status += f' <span class="badge b-rev">見直し中</span><br><span class="mut">{rich(item["review_ja"], places)}</span>'
         title = (f'<span class="id">{h(session["id"])}</span> {link(session["url"], session.get("title_ja") or session["title"])}'
@@ -645,6 +694,7 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         for item, s in reviewing:
             body.append(f'<li><span class="id">{h(s["id"])}</span> {h(s.get("title_ja") or s["title"])}: {rich(item["review_ja"], places)}</li>')
         body.append("</ul>")
+    body.extend(prep_section(active, rows, built_on, zone))
     current = None
     for start, row in sorted(rows, key=lambda r: r[0]):
         day = start.astimezone(zone).date().isoformat()

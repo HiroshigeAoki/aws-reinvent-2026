@@ -5,52 +5,156 @@
     {
       "id": "TNC340-R",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "DevOps Agentの公式ドキュメントで、調査の進め方と必要な権限を読む",
+          "done": false
+        },
+        {
+          "task_ja": "直近の障害を1件選び、調査から再発防止までの流れを書き出しておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "GHJ306-S",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "GameDayの参加レポートを1本読み、チーム戦の進め方をつかむ",
+          "done": false
+        },
+        {
+          "task_ja": "Datadogのダッシュボード・モニター・APMの基本画面を確認する",
+          "done": false
+        }
+      ]
     },
     {
       "id": "DAT406-R1",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "Neptuneのクエリ言語（openCypher）の基本を読む",
+          "done": false
+        },
+        {
+          "task_ja": "GraphRAGの仕組み（グラフで関連文書をたどる）を復習する",
+          "done": false
+        },
+        {
+          "task_ja": "記事アーカイブのPoCで試したい問いを3つ書いておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "SEC304",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "AWS Continuumの発表内容を読み、何を自動化するのか確認する",
+          "done": false
+        },
+        {
+          "task_ja": "自分のCI/CDで今どこに脆弱性チェックがあるかメモする",
+          "done": false
+        }
+      ]
     },
     {
       "id": "TNC302-R",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "Frontier Agents（DevOps Agent・Security Agent）の概要を読む",
+          "done": false
+        },
+        {
+          "task_ja": "4時間の中で講師に聞きたいことを2つ書いておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "DAT410-R",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "Aurora PostgreSQLのpgvectorと全文検索の基本を復習する",
+          "done": false
+        },
+        {
+          "task_ja": "記事検索の今の課題（取りこぼし・並び順）を書き出しておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "COM328-R1",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "OpenTelemetryのトレース・メトリクス・ログの関係を復習する",
+          "done": false
+        },
+        {
+          "task_ja": "修正PRを自動で出すときに入れたい歯止めを考えておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "GHJ305",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "OWASP Top 10を一通り見直す",
+          "done": false
+        },
+        {
+          "task_ja": "GameDay（GHJ306-S）の振り返りを1行書いておく",
+          "done": false
+        }
+      ]
     },
     {
       "id": "SEC341",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "Bedrock GuardrailsとCedarの基本を読む",
+          "done": false
+        },
+        {
+          "task_ja": "プロンプトインジェクションの代表的な手口を確認する",
+          "done": false
+        }
+      ]
     },
     {
       "id": "DAT438-R1",
       "year": 2026,
-      "status": "reserved"
+      "status": "reserved",
+      "prep": [
+        {
+          "task_ja": "Amazon Bedrock AgentCoreのドキュメントで構成要素を読む",
+          "done": false
+        },
+        {
+          "task_ja": "冪等キーを使った書き込みの設計を復習する",
+          "done": false
+        }
+      ]
     }
   ]
 }

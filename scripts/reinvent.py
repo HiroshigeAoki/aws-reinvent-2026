@@ -460,6 +460,13 @@ def check_schedule(catalog: Any, schedule: Any, events: Any = None) -> ScheduleR
             raise ValidationError(f"{label}.status: candidate/planned/reserved/attended のいずれかが必要です")
         if "review_ja" in item and item["review_ja"] is not None and not is_text(item["review_ja"]):
             raise ValidationError(f"{label}.review_ja: 空でない文字列か null が必要です")
+        prep = item.get("prep", [])
+        if not isinstance(prep, list):
+            raise ValidationError(f"{label}.prep: 配列が必要です")
+        for task_index, task in enumerate(prep):
+            if not (isinstance(task, dict) and is_text(task.get("task_ja")) and type(task.get("done")) is bool
+                    and (task.get("url") is None or is_text(task["url"]))):
+                raise ValidationError(f"{label}.prep[{task_index}]: task_ja（文字列）と done（真偽値）が必要です。url は任意の文字列です")
         if item["status"] not in {"planned", "reserved"}:
             continue
         session = sessions[key]
