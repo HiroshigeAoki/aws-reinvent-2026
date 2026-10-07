@@ -3,44 +3,59 @@
   "transfer_minutes": 45,
   "items": [
     {
-      "id": "DVT206",
+      "id": "TNC340-R",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "DVT212-S",
+      "id": "GHJ306-S",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "SVS303-R",
+      "id": "DAT406-R1",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "GHJ301-S",
+      "id": "SEC304",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "GHJ212",
+      "id": "TNC302-R",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "API304-R",
+      "id": "DAT410-R",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "SEC362",
+      "id": "COM328-R1",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
     },
     {
-      "id": "MAM419-R",
+      "id": "GHJ305",
       "year": 2026,
-      "status": "candidate"
+      "status": "reserved"
+    },
+    {
+      "id": "SEC426",
+      "year": 2026,
+      "status": "reserved"
+    },
+    {
+      "id": "SEC428",
+      "year": 2026,
+      "status": "reserved"
+    },
+    {
+      "id": "DAT438-R1",
+      "year": 2026,
+      "status": "reserved"
     }
   ]
 }

@@ -4,15 +4,18 @@
 
 編集元は `data/catalog.json`。メモは `notes/`。
 
-確認日: 2026-09-30。日時は `America/Los_Angeles`。
+確認日: 2026-10-06。日時は `America/Los_Angeles`。
 
 | 年 / ID | セッション | 形式 | レベル | 開始 | 会場 |
 | --- | --- | --- | --- | --- | --- |
-| 2026 / API304-R | [API Gateway unleashed](../sessions/2026/API304-R/README.md) | Workshop | 300 | 2026-12-03 08:00 PST | Caesars Forum |
-| 2026 / DVT206 | [10x or bust: How Amazon's Frontier teams ship with Kiro](../sessions/2026/DVT206/README.md) | Breakout session | 200 | 2026-11-30 08:00 PST | Caesars Forum |
-| 2026 / DVT212-S | [100 Million Bugs Later: A Field Report From the Agentic Era \(sponsored by CodeRabbit\)](../sessions/2026/DVT212-S/README.md) | Breakout session | 200 | 2026-11-30 16:00 PST | Caesars Palace |
-| 2026 / GHJ212 | [AWS AI League: Build agents with AgentCore \(Agentic Football Cup\)](../sessions/2026/GHJ212/README.md) | Gamified learning | 200 | 未確認 | 未確認 |
-| 2026 / GHJ301-S | [AWS GameDay - Agentic AI & AI Application Monitoring ft\. New Relic](../sessions/2026/GHJ301-S/README.md) | Gamified learning | 300 | 2026-12-01 14:00 PST | Caesars Palace |
-| 2026 / MAM419-R | [Accelerate legacy Java modernization with custom AI-powered transformations](../sessions/2026/MAM419-R/README.md) | Workshop | 400 | 2026-12-01 12:00 PST | Caesars Palace |
-| 2026 / SEC362 | [Authentication, authorization, and audit for agentic AI on AWS](../sessions/2026/SEC362/README.md) | Workshop | 300 | 2026-12-03 08:00 PST | Wynn/Encore |
-| 2026 / SVS303-R | [AI-driven serverless development with Kiro](../sessions/2026/SVS303-R/README.md) | Workshop | 300 | 2026-11-30 12:00 PST | Caesars Palace |
+| 2026 / COM328-R1 | [Autonomous Remediation with OpenTelemetry and DevOps Agent](../sessions/2026/COM328-R1/README.md) | Code talk | 300 | 2026-12-02 16:30 PST | MGM Grand |
+| 2026 / DAT406-R1 | [Build agentic GraphRAG apps with Amazon Neptune](../sessions/2026/DAT406-R1/README.md) | Builders' session | 400 | 2026-12-01 13:00 PST | MGM Grand |
+| 2026 / DAT410-R | [Build agentic hybrid retrieval with Amazon Aurora PostgreSQL](../sessions/2026/DAT410-R/README.md) | Builders' session | 400 | 2026-12-02 13:30 PST | MGM Grand |
+| 2026 / DAT438-R1 | [Build agentic payment investigators on Aurora PostgreSQL & AgentCore](../sessions/2026/DAT438-R1/README.md) | Workshop | 400 | 2026-12-04 10:30 PST | Wynn/Encore |
+| 2026 / GHJ305 | [AWS GameDay - Application Security & AI-Powered Penetration Testing](../sessions/2026/GHJ305/README.md) | Gamified learning | 300 | 2026-12-03 09:00 PST | Caesars Palace |
+| 2026 / GHJ306-S | [AWS GameDay - Service Reliability & Agentic Remediation ft\. Datadog](../sessions/2026/GHJ306-S/README.md) | Gamified learning | 300 | 2026-11-30 14:00 PST | Caesars Palace |
+| 2026 / SEC304 | [From Commit to Secure: Catch vulnerabilities at machine speed with AWS Continuum](../sessions/2026/SEC304/README.md) | Builders' session | 300 | 2026-12-01 16:30 PST | Wynn/Encore |
+| 2026 / SEC426 | [How AWS Continuum validates security findings across the SDLC](../sessions/2026/SEC426/README.md) | Chalk talk | 400 | 2026-12-03 14:30 PST | Wynn/Encore |
+| 2026 / SEC428 | [Fix a Security Hub finding once with four layers of controls](../sessions/2026/SEC428/README.md) | Chalk talk | 400 | 2026-12-03 16:00 PST | Wynn/Encore |
+| 2026 / TNC302-R | [Agentic Powered AWS Frontier Agents](../sessions/2026/TNC302-R/README.md) | Bootcamp | 300 | 2026-12-02 08:30 PST | Caesars Palace |
+| 2026 / TNC340-R | [Resolving and Preventing Production Incidents with AWS DevOps Agent](../sessions/2026/TNC340-R/README.md) | Lab | 300 | 2026-11-30 10:00 PST | Caesars Palace |
