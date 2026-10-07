@@ -6,27 +6,27 @@
     {
       "id": "agenda",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
-      "label_ja": "公式 Agenda"
+      "label_ja": "公式アジェンダ"
     },
     {
       "id": "keynotes",
       "url": "https://aws.amazon.com/events/reinvent/sessions/keynotes/",
-      "label_ja": "公式 基調講演"
+      "label_ja": "公式の基調講演ページ"
     },
     {
       "id": "experiences",
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
-      "label_ja": "公式 Uniquely re:Invent"
+      "label_ja": "公式Uniquely re:Invent"
     },
     {
       "id": "expo",
       "url": "https://aws.amazon.com/events/reinvent/experiences/expo/",
-      "label_ja": "公式 Expo"
+      "label_ja": "公式Expoページ"
     },
     {
       "id": "japan-tour",
       "url": "https://event.jtbbwt.com/event/46a58fa2-50b2-45f3-bf77-30a47168cbae/summary",
-      "label_ja": "JTB 公式ジャパンツアー"
+      "label_ja": "JTB公式ジャパンツアー"
     }
   ],
   "events": [
@@ -43,7 +43,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
-      "public_note_ja": "空港 T1・T3 でも日・月 7:00〜23:59 に受け取れる。月は 6:30〜21:00、火〜木は 6:30〜20:00",
+      "public_note_ja": "空港T1・T3でも日・月7:00〜23:59に受け取れる。月は6:30〜21:00、火〜木は6:30〜20:00。",
       "intent": null
     },
     {
@@ -59,7 +59,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
-      "public_note_ja": "バッジ受付ではない。バッジは MGM Grand / The Venetian か空港で受け取る",
+      "public_note_ja": "バッジ受付ではない。バッジはMGM Grand / The Venetianか空港で受け取る。",
       "intent": null
     },
     {
@@ -74,14 +74,14 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
-      "note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表",
-      "public_note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表",
+      "note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表。",
+      "public_note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表。",
       "intent": "maybe"
     },
     {
       "id": "expo-welcome-reception",
       "title": "Welcome reception in Expo",
-      "title_ja": "Expo ウェルカムレセプション",
+      "title_ja": "Expoウェルカムレセプション",
       "category": "reception",
       "date": "2026-11-30",
       "starts_at": "2026-11-30T16:00:00-08:00",
@@ -90,14 +90,14 @@
       "registration": "none",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
-      "note_ja": "GHJ306-S 終了後の17時以降に参加",
+      "note_ja": "GHJ306-S終了後の17時以降に参加",
       "public_note_ja": null,
       "intent": "maybe"
     },
     {
       "id": "keynote-ceo",
       "title": "Opening Keynote with Matt Garman",
-      "title_ja": "CEO 基調講演",
+      "title_ja": "CEO基調講演",
       "category": "keynote",
       "date": "2026-12-01",
       "starts_at": "2026-12-01T08:30:00-08:00",
@@ -113,7 +113,7 @@
     {
       "id": "trivia-night-jeff-barr",
       "title": "Trivia Night with Jeff Barr",
-      "title_ja": "Jeff Barr の AWS クイズ大会",
+      "title_ja": "Jeff BarrのAWSクイズ大会",
       "category": "activity",
       "date": "2026-12-01",
       "starts_at": null,
@@ -145,7 +145,7 @@
     {
       "id": "dnd-miniature-mixer",
       "title": "Dungeons and Dragons: Miniature Mixer",
-      "title_ja": "D&D ミニチュア作り",
+      "title_ja": "D&Dミニチュア作り",
       "category": "activity",
       "date": "2026-12-01",
       "starts_at": null,
@@ -186,14 +186,14 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
-      "note_ja": "TNC302-R と重なるため配信で見る",
+      "note_ja": "TNC302-Rと重なるため配信で見る",
       "public_note_ja": null,
       "intent": "skip"
     },
     {
       "id": "reinvent-run",
       "title": "The re:Invent Run",
-      "title_ja": "5K ラン（歩きも可）",
+      "title_ja": "5Kラン（歩きも可）",
       "category": "activity",
       "date": "2026-12-02",
       "starts_at": null,
@@ -202,14 +202,14 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
-      "note_ja": "時刻未発表。朝なら TNC302-R の前で慌ただしい",
+      "note_ja": "時刻未発表。朝ならTNC302-Rの前で慌ただしい",
       "public_note_ja": "時刻未発表",
       "intent": "maybe"
     },
     {
       "id": "magic-the-gathering-night",
       "title": "Magic: The Gathering Night",
-      "title_ja": "MTG ナイト",
+      "title_ja": "MTGナイト",
       "category": "activity",
       "date": "2026-12-02",
       "starts_at": null,
@@ -234,14 +234,14 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
-      "note_ja": "16:30 から MGM で COM328-R1 のため配信で見る",
+      "note_ja": "16:30からMGMでCOM328-R1のため配信で見る",
       "public_note_ja": null,
       "intent": "skip"
     },
     {
       "id": "expo-happy-hour",
       "title": "Happy hour in Expo",
-      "title_ja": "Expo ハッピーアワー",
+      "title_ja": "Expoハッピーアワー",
       "category": "reception",
       "date": "2026-12-02",
       "starts_at": "2026-12-02T16:30:00-08:00",
@@ -282,7 +282,7 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
-      "note_ja": "GHJ305 と重なるため配信で見る",
+      "note_ja": "GHJ305と重なるため配信で見る",
       "public_note_ja": null,
       "intent": "skip"
     },
@@ -314,14 +314,14 @@
       "registration": "required",
       "url": "https://event.jtbbwt.com/event/46a58fa2-50b2-45f3-bf77-30a47168cbae/summary",
       "checked_on": "2026-10-07",
-      "note_ja": "JTB ツアー参加者は優先予約。オンライン申込は 9/18 締切。2025 年は当日枠の参加例あり",
-      "public_note_ja": "JTB ツアー参加者は優先予約。オンライン申込は 9/18 締切。2025 年は当日枠の参加例あり",
+      "note_ja": "JTBツアー参加者は優先予約。オンライン申込は9/18締切。2025年は当日枠の参加例あり。",
+      "public_note_ja": "JTBツアー参加者は優先予約。オンライン申込は9/18締切。2025年は当日枠の参加例あり。",
       "intent": "maybe"
     },
     {
       "id": "byte-club",
       "title": "Byte Club",
-      "title_ja": "AWS テーマのミニゴルフ（月〜木）",
+      "title_ja": "AWSテーマのミニゴルフ（月〜木）",
       "category": "expo",
       "date": null,
       "starts_at": null,
@@ -337,7 +337,7 @@
     {
       "id": "dev-quest",
       "title": "/dev/quest",
-      "title_ja": "アクティビティ達成で限定 SWAG",
+      "title_ja": "アクティビティ達成で限定SWAG",
       "category": "activity",
       "date": null,
       "starts_at": null,
@@ -353,7 +353,7 @@
     {
       "id": "aws-village",
       "title": "AWS Village",
-      "title_ja": "新発表をその日に試せる Expo エリア",
+      "title_ja": "新発表をその日に試せるExpoエリア",
       "category": "expo",
       "date": null,
       "starts_at": null,
@@ -362,8 +362,8 @@
       "registration": "none",
       "url": "https://aws.amazon.com/events/reinvent/experiences/expo/",
       "checked_on": "2026-10-07",
-      "note_ja": "Expo は月 16:00 から木まで",
-      "public_note_ja": "Expo は月 16:00 から木まで",
+      "note_ja": "Expoは月16:00から木まで",
+      "public_note_ja": "Expoは月16:00から木まで",
       "intent": "maybe"
     }
   ]

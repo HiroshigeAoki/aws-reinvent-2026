@@ -72,7 +72,7 @@ class SharedPageTests(unittest.TestCase):
     def test_map_links_venues_to_google_maps_and_is_to_scale(self):
         html = build_shared(events(), guide(), "2026-10-07")
         self.assertIn("https://www.google.com/maps/search/?api=1&amp;query=The+Venetian%2C+Las+Vegas%2C+NV", html)
-        self.assertIn("500 m", html)
+        self.assertIn("500m", html)
         a, b = guide()["venues"]
         self.assertAlmostEqual(meters(a, b), 2211, delta=10)  # 0.02 deg latitude
 
@@ -91,7 +91,7 @@ class SharedPageTests(unittest.TestCase):
         html = build_shared(events(), g, "2026-10-07")
         self.assertIn('class="leg"', html)
         self.assertIn("徒歩38分", html)
-        self.assertIn("MGM Grand まで", html)
+        self.assertIn("MGM Grandまで", html)
 
 
 class PersonalPageTests(unittest.TestCase):

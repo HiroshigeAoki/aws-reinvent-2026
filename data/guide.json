@@ -32,7 +32,7 @@
     {
       "id": "caesars_palace",
       "name": "Caesars Palace",
-      "role_ja": "2026 の会場。具体的な役割は未公表。",
+      "role_ja": "2026の会場。具体的な役割は未公表。",
       "lat": 36.11663,
       "lon": -115.17676,
       "year": 2026,
@@ -70,7 +70,7 @@
     {
       "id": "monorail_free",
       "title_ja": "モノレールはバッジで無料",
-      "body_ja": "バッジを見せれば Las Vegas Monorail に無料で乗れる（2026 公式 FAQ）。",
+      "body_ja": "バッジを見せればLas Vegas Monorailに無料で乗れる（2026公式FAQ）。",
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/faqs/"
     },
@@ -91,7 +91,7 @@
     {
       "id": "badge_pickup_airport",
       "title_ja": "バッジ受付の場所と時間(2026)",
-      "body_ja": "公式日程では、バッジ受付はThe VenetianとMGM Grand(日10〜20時、月6:30〜21時、火〜木6:30〜20時)と、空港T1・T3(日・月7:00〜23:59)。Caesars Forumの日曜10〜18時はキックオフ企画で、バッジ受付ではない。Mandalay Bayは今年は会場外。",
+      "body_ja": "公式日程では、バッジ受付はThe VenetianとMGM Grand(日10〜20時、月6:30〜21時、火〜木6:30〜20時)と、空港T1・T3(日・月7:00〜23:59)。Caesars Forumの日曜10〜18時はキックオフ企画で、バッジ受付ではない。Mandalay Bayは今年の会場に含まれない。",
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
@@ -144,7 +144,7 @@
       "id": "power-bank-rules",
       "category": "準備・荷造り",
       "title_ja": "モバイルバッテリーは機内ルールに注意",
-      "body_ja": "預け入れ不可で手荷物のみ。日本発着便は 2026-04-24 から機内での充電・給電が禁止、1 人 2 個・160Wh 以下。AA の独自ルールも搭乗前に公式で確認する。",
+      "body_ja": "預け入れ不可で手荷物のみ。日本発着便は2026-04-24から機内での充電・給電が禁止、1人2個・160Wh以下。AAの独自ルールも搭乗前に公式で確認する。",
       "year": 2026,
       "sources": [
         "https://trafficnews.jp/post/656383",
@@ -154,8 +154,8 @@
     {
       "id": "esta-fee",
       "category": "出入国・乗り継ぎ",
-      "title_ja": "ESTA は 40 ドル",
-      "body_ja": "2025-09-30 から申請料が 21 ドルから 40 ドルに上がった。承認済みか出発前に確認する。",
+      "title_ja": "ESTAは40ドル",
+      "body_ja": "2025-09-30から申請料が21ドルから40ドルに上がった。承認済みか出発前に確認する。",
       "year": 2025,
       "sources": [
         "https://www.bal.com/immigration-news/united-states-new-cbp-immigration-related-fees-take-effect-sept-30"
@@ -175,7 +175,7 @@
       "id": "tsa-shoes",
       "category": "出入国・乗り継ぎ",
       "title_ja": "米国の保安検査は靴のままで可",
-      "body_ja": "2025-07-08 から靴を脱がずに通れる運用になった。追加検査で求められることはある。液体の 3-1-1 ルールは変わらない。",
+      "body_ja": "2025-07-08から靴を脱がずに通れる運用になった。追加検査で求められることはある。液体の3-1-1ルールは変わらない。",
       "year": 2025,
       "sources": [
         "https://www.wsaw.com/2025/07/08/tsa-allow-people-keep-shoes-checkpoints-first-time-20-years"
@@ -184,7 +184,7 @@
     {
       "id": "lax-recheck",
       "category": "出入国・乗り継ぎ",
-      "title_ja": "LAX で荷物を一度受け取る",
+      "title_ja": "LAXで荷物を一度受け取る",
       "body_ja": "国際線で着いて国内線に乗り継ぐときは、入国審査後に預け荷物を受け取り、税関を通ってから預け直す。受け取り不要の試行はシドニー発のみ。",
       "year": 2025,
       "sources": [
@@ -195,7 +195,7 @@
       "id": "taxi-flat",
       "category": "移動",
       "title_ja": "空港からのタクシーは定額",
-      "body_ja": "空港からストリップへはエリア別の定額（南 21.25／中 25.25／北 29.25 ドル）、カード払いは 3 ドル加算という二次情報がある。公式では未確認。",
+      "body_ja": "空港からストリップへはエリア別の定額（南21.25／中25.25／北29.25ドル）、カード払いは3ドル加算という二次情報がある。公式では未確認。",
       "year": null,
       "sources": [
         "https://www.vegasalways.com/taxi-fares-in-las-vegas/"
@@ -205,7 +205,7 @@
       "id": "rtc-visitor-pass",
       "category": "移動",
       "title_ja": "路線バスは訪問者向けパス",
-      "body_ja": "ストリップを走る Deuce などは訪問者向けの 2 時間 6／24 時間 8／3 日 20 ドルのパス。住民向けの安いパスは地元 ID が要るという二次情報がある。",
+      "body_ja": "ストリップを走るDeuceなどは訪問者向けの2時間6／24時間8／3日20ドルのパス。住民向けの安いパスは地元IDが要るという二次情報がある。",
       "year": null,
       "sources": [
         "https://transitunlimited.org/RTC_Transit_fares",
@@ -320,7 +320,7 @@
       "id": "t_ses_new_launch",
       "category": "セッション・予約",
       "title_ja": "基調講演後に新規セッションが追加",
-      "body_ja": "発表された新サービス関連の枠が、基調講演の後に追加されることが多い。アプリで New Launch を絞り込んで確認する。",
+      "body_ja": "発表された新サービス関連の枠が、基調講演の後に追加されることが多い。アプリでNew Launchを絞り込んで確認する。",
       "year": 2025,
       "sources": [
         "https://blog.serverworks.co.jp/reinvent/session/reservetips"
@@ -339,8 +339,8 @@
     {
       "id": "t_ses_reserve_open",
       "category": "セッション・予約",
-      "title_ja": "予約は 10/6 に開始済み",
-      "body_ja": "公式 FAQ では予約開始が 2026-10-06。人気枠は開始直後に埋まりやすい。",
+      "title_ja": "予約は10/6に開始済み",
+      "body_ja": "公式FAQでは予約開始が2026-10-06。人気枠は開始直後に埋まりやすい。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/faqs/",
@@ -433,7 +433,7 @@
       "id": "t_food_menu",
       "category": "食事",
       "title_ja": "メニューは写真翻訳で",
-      "body_ja": "英語メニューが不安なら、スマホで撮影してAI翻訳すると楽。",
+      "body_ja": "英語メニューが不安なら、スマートフォンで撮影してAI翻訳すると楽。",
       "year": 2025,
       "sources": [
         "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
@@ -465,7 +465,7 @@
       "id": "t_health_jetlag",
       "category": "体調",
       "title_ja": "前日までに現地入りする",
-      "body_ja": "時差ぼけ対策に、開幕前の金・土曜に着くよう勧める記事がある。2026 は 11/29（日）からバッジ受付。",
+      "body_ja": "時差ぼけ対策に、開幕前の金・土曜に着くよう勧める記事がある。2026は11/29（日）からバッジ受付。",
       "year": 2025,
       "sources": [
         "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
@@ -485,7 +485,7 @@
       "id": "t_net_uber_tip",
       "category": "通信・お金",
       "title_ja": "配車はアプリ内でチップまで決済",
-      "body_ja": "UberやLyftは運賃が確定し、チップ込みでアプリ内で支払える。出発前に国際SMSが使える状態で登録しておく。",
+      "body_ja": "UberやLyftは運賃が確定し、チップ込みの金額をアプリ内で支払える。出発前に国際SMSが使える状態で登録しておく。",
       "year": 2023,
       "sources": [
         "https://dev.classmethod.jp/articles/lasvegas-rideshare-airport-hotel"
@@ -556,7 +556,7 @@
       "id": "t_expo_scan",
       "category": "夜・イベント",
       "title_ja": "Expoのバッジスキャンは営業につながる",
-      "body_ja": "スキャンさせると後で連絡が来る。スワッグを狙うなら週の前半が良い。",
+      "body_ja": "スキャンさせるとあとで連絡が来る。スワッグを狙うなら週の前半が良い。",
       "year": 2025,
       "sources": [
         "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
@@ -566,7 +566,7 @@
       "id": "us-plug-voltage",
       "category": "準備・荷造り",
       "title_ja": "プラグは日本と同じ形、電圧は120V",
-      "body_ja": "アメリカのコンセントは日本と同じAタイプで、変換プラグは基本的に要らない。ただし電圧が120Vなので、充電器やPC電源は100-240V対応か表示を確認し、ドライヤーなどの高出力品は持ち込まないほうが無難。",
+      "body_ja": "アメリカのコンセントは日本と同じAタイプで、変換プラグは基本的に要らない。ただし電圧が120Vなので、充電器やパソコン電源は100-240V対応か表示を確認し、ドライヤーなどの高出力品は持ち込まないほうが無難。",
       "year": null,
       "sources": [
         "https://www.arukikata.co.jp/areainfo/us-plug/",
@@ -588,7 +588,7 @@
       "id": "water-bottle-stations",
       "category": "準備・荷造り",
       "title_ja": "水筒と給水ポイントを活用",
-      "body_ja": "Venetian周辺にはHydrate & Helpの給水所が置かれた（2025）。空のボトルを持ち込んで補充すると、買い水の出費と乾燥対策を両立できる。",
+      "body_ja": "Venetian周辺にはHydrate & Helpの給水所が置かれた（2025）。空のボトルを持ち込んで補充すると、水を買う出費を抑えられ、乾燥対策にもなる。",
       "year": 2025,
       "sources": [
         "https://aws.amazon.com/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025"
@@ -609,7 +609,7 @@
       "id": "timezone-jetlag",
       "category": "出入国・乗り継ぎ",
       "title_ja": "時差は日本が17時間進み、早めの到着が有利",
-      "body_ja": "ラスベガスは太平洋標準時で、日本より 17 時間遅い。月曜開始の前の金・土に着き、軽く歩いて体を慣らすとよいとされる。",
+      "body_ja": "ラスベガスは太平洋標準時で、日本より17時間遅い。月曜開始の前の金・土に着き、軽く歩いて体を慣らすとよいとされる。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/agenda/",
@@ -650,7 +650,7 @@
       "id": "mgm-monorail-station",
       "category": "ホテル",
       "title_ja": "MGM Grandのモノレール駅は館内にある",
-      "body_ja": "駅の入口は2つあり、1つはNellie'sとGrand Expressの間付近、もう1つは地下のMGM Underground（ライドシェア乗り場と同じ場所）にある。2024のブログでは、会場入口からフードコート方面を抜けて行くと書かれていた。",
+      "body_ja": "駅の入口は2つあり、1つはNellie'sとGrand Expressの間付近、もう1つは地下のMGM Underground（ライドシェア乗り場と同じ場所）にある。2024のブログでは、会場入口からフードコート方面を抜けていくと書かれていた。",
       "year": 2024,
       "sources": [
         "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/",
@@ -682,7 +682,7 @@
       "id": "shuttle-tracking",
       "category": "移動",
       "title_ja": "シャトルはアプリで時刻を確認",
-      "body_ja": "公式シャトルは会議時間中は連続運行で、バッジが要る。アプリに時刻が入る。2025は運行状況のリアルタイム追跡がアプリにあった。",
+      "body_ja": "公式シャトルは会議時間中に連続運行し、乗るにはバッジが要る。アプリに時刻が入る。2025は運行状況のリアルタイム追跡がアプリにあった。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/faqs/",
@@ -767,7 +767,7 @@
       "id": "cold-indoors",
       "category": "体調",
       "title_ja": "会場内は寒く、屋外は乾燥する",
-      "body_ja": "会場内は外より寒いことがあり、羽織れる上着が要る。砂漠の乾燥は公式資料での数値を確認できていないが、水分を意識して取る。",
+      "body_ja": "会場内は外より寒いことがあり、羽織れる上着が要る。乾燥の程度は公式の数値を確認できていないが、水分はこまめに取る。",
       "year": 2025,
       "sources": [
         "https://www.qes.co.jp/media/aws/a699",
@@ -810,7 +810,7 @@
       "id": "venue-wifi",
       "category": "通信・お金",
       "title_ja": "会場のWi-Fi情報",
-      "body_ja": "公式FAQの概要にはWi-Fiの提供が書かれているが、接続方法や品質の詳細は取得できていない。重い作業用に回線を過信しない。",
+      "body_ja": "公式FAQの概要にはWi-Fiの提供が書かれているが、接続方法や品質の詳細は未確認。重い作業用に回線を過信しない。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/faqs/"
@@ -854,7 +854,7 @@
       "id": "night-safety",
       "category": "英語・現地",
       "title_ja": "夜は比較的安全でも荷物に注意",
-      "body_ja": "会場ガイドは比較的安全としつつ危険な地域もあると書く。2025には会場でパスポートを落として焦った体験談がある。貴重品は身につけ、夜の移動は人通りのある道を選ぶ。",
+      "body_ja": "会場ガイドには、比較的安全だが危険な地域もあると書かれている。2025には会場でパスポートを落として焦った体験談がある。貴重品は身につけ、夜の移動は人通りのある道を選ぶ。",
       "year": 2025,
       "sources": [
         "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/",
@@ -908,7 +908,7 @@
       "id": "us-911",
       "category": "緊急時",
       "title_ja": "緊急通報は911",
-      "body_ja": "警察、消防、救急は米国内共通で911。ホテル内なら館内セキュリティにも連絡し、場所を英語で伝える。公式サイトの一次ソースは今回未取得。",
+      "body_ja": "警察、消防、救急は米国内共通で911。ホテル内なら館内セキュリティにも連絡し、場所を英語で伝える。公式の一次情報は未確認。",
       "year": null,
       "sources": [
         "https://www.anzen.mofa.go.jp/"
@@ -917,8 +917,8 @@
     {
       "id": "lost-badge-pc",
       "category": "緊急時",
-      "title_ja": "バッジやPCの紛失手順は公式未掲載",
-      "body_ja": "2026のFAQにはバッジ紛失時の再発行手順が載っていない。会場のヘルプデスクに相談するのが基本。PC紛失は、2025にシアトル空港で失くして復旧に10日、費用は約4.7万円の報告がある。",
+      "title_ja": "バッジやパソコンの紛失手順は公式未掲載",
+      "body_ja": "2026のFAQにはバッジ紛失時の再発行手順が載っていない。会場のヘルプデスクに相談するのが基本。パソコン紛失は、2025にシアトル空港で失くして復旧に10日、費用は約4.7万円の報告がある。",
       "year": 2025,
       "sources": [
         "https://aws.amazon.com/events/reinvent/faqs/",
@@ -960,12 +960,12 @@
   ],
   "links": [
     {
-      "title": "re:Invent 2026 公式トップ",
+      "title": "re:Invent 2026公式トップ",
       "url": "https://aws.amazon.com/events/reinvent/",
       "why_ja": "日程と最新の案内の入口。"
     },
     {
-      "title": "re:Invent 2026 アジェンダ",
+      "title": "re:Invent 2026アジェンダ",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "why_ja": "セッション検索と予約。"
     },
@@ -977,7 +977,7 @@
     {
       "title": "会場とホテル（登録サイト）",
       "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/venueshotel/page/venuehotel",
-      "why_ja": "公式の会場・ホテル情報。登録サイトへのログインが必要な場合がある。"
+      "why_ja": "公式の会場・ホテル情報。登録サイトへのログインを求められる場合がある。"
     },
     {
       "title": "初参加向けTips（Serverworks, 2025）",
