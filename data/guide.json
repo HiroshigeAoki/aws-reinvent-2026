@@ -1,0 +1,547 @@
+{
+  "checked_on": "2026-10-07",
+  "venues": [
+    {
+      "id": "encore",
+      "name": "Encore",
+      "role_ja": "セッション会場。Wynnと隣接しており、徒歩で行き来できる。2025ではパートナー向けフォーラムも開催。",
+      "lat": 36.1295,
+      "lon": -115.1655,
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "wynn",
+      "name": "Wynn",
+      "role_ja": "セッション会場。Encoreと一体で、Venetianとは歩ける距離（過去ブログでは橋やモール経由）。",
+      "lat": 36.1267,
+      "lon": -115.1653,
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "venetian",
+      "name": "The Venetian",
+      "role_ja": "2026 の会場。2025 は基調講演・Expo・バッジ受付・認定ラウンジが集まる中心会場だった。",
+      "lat": 36.1213,
+      "lon": -115.1696,
+      "year": 2026,
+      "source": "https://aws.amazon.com/jp/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025/"
+    },
+    {
+      "id": "caesars_palace",
+      "name": "Caesars Palace",
+      "role_ja": "2026 の会場。具体的な役割は未公表。",
+      "lat": 36.1162,
+      "lon": -115.1745,
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "caesars_forum",
+      "name": "Caesars Forum",
+      "role_ja": "セッション会場。Venetianから歩ける範囲で、Wynn側とも橋で繋がる（2024ブログ）。モノレールLINQ駅が近い。",
+      "lat": 36.1168,
+      "lon": -115.1612,
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "mgm_grand",
+      "name": "MGM Grand",
+      "role_ja": "セッション会場。他会場から離れており、シャトルまたはモノレール（MGM Grand駅）で移動する。",
+      "lat": 36.1024,
+      "lon": -115.1695,
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    }
+  ],
+  "transport": [
+    {
+      "id": "shuttle_official",
+      "title_ja": "無料の公式シャトル",
+      "body_ja": "徒歩圏外の会場間とre:Playへ、会議時間中は連続運行される。利用には有効なバッジが必要。詳細な路線と時刻は秋に公開予定とされている。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "monorail_free",
+      "title_ja": "モノレールはバッジで無料",
+      "body_ja": "バッジを見せれば Las Vegas Monorail に無料で乗れる（2026 公式 FAQ）。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "id": "monorail_hours",
+      "title_ja": "モノレールの運行時間",
+      "body_ja": "2022のre:Play帰りの体験談では、金〜日は午前3時、他の日は午前2時までとされていた。2026の時刻は未確認。",
+      "year": 2022,
+      "source": "https://dev.classmethod.jp/articles/i-moved-to-the-replay-venue-by-monorail-reinvent/"
+    },
+    {
+      "id": "airport_rideshare",
+      "title_ja": "空港からUber/Lyft",
+      "body_ja": "配車の乗り場は到着ロビーから離れた駐車場棟にあり、案内がわかりにくい。標準車で22〜26ドル程度（2023時点）。アプリ上でチップ込みの決済ができる。",
+      "year": 2023,
+      "source": "https://dev.classmethod.jp/articles/lasvegas-rideshare-airport-hotel"
+    },
+    {
+      "id": "badge_pickup_airport",
+      "title_ja": "バッジ受付の場所",
+      "body_ja": "2024は空港ターミナル1と3（日・月）、MGM、Mandalay Bayにもバッジ受付があった。2026の受付場所と時刻は未確認。",
+      "year": 2024,
+      "source": "https://dev.classmethod.jp/articles/aws-reinvent-2024-registration-badge-pickup/"
+    },
+    {
+      "id": "replay_shuttle",
+      "title_ja": "re:Playへのシャトル",
+      "body_ja": "2025は午後7時から、全re:Invent提携ホテルを回る形で運行された。2026は公式FAQでre:Play行きシャトルの運行が案内されている。",
+      "year": 2025,
+      "source": "https://www.production.club/productions/replay-2025"
+    },
+    {
+      "id": "venue_scale",
+      "title_ja": "会場全体の広さ",
+      "body_ja": "2022 は北端の Encore から南端の会場まで約 5km あった。地図で見るより遠い。",
+      "year": 2022,
+      "source": "https://dev.classmethod.jp/articles/how-to-survive-in-reinvent-for-people-who-is-terrible-with-directions/"
+    }
+  ],
+  "walk_times": [
+    {
+      "from": "mgm_grand",
+      "to": "caesars_forum",
+      "minutes": 5,
+      "mode": "monorail",
+      "note_ja": "MGM Grand駅からHarrah's/LINQ駅まで約5分。シャトルより渋滞の影響を受けにくい（2024）。",
+      "year": 2024,
+      "source": "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/"
+    },
+    {
+      "from": "venetian",
+      "to": "wynn",
+      "minutes": null,
+      "mode": "walk",
+      "note_ja": "歩ける範囲だが、会場の建物が大きく、入口から部屋まで追加で歩く。所要時間の公式値は未確認。",
+      "year": 2024,
+      "source": "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/"
+    },
+    {
+      "from": "venetian",
+      "to": "mgm_grand",
+      "minutes": null,
+      "mode": "shuttle",
+      "note_ja": "MGMとMandalay Bayはシャトル必須という体験談（2025）。分数は未確認。",
+      "year": 2025,
+      "source": "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+    }
+  ],
+  "tips": [
+    {
+      "id": "t_move_buffer",
+      "category": "移動",
+      "title_ja": "会場間は30分以上あける",
+      "body_ja": "地図上は近くても、ホテルが巨大で想像以上に歩く。会場をまたぐ予約は間隔を広めに取る。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "t_move_cluster",
+      "category": "移動",
+      "title_ja": "同じ会場に予定をまとめる",
+      "body_ja": "Venetian・Wynn/Encore・Caesars Forumは近く、MGMはシャトルが要る。1日の予定を会場ごとにまとめると楽。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "t_move_app_nav",
+      "category": "移動",
+      "title_ja": "公式アプリのナビを使う",
+      "body_ja": "AWS Eventsアプリの地図で、現在地から会場・部屋まで道案内と所要時間が出る。迷いやすい人ほど有効。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/",
+        "https://dev.classmethod.jp/articles/aws-events-mobile-app-navigation-awsreinvent/"
+      ]
+    },
+    {
+      "id": "t_move_monorail",
+      "category": "移動",
+      "title_ja": "MGM方面はモノレールも手",
+      "body_ja": "MGMとCaesars Forum間はモノレールが速くて渋滞に強い。バッジを改札で見せる。",
+      "year": 2024,
+      "sources": [
+        "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/"
+      ]
+    },
+    {
+      "id": "t_move_bridge",
+      "category": "移動",
+      "title_ja": "連絡橋は時間帯で閉まる",
+      "body_ja": "Wynn/Encore/Caesars Forum方面の橋は、セッション時間外は閉まるという記述がある。夜は別ルートを考える。",
+      "year": 2024,
+      "sources": [
+        "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/"
+      ]
+    },
+    {
+      "id": "t_move_ask_me",
+      "category": "移動",
+      "title_ja": "迷ったら「Ask Me」スタッフ",
+      "body_ja": "案内表示の近くに、ミントグリーンのシャツのスタッフがいて道を教えてくれる。",
+      "year": 2022,
+      "sources": [
+        "https://dev.classmethod.jp/articles/how-to-survive-in-reinvent-for-people-who-is-terrible-with-directions/"
+      ]
+    },
+    {
+      "id": "t_ses_arrive10",
+      "category": "セッション・予約",
+      "title_ja": "開始10分前までに並ぶ",
+      "body_ja": "予約済みでも、開始10分前までに着かないと席を未予約の並び（ウォークアップ）に回される。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "t_ses_walkup",
+      "category": "セッション・予約",
+      "title_ja": "ウォークアップ列を活用",
+      "body_ja": "予約なしでも、開始前に並べば空席に入れることが多い。予約が取れなかった人気枠の保険になる。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips",
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "t_ses_hands_on_line",
+      "category": "セッション・予約",
+      "title_ja": "ハンズオン系は1時間前から",
+      "body_ja": "人気のワークショップは最低1時間前から並ぶ必要があったという報告がある。別の記事では約40分前の待機列の例もある。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a715",
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "t_ses_new_launch",
+      "category": "セッション・予約",
+      "title_ja": "基調講演後に新規セッションが追加",
+      "body_ja": "発表された新サービス関連の枠が、基調講演の後に追加されることが多い。アプリで New Launch を絞り込んで確認する。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent/session/reservetips"
+      ]
+    },
+    {
+      "id": "t_ses_denied",
+      "category": "セッション・予約",
+      "title_ja": "予約があっても入れない例",
+      "body_ja": "予約済みでも、遅れるとウォークアップ組が優先されて入れなかった例がある。重要枠は余裕を持って行く。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent/session/reservetips"
+      ]
+    },
+    {
+      "id": "t_ses_reserve_open",
+      "category": "セッション・予約",
+      "title_ja": "予約は 10/6 に開始済み",
+      "body_ja": "公式 FAQ では予約開始が 2026-10-06。人気枠は開始直後に埋まりやすい。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/",
+        "https://zenn.dev/gnc_tech/articles/711da2e740af30"
+      ]
+    },
+    {
+      "id": "t_ses_keynote",
+      "category": "セッション・予約",
+      "title_ja": "基調講演は早朝から並ぶ",
+      "body_ja": "良い席を狙うなら午前5時起きで並んだという体験談がある。2026の開始時刻は未確認。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "t_ses_translation",
+      "category": "セッション・予約",
+      "title_ja": "基調講演は日本語の同時通訳あり",
+      "body_ja": "公式FAQによると、基調講演の多言語翻訳に日本語が含まれる。受信方法は現地で確認する。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "t_gear_shoes",
+      "category": "持ち物・服装",
+      "title_ja": "歩き慣れた靴が最優先",
+      "body_ja": "1日1万歩以上、多い人は2万歩超になる。履き慣れた靴を選ぶ。",
+      "year": 2025,
+      "sources": [
+        "https://zenn.dev/gnc_tech/articles/711da2e740af30",
+        "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/"
+      ]
+    },
+    {
+      "id": "t_gear_layers",
+      "category": "持ち物・服装",
+      "title_ja": "12月は朝晩が冷える",
+      "body_ja": "朝は3〜6度台、昼は15度前後との報告がある。室内は暖かいので、脱ぎ着しやすい重ね着にする。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "t_gear_battery",
+      "category": "持ち物・服装",
+      "title_ja": "モバイルバッテリーは必携",
+      "body_ja": "会場にコンセントが少なく、1日中アプリや撮影で電池が減る。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_gear_bag",
+      "category": "持ち物・服装",
+      "title_ja": "配布物用のバッグ",
+      "body_ja": "スワッグを持ち帰るため、折りたためるエコバッグやバックパックがあると便利。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/",
+        "https://zenn.dev/gnc_tech/articles/711da2e740af30"
+      ]
+    },
+    {
+      "id": "t_food_free",
+      "category": "食事",
+      "title_ja": "会場の食事は無料",
+      "body_ja": "会場やネットワーキングイベントの食事は無料で、朝食と昼食を会場で済ませた例がある。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a715"
+      ]
+    },
+    {
+      "id": "t_food_snack",
+      "category": "食事",
+      "title_ja": "移動用に軽食を持つ",
+      "body_ja": "移動や待ち行列が続くので、栄養バーなどがあると助かる。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_food_menu",
+      "category": "食事",
+      "title_ja": "メニューは写真翻訳で",
+      "body_ja": "英語メニューが不安なら、スマホで撮影してAI翻訳すると楽。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_health_dry",
+      "category": "体調",
+      "title_ja": "乾燥対策",
+      "body_ja": "ラスベガスはとても乾燥する。のど飴、のどスプレー、保湿クリーム、リップを用意する。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a715",
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_health_pace",
+      "category": "体調",
+      "title_ja": "初日に飛ばしすぎない",
+      "body_ja": "1週間は長い。1日の予定は詰めすぎず、多くても3枠程度にとどめる意見がある。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips",
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "t_health_jetlag",
+      "category": "体調",
+      "title_ja": "前日までに現地入りする",
+      "body_ja": "時差ぼけ対策に、開幕前の金・土曜に着くよう勧める記事がある。2026 は 11/29（日）からバッジ受付。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "t_net_esim",
+      "category": "通信・お金",
+      "title_ja": "eSIMで十分だった",
+      "body_ja": "eSIMで大きな問題はなかったという報告がある。心配なら予備にモバイルWi-Fiを持つ。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_net_tip",
+      "category": "通信・お金",
+      "title_ja": "チップの目安",
+      "body_ja": "レストランは15〜20%程度、ハウスキーピングは1回1〜2ドル、荷物は1個1〜2ドルが一般的な目安。出典は一般的な旅行記事で、re:Invent固有ではない。",
+      "year": 2025,
+      "sources": [
+        "https://allabout.co.jp/gm/gc/7888/2/"
+      ]
+    },
+    {
+      "id": "t_net_uber_tip",
+      "category": "通信・お金",
+      "title_ja": "配車はアプリ内でチップまで決済",
+      "body_ja": "UberやLyftは運賃が確定し、チップ込みでアプリ内で支払える。出発前に国際SMSが使える状態で登録しておく。",
+      "year": 2023,
+      "sources": [
+        "https://dev.classmethod.jp/articles/lasvegas-rideshare-airport-hotel"
+      ]
+    },
+    {
+      "id": "t_night_replay",
+      "category": "夜・イベント",
+      "title_ja": "re:Playは参加パスに含まれる",
+      "body_ja": "公式パーティre:Playはフルカンファレンスパスに含まれ、ゲスト参加は350ドルの別パス。シャトルが出る。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "t_night_replay_cold",
+      "category": "夜・イベント",
+      "title_ja": "re:Playは屋外で冷える",
+      "body_ja": "屋外会場なので防寒が必要。シャトルは混むため、時間に余裕を持つ。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/",
+        "https://www.production.club/productions/replay-2025"
+      ]
+    },
+    {
+      "id": "t_night_partner",
+      "category": "夜・イベント",
+      "title_ja": "ベンダーの夜イベントを探す",
+      "body_ja": "協賛企業の交流会や無料イベントが多数ある。conferenceparties.comのようなまとめサイトで探す人が多い。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "t_en_japanese",
+      "category": "英語・現地",
+      "title_ja": "日本語話者が多く支援もある",
+      "body_ja": "日本人参加者が多く、日本語対応のスタッフもいる。拙い英語でも、周りは身振りを交えて付き合ってくれる。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/tanaka-seiya-look-back-at-first-reInvent2025/"
+      ]
+    },
+    {
+      "id": "t_en_gameday",
+      "category": "英語・現地",
+      "title_ja": "GameDayは英語が不安でも楽しめる",
+      "body_ja": "言語の不安があっても、学びが大きく印象に残ったという体験談が複数ある。日本語対応のチームもあった。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "t_en_email",
+      "category": "英語・現地",
+      "title_ja": "登録は別名メールがよい",
+      "body_ja": "スポンサーからの営業メールが多いので、+reinvent付きのアドレスで登録する提案がある。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a699"
+      ]
+    },
+    {
+      "id": "t_expo_scan",
+      "category": "夜・イベント",
+      "title_ja": "Expoのバッジスキャンは営業につながる",
+      "body_ja": "スキャンさせると後で連絡が来る。スワッグを狙うなら週の前半が良い。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "title": "re:Invent 2026 公式トップ",
+      "url": "https://aws.amazon.com/events/reinvent/",
+      "why_ja": "日程と最新の案内の入口。"
+    },
+    {
+      "title": "re:Invent 2026 アジェンダ",
+      "url": "https://aws.amazon.com/events/reinvent/agenda/",
+      "why_ja": "セッション検索と予約。"
+    },
+    {
+      "title": "re:Invent 2026 FAQ",
+      "url": "https://aws.amazon.com/events/reinvent/faqs/",
+      "why_ja": "シャトル、モノレール、10分前ルール、アプリ、re:Playなどの公式回答。"
+    },
+    {
+      "title": "会場とホテル（登録サイト）",
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/venueshotel/page/venuehotel",
+      "why_ja": "公式の会場・ホテル情報。登録サイトへのログインが必要な場合がある。"
+    },
+    {
+      "title": "初参加向けTips（Serverworks, 2025）",
+      "url": "https://blog.serverworks.co.jp/reinvent2025-try-and-tips",
+      "why_ja": "移動・GameDay・Expoの実体験。"
+    },
+    {
+      "title": "予約の注意点（Serverworks, 2025）",
+      "url": "https://blog.serverworks.co.jp/reinvent/session/reservetips",
+      "why_ja": "ウォークアップと追加セッションの注意。"
+    },
+    {
+      "title": "会場の歩き方（DevelopersIO, 2024）",
+      "url": "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/",
+      "why_ja": "会場間のルートと橋の注意。"
+    },
+    {
+      "title": "モノレール利用（DevelopersIO, 2024）",
+      "url": "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/",
+      "why_ja": "MGMとCaesars Forumの移動。"
+    },
+    {
+      "title": "空港からの配車（DevelopersIO, 2023）",
+      "url": "https://dev.classmethod.jp/articles/lasvegas-rideshare-airport-hotel",
+      "why_ja": "乗り場と料金感。"
+    },
+    {
+      "title": "Guide to re:Invent 2025 tips (ranthebuilder)",
+      "url": "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/",
+      "why_ja": "英語の総合Tips。服装・食事・夜イベント。"
+    },
+    {
+      "title": "APN Know before you go 2025",
+      "url": "https://aws.amazon.com/jp/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025/",
+      "why_ja": "AWS公式ブログ。2025の会場の役割。"
+    }
+  ]
+}

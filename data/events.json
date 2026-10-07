@@ -43,6 +43,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
+      "public_note_ja": null,
       "intent": null
     },
     {
@@ -58,6 +59,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表",
+      "public_note_ja": "日付は公式ページ上の曜日表記から推定。時刻・会場は未発表",
       "intent": "maybe"
     },
     {
@@ -73,6 +75,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "GHJ306-S 終了後の17時以降に参加",
+      "public_note_ja": null,
       "intent": "maybe"
     },
     {
@@ -88,6 +91,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "配信あり",
+      "public_note_ja": "配信あり",
       "intent": "go"
     },
     {
@@ -103,6 +107,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "曜日は公式ページ上の表記から推定",
+      "public_note_ja": "曜日は公式ページ上の表記から推定",
       "intent": "maybe"
     },
     {
@@ -118,6 +123,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "曜日は公式ページ上の表記から推定",
+      "public_note_ja": "曜日は公式ページ上の表記から推定",
       "intent": null
     },
     {
@@ -133,6 +139,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "曜日は公式ページ上の表記から推定",
+      "public_note_ja": "曜日は公式ページ上の表記から推定",
       "intent": null
     },
     {
@@ -148,6 +155,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
+      "public_note_ja": null,
       "intent": null
     },
     {
@@ -163,6 +171,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "TNC302-R と重なるため配信で見る",
+      "public_note_ja": null,
       "intent": "skip"
     },
     {
@@ -178,6 +187,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "時刻未発表。朝なら TNC302-R の前で慌ただしい",
+      "public_note_ja": "時刻未発表",
       "intent": "maybe"
     },
     {
@@ -193,6 +203,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "曜日は公式ページ上の表記から推定",
+      "public_note_ja": "曜日は公式ページ上の表記から推定",
       "intent": null
     },
     {
@@ -208,6 +219,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "16:30 から MGM で COM328-R1 のため配信で見る",
+      "public_note_ja": null,
       "intent": "skip"
     },
     {
@@ -223,6 +235,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "COM328-R1（MGM）終了後なら終盤だけ",
+      "public_note_ja": null,
       "intent": null
     },
     {
@@ -238,6 +251,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
+      "public_note_ja": null,
       "intent": null
     },
     {
@@ -253,6 +267,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "GHJ305 と重なるため配信で見る",
+      "public_note_ja": null,
       "intent": "skip"
     },
     {
@@ -268,6 +283,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": "各ホテルから無料シャトル",
+      "public_note_ja": "各ホテルから無料シャトル",
       "intent": "go"
     },
     {
@@ -283,6 +299,7 @@
       "url": "https://event.jtbbwt.com/event/46a58fa2-50b2-45f3-bf77-30a47168cbae/summary",
       "checked_on": "2026-10-07",
       "note_ja": "JTB ツアー参加者は優先予約。オンライン申込は 9/18 締切。2025 年は当日枠の参加例あり",
+      "public_note_ja": "JTB ツアー参加者は優先予約。オンライン申込は 9/18 締切。2025 年は当日枠の参加例あり",
       "intent": "maybe"
     },
     {
@@ -298,6 +315,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": null,
+      "public_note_ja": null,
       "intent": null
     },
     {
@@ -313,6 +331,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/",
       "checked_on": "2026-10-07",
       "note_ja": "期間中ずっと",
+      "public_note_ja": "期間中ずっと",
       "intent": "maybe"
     },
     {
@@ -328,6 +347,7 @@
       "url": "https://aws.amazon.com/events/reinvent/experiences/expo/",
       "checked_on": "2026-10-07",
       "note_ja": "Expo は月 16:00 から木まで",
+      "public_note_ja": "Expo は月 16:00 から木まで",
       "intent": "maybe"
     }
   ]

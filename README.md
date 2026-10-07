@@ -29,7 +29,11 @@ python3 scripts/reinvent.py render
 python3 scripts/reinvent.py check-schedule
 python3 scripts/reinvent.py watch-events
 python3 scripts/reinvent.py watch-events --source agenda
+python3 scripts/site.py build     # local-data/site/ に共有版・個人版 HTML
+python3 scripts/site.py publish   # 上に加えて gera update と html-artifacts 更新
 ```
+
+共有版（gera）は一般情報とイベントのみ。`note_ja` と参加予定は出さず、`public_note_ja` だけ載せる。予約を見直すときは `planning/schedule.json` の項目に `review_ja` を書く。公開先の ID とパスは `local-data/site.json`。
 
 ## パス
 
@@ -37,6 +41,7 @@ python3 scripts/reinvent.py watch-events --source agenda
 |---|---|
 | `data/catalog.json` | 選定入力 |
 | `data/events.json` | 公式イベントの日時・参加予定 |
+| `data/guide.json` | 会場・移動・過去 Tips（出典と年付き） |
 | `docs/events.md` | `render` 生成 |
 | `docs/catalog.md` / `sessions/` | `render` 生成 |
 | `planning/` | 優先・予定 |

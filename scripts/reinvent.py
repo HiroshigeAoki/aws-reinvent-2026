@@ -313,7 +313,7 @@ def validate_events(data: Any) -> list[str]:
                     errors.append(f"{label}.{name}: 空でない文字列が必要です")
             if collection == "sources":
                 continue
-            for name in ("title_ja", "venue", "note_ja"):
+            for name in ("title_ja", "venue", "note_ja", "public_note_ja"):
                 if entry.get(name) is not None and not is_text(entry[name]):
                     errors.append(f"{label}.{name}: 空でない文字列か null が必要です")
             for name, allowed in (("category", EVENT_CATEGORIES), ("registration", EVENT_REGISTRATION), ("intent", EVENT_INTENT)):
@@ -458,6 +458,8 @@ def check_schedule(catalog: Any, schedule: Any, events: Any = None) -> ScheduleR
             raise ValidationError(f"{label}: カタログにないセッションです: {year}/{session_id}")
         if not isinstance(item.get("status"), str) or item["status"] not in STATUSES:
             raise ValidationError(f"{label}.status: candidate/planned/reserved/attended のいずれかが必要です")
+        if "review_ja" in item and item["review_ja"] is not None and not is_text(item["review_ja"]):
+            raise ValidationError(f"{label}.review_ja: 空でない文字列か null が必要です")
         if item["status"] not in {"planned", "reserved"}:
             continue
         session = sessions[key]
