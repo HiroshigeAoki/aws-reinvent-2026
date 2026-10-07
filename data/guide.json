@@ -22,11 +22,11 @@
     {
       "id": "venetian",
       "name": "The Venetian",
-      "role_ja": "2026 の会場。2025 は基調講演・Expo・バッジ受付・認定ラウンジが集まる中心会場だった。",
+      "role_ja": "2026 の会場。認定の確認デスク（日・月）がある（2026 FAQ）。2025 は基調講演・Expo・バッジ受付が集まる中心会場だった。",
       "lat": 36.1213,
       "lon": -115.1696,
       "year": 2026,
-      "source": "https://aws.amazon.com/jp/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025/"
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
     },
     {
       "id": "caesars_palace",
@@ -40,7 +40,7 @@
     {
       "id": "caesars_forum",
       "name": "Caesars Forum",
-      "role_ja": "セッション会場。Venetianから歩ける範囲で、Wynn側とも橋で繋がる（2024ブログ）。モノレールLINQ駅が近い。",
+      "role_ja": "2026 の会場。認定ラウンジ（日〜金）がある（2026 FAQ）。Venetian から歩ける範囲で、モノレール LINQ 駅が近い。",
       "lat": 36.1168,
       "lon": -115.1612,
       "year": 2026,
@@ -137,6 +137,88 @@
     }
   ],
   "tips": [
+    {
+      "id": "power-bank-rules",
+      "category": "準備・荷造り",
+      "title_ja": "モバイルバッテリーは機内ルールに注意",
+      "body_ja": "預け入れ不可で手荷物のみ。日本発着便は 2026-04-24 から機内での充電・給電が禁止、1 人 2 個・160Wh 以下。AA の独自ルールも搭乗前に公式で確認する。",
+      "year": 2026,
+      "sources": [
+        "https://trafficnews.jp/post/656383",
+        "https://tetsudo-ch.com/13004690.html"
+      ]
+    },
+    {
+      "id": "esta-fee",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "ESTA は 40 ドル",
+      "body_ja": "2025-09-30 から申請料が 21 ドルから 40 ドルに上がった。承認済みか出発前に確認する。",
+      "year": 2025,
+      "sources": [
+        "https://www.bal.com/immigration-news/united-states-new-cbp-immigration-related-fees-take-effect-sept-30"
+      ]
+    },
+    {
+      "id": "cbp-food",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "食べ物は入国時に申告",
+      "body_ja": "お菓子を含む食品は申告対象になりうる。申告せず見つかると没収や罰金があるので、迷ったら申告する。",
+      "year": 2026,
+      "sources": [
+        "https://cbp.gov/travel/clearing-cbp/bringing-agricultural-products-united-states"
+      ]
+    },
+    {
+      "id": "tsa-shoes",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "米国の保安検査は靴のままで可",
+      "body_ja": "2025-07-08 から靴を脱がずに通れる運用になった。追加検査で求められることはある。液体の 3-1-1 ルールは変わらない。",
+      "year": 2025,
+      "sources": [
+        "https://www.wsaw.com/2025/07/08/tsa-allow-people-keep-shoes-checkpoints-first-time-20-years"
+      ]
+    },
+    {
+      "id": "lax-recheck",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "LAX で荷物を一度受け取る",
+      "body_ja": "国際線で着いて国内線に乗り継ぐときは、入国審査後に預け荷物を受け取り、税関を通ってから預け直す。受け取り不要の試行はシドニー発のみ。",
+      "year": 2025,
+      "sources": [
+        "https://news.aa.com/news/news-details/2025/American-and-US-Customs-and-Border-Protection-pilot-innovative-baggage-screening-initiative-OPS-OTH-04/"
+      ]
+    },
+    {
+      "id": "taxi-flat",
+      "category": "移動",
+      "title_ja": "空港からのタクシーは定額",
+      "body_ja": "空港からストリップへはエリア別の定額（南 21.25／中 25.25／北 29.25 ドル）、カード払いは 3 ドル加算という二次情報がある。公式では未確認。",
+      "year": null,
+      "sources": [
+        "https://www.vegasalways.com/taxi-fares-in-las-vegas/"
+      ]
+    },
+    {
+      "id": "rtc-visitor-pass",
+      "category": "移動",
+      "title_ja": "路線バスは訪問者向けパス",
+      "body_ja": "ストリップを走る Deuce などは訪問者向けの 2 時間 6／24 時間 8／3 日 20 ドルのパス。住民向けの安いパスは地元 ID が要るという二次情報がある。",
+      "year": null,
+      "sources": [
+        "https://transitunlimited.org/RTC_Transit_fares",
+        "https://www.thepricer.org/how-much-does-the-deuce-bus-in-las-vegas-cost/"
+      ]
+    },
+    {
+      "id": "monorail-fare",
+      "category": "移動",
+      "title_ja": "バッジがないときのモノレール",
+      "body_ja": "バッジでの無料乗車時間外は通常運賃（片道 6 ドル前後、オンライン購入あり）。営業は平日 7 時から深夜までという二次情報がある。",
+      "year": null,
+      "sources": [
+        "https://lasvegaswonders.com/las-vegas-taxi-vs-monorail/"
+      ]
+    },
     {
       "id": "t_move_buffer",
       "category": "移動",
