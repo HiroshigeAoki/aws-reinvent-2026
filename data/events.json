@@ -106,9 +106,9 @@
       "registration": "unknown",
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
-      "note_ja": "配信あり",
+      "note_ja": "並ばずにホテルで配信を見る",
       "public_note_ja": "配信あり",
-      "intent": "go"
+      "intent": "skip"
     },
     {
       "id": "trivia-night-jeff-barr",
