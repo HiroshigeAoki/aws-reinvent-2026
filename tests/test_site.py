@@ -3,7 +3,7 @@
 import unittest
 
 from scripts.reinvent import ValidationError, check_schedule
-from scripts.site import build_personal, build_shared, validate_guide
+from scripts.site import build_personal, build_shared, merge_guides, validate_guide
 from tests.test_reinvent import catalog, item, schedule, session
 
 
@@ -58,6 +58,16 @@ class SharedPageTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             validate_guide(guide(tips=[{"id": "x", "category": "不明", "title_ja": "t", "body_ja": "b",
                                         "sources": ["https://example.com"]}]))
+
+    def test_private_overlay_is_appended_and_marked(self):
+        overlay = {"checked_on": "2026-10-07", "tips": [
+            {"id": "pen", "category": "出入国・乗り継ぎ", "title_ja": "ペンを持つ", "body_ja": "書類用。",
+             "year": 2025, "origin": "handover", "sources": []}]}
+        merged = merge_guides(guide(), overlay)
+        self.assertEqual(len(merged["tips"]), 2)
+        html = build_shared(events(), merged, "2026-10-07")
+        self.assertIn("社内の引き継ぎ", html)
+        self.assertIn("ペンを持つ", html)
 
 
 class PersonalPageTests(unittest.TestCase):

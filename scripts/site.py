@@ -30,7 +30,8 @@ OUT_DIR = ROOT / "local-data" / "site"
 CONFIG = ROOT / "local-data" / "site.json"
 MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
 WEEKDAYS = "月火水木金土日"
-TIP_CATEGORIES = ("移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地")
+TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "空き時間")
+PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 
 CSS = """
 :root{--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
@@ -113,7 +114,7 @@ def validate_guide(guide: Any) -> dict[str, Any]:
                 if not is_text(entry.get(name)):
                     errors.append(f"{label}.{name}: 空でない文字列が必要です")
             urls = entry.get("sources") if collection == "tips" else [entry.get("url" if collection == "links" else "source")]
-            if not isinstance(urls, list) or not urls:
+            if not isinstance(urls, list) or (not urls and entry.get("origin") != "handover"):
                 errors.append(f"{label}: 出典 URL が必要です")
                 urls = []
             for url in urls:
@@ -128,6 +129,18 @@ def validate_guide(guide: Any) -> dict[str, Any]:
     if errors:
         raise ValidationError("\n".join(errors))
     return guide
+
+
+def merge_guides(public: Any, private: Any) -> dict[str, Any]:
+    """Append the gitignored overlay (company-internal handover notes) to the public guide."""
+    guide = validate_guide(public)
+    if private is None:
+        return guide
+    private = validate_guide(private)
+    merged = dict(guide)
+    for collection in ("venues", "transport", "walk_times", "tips", "links"):
+        merged[collection] = list(guide.get(collection, [])) + list(private.get(collection, []))
+    return merged
 
 
 def year_badge(year: Any, current: int) -> str:
@@ -248,6 +261,8 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         body.append(f'<h3>{h(category)}</h3><div class="cards">')
         for tip in selected:
             sources = " ".join(link(url, f"出典{i + 1}") for i, url in enumerate(tip["sources"]))
+            if tip.get("origin") == "handover":
+                sources = '<span class="badge b-ev">社内の引き継ぎ</span> ' + sources
             body.append(f'<div class="c"><h4>{h(tip["title_ja"])}</h4><p>{h(tip["body_ja"])}</p>'
                         f'<div class="src">{year_badge(tip.get("year"), year)} {sources}</div></div>')
         body.append("</div>")
@@ -343,7 +358,8 @@ def build(config: dict[str, Any]) -> tuple[Path, Path]:
     catalog = require_valid_catalog(read_json(ROOT / "data" / "catalog.json"))
     events = require_valid_events(read_json(ROOT / "data" / "events.json"))
     schedule = read_json(ROOT / "planning" / "schedule.json")
-    guide = validate_guide(read_json(ROOT / "data" / "guide.json"))
+    guide = merge_guides(read_json(ROOT / "data" / "guide.json"),
+                         read_json(PRIVATE_GUIDE) if PRIVATE_GUIDE.exists() else None)
     built_on = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M %Z")
     shared_path = OUT_DIR / "shared" / "index.html"
     personal_path = OUT_DIR / "personal.html"
