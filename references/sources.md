@@ -17,3 +17,5 @@
 2025 の予習は [2025.md](2025.md)。
 
 更新: 公式を見て `data/catalog.json` を直し → `validate` → `render` → 必要なら `planning/` / `notes/`。
+
+イベント更新: `watch-events` で公式ページの差分を確認 → `data/events.json` を編集 → `validate` → `render`。取得結果は `local-data/raw/events/`。

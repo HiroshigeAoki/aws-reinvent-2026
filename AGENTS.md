@@ -7,3 +7,4 @@
 - `notes/` と `planning/*.md` は手書き。カタログ更新で上書きしない。notes 推敲は `docs/qwen-notes.md`。
 - 時刻は America/Los_Angeles（オフセット付き）。2025 の日程を 2026 にコピーしない。`why_ja` は短く。
 - `python3 scripts/reinvent.py validate` と `python3 -m unittest discover -s tests -v`。`reserved` は実予約後のみ。
+- `data/events.json` は公式・主催者の出典のみ。未確認は null。説明文を転載しない。

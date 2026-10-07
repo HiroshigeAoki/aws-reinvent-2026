@@ -26,3 +26,7 @@ def streams_path() -> Path:
 
 def catalog_full_path() -> Path:
     return LOCAL_DATA / "catalog-full.sqlite"
+
+
+def events_snapshot_root() -> Path:
+    return LOCAL_DATA / "raw" / "events"

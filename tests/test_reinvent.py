@@ -7,7 +7,7 @@ import unittest
 
 from scripts.reinvent import (
     ValidationError, check_schedule, render_catalog, require_valid_catalog,
-    search_catalog, validate_catalog,
+    search_catalog, validate_catalog, validate_events, render_events,
 )
 
 
@@ -240,6 +240,87 @@ class RenderingTests(unittest.TestCase):
         matches = search_catalog(catalog(session(title="Designing Agents")), "Designing")
         self.assertEqual(len(matches), 1)
         self.assertEqual(matches[0]["title"], "Designing Agents")
+
+
+def event(event_id="party", **overrides):
+    result = dict(id=event_id, title="Party", title_ja="交流会", category="party",
+                  date="2026-11-30", starts_at="2026-11-30T09:30:00-08:00",
+                  ends_at="2026-11-30T10:30:00-08:00", venue=None,
+                  registration="none", url="https://example.com/events",
+                  checked_on="2026-10-07", note_ja=None, intent="go")
+    result.update(overrides)
+    return result
+
+
+def events(*entries):
+    return dict(schema_version=1, checked_on="2026-10-07", timezone="America/Los_Angeles",
+                sources=[dict(id="agenda", url="https://example.com", label_ja="公式")],
+                events=list(entries) or [event()])
+
+
+class EventTests(unittest.TestCase):
+    def test_validation(self):
+        self.assertEqual(validate_events(events()), [])
+        for field, value in dict(id="Bad_ID", title="", title_ja="", category="bad", date="2026-02-30",
+                                 starts_at="2026-11-30T09:00:00", ends_at="2026-11-30T08:00:00-08:00",
+                                 venue="", registration="bad", url="http://example.com", checked_on="bad",
+                                 note_ja="", intent="bad").items():
+            with self.subTest(field=field):
+                self.assertTrue(validate_events(events(event(**{field: value}))))
+        for field in event():
+            data = events()
+            del data["events"][0][field]
+            self.assertTrue(validate_events(data), field)
+        for field, value in dict(schema_version=True, checked_on="bad", timezone="bad", sources={}, events={}).items():
+            data = events()
+            data[field] = value
+            self.assertTrue(validate_events(data), field)
+        for field, value in dict(id="Bad", url="http://example.com", label_ja="").items():
+            data = events()
+            data["sources"][0][field] = value
+            self.assertTrue(validate_events(data), field)
+        data = events()
+        data["sources"] *= 2
+        self.assertTrue(validate_events(data))
+        self.assertTrue(validate_events(events(event(), event())))
+        self.assertTrue(validate_events(events(event(date=None))))
+        self.assertTrue(validate_events(events(event(date="2026-12-01"))))
+        self.assertTrue(validate_events(events(event(starts_at=None))))
+        self.assertEqual(validate_events(events(event(starts_at="2026-11-30T17:30:00+00:00"))), [])
+        self.assertEqual(validate_events(events(event(ends_at=None))), [])
+
+    def test_schedule_events(self):
+        for intent in ("maybe", "skip", None):
+            self.assertEqual(check_schedule(catalog(), schedule(item("A101")), events(event(intent=intent))).errors, [])
+        report = check_schedule(catalog(), schedule(item("A101")), events())
+        self.assertIn("event:party", report.errors[0])
+        self.assertEqual(report.checked, 2)
+        self.assertEqual(check_schedule(catalog(), schedule(), events(event(starts_at=None, ends_at=None))).checked, 0)
+        transfer = event(starts_at="2026-11-30T10:15:00-08:00", ends_at="2026-11-30T11:00:00-08:00", venue="MGM")
+        self.assertIn("移動時間不足", check_schedule(catalog(), schedule(item("A101")), events(transfer)).errors[0])
+        transfer["venue"] = None
+        self.assertEqual(check_schedule(catalog(), schedule(item("A101")), events(transfer)).errors, [])
+
+    def test_render(self):
+        entries = [event("overlap"), event("transfer", starts_at="2026-11-30T10:15:00-08:00", ends_at="2026-11-30T11:00:00-08:00", venue="MGM"),
+                   event("none", starts_at="2026-11-30T12:00:00-08:00", ends_at=None),
+                   event("untimed", starts_at=None, ends_at=None), event("unknown", date=None, starts_at=None, ends_at=None),
+                   event("tuesday", date="2026-12-01", starts_at=None, ends_at=None)]
+        for e in entries:
+            e["title"] = e["id"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = render_events(events(*entries), catalog(), schedule(item("A101")), root)
+            content = path.read_text()
+            for text in ("2026-11-30（月）", "2026-12-01（火）", "日付未定", "重なる: A101", "移動注意: A101", "なし", "時刻未定", "09:30–10:30", "## 出典"):
+                self.assertIn(text, content)
+            positions = [content.index("（" + name + "）") for name in ("overlap", "transfer", "none", "untimed", "tuesday", "unknown")]
+            self.assertEqual(positions, sorted(positions))
+            render_events(events(*reversed(entries)), catalog(), schedule(item("A101")), root)
+            self.assertEqual(content, path.read_text())
+            path.write_text("handwritten")
+            with self.assertRaises(ValidationError):
+                render_events(events(), catalog(), schedule(), root)
 
 
 if __name__ == "__main__":

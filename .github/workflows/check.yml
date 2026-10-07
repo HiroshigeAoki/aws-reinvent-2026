@@ -24,5 +24,5 @@ jobs:
       - name: Check generated documents
         run: |
           python scripts/reinvent.py render
-          git diff --exit-code -- docs/catalog.md sessions/
-          test -z "$(git ls-files --others --exclude-standard -- docs/catalog.md sessions/)"
+          git diff --exit-code -- docs/catalog.md docs/events.md sessions/
+          test -z "$(git ls-files --others --exclude-standard -- docs/catalog.md docs/events.md sessions/)"

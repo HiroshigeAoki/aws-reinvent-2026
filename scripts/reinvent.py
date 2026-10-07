@@ -261,6 +261,166 @@ def render_catalog(catalog: Any, root: Path) -> list[Path]:
     return list(output)
 
 
+EVENT_CATEGORIES = dict(keynote="基調講演", party="パーティー", reception="レセプション", expo="Expo",
+                        activity="アクティビティ", community="コミュニティ", japan="日本向け", other="その他")
+EVENT_REGISTRATION = dict(none="不要", required="必要", unknown="未確認")
+EVENT_INTENT = {"go": "行く", "maybe": "検討", "skip": "見送り", None: "—"}
+SLUG_PATTERN = re.compile(r"[a-z0-9-]+", re.ASCII)
+EVENT_FIELDS = ("id", "title", "title_ja", "category", "date", "starts_at", "ends_at", "venue",
+                "registration", "url", "checked_on", "note_ja", "intent")
+
+
+def validate_events(data: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(data, dict):
+        return ["events: JSON オブジェクトが必要です"]
+    if type(data.get("schema_version")) is not int or data.get("schema_version") != 1:
+        errors.append("schema_version: 1 が必要です")
+    if not valid_date(data.get("checked_on")):
+        errors.append("checked_on: YYYY-MM-DD 形式の日付が必要です")
+    zone = None
+    try:
+        zone = timezone(data.get("timezone"), "timezone")
+    except ValidationError as exc:
+        errors.append(str(exc))
+    for collection, fields in (("sources", ("id", "url", "label_ja")), ("events", EVENT_FIELDS)):
+        entries = data.get(collection)
+        if not isinstance(entries, list):
+            errors.append(f"{collection}: 配列が必要です")
+            continue
+        seen = set()
+        for index, entry in enumerate(entries):
+            label = f"{collection}[{index}]"
+            if not isinstance(entry, dict):
+                errors.append(f"{label}: JSON オブジェクトが必要です")
+                continue
+            for name in fields:
+                if name not in entry:
+                    errors.append(f"{label}.{name}: 必須項目です")
+            entry_id = entry.get("id")
+            if not isinstance(entry_id, str) or not SLUG_PATTERN.fullmatch(entry_id):
+                errors.append(f"{label}.id: 小文字英数字・ハイフンのみ使用できます")
+            elif entry_id in seen:
+                errors.append(f"{label}.id: ID が重複しています: {entry_id}")
+            else:
+                seen.add(entry_id)
+            try:
+                validate_url(entry.get("url"), f"{label}.url")
+            except ValidationError as exc:
+                errors.append(str(exc))
+            for name in (("label_ja",) if collection == "sources" else ("title",)):
+                if not is_text(entry.get(name)):
+                    errors.append(f"{label}.{name}: 空でない文字列が必要です")
+            if collection == "sources":
+                continue
+            for name in ("title_ja", "venue", "note_ja"):
+                if entry.get(name) is not None and not is_text(entry[name]):
+                    errors.append(f"{label}.{name}: 空でない文字列か null が必要です")
+            for name, allowed in (("category", EVENT_CATEGORIES), ("registration", EVENT_REGISTRATION), ("intent", EVENT_INTENT)):
+                value = entry.get(name)
+                if not isinstance(value, (str, type(None))) or value not in allowed:
+                    errors.append(f"{label}.{name}: 有効な値が必要です")
+            for name in ("date", "checked_on"):
+                if (name == "checked_on" or entry.get(name) is not None) and not valid_date(entry.get(name)):
+                    errors.append(f"{label}.{name}: YYYY-MM-DD 形式の日付が必要です")
+            times = {}
+            for name in ("starts_at", "ends_at"):
+                try:
+                    times[name] = parse_time(entry.get(name), f"{label}.{name}")
+                except ValidationError as exc:
+                    errors.append(str(exc))
+            start, end = times.get("starts_at"), times.get("ends_at")
+            if start is not None and zone is not None and entry.get("date") != start.astimezone(zone).date().isoformat():
+                errors.append(f"{label}.date: 開始日時の現地日付と一致する必要があります")
+            if end is not None and start is None:
+                errors.append(f"{label}.starts_at: 終了日時がある場合は開始日時が必要です")
+            if start is not None and end is not None and end <= start:
+                errors.append(f"{label}.ends_at: 開始日時より後である必要があります")
+    return errors
+
+
+def require_valid_events(data: Any) -> dict[str, Any]:
+    errors = validate_events(data)
+    if errors:
+        raise ValidationError("\n".join(errors))
+    return data
+
+
+def event_relation(event: dict[str, Any], sessions: list[dict[str, Any]], transfer: int) -> str:
+    start = parse_time(event["starts_at"], "starts_at")
+    end = parse_time(event["ends_at"], "ends_at")
+    if start is None:
+        return "—"
+    overlaps, transfers = [], []
+    for session in sessions:
+        other_start = parse_time(session["starts_at"], "starts_at")
+        other_end = parse_time(session["ends_at"], "ends_at")
+        if other_start is None or other_end is None:
+            continue
+        if end is not None and start < other_end and other_start < end:
+            overlaps.append(session["id"])
+        elif event["venue"] and session["venue"] and event["venue"] != session["venue"]:
+            gap = None
+            if start >= other_end:
+                gap = (start - other_end).total_seconds() / 60
+            elif end is not None and other_start >= end:
+                gap = (other_start - end).total_seconds() / 60
+            if gap is not None and gap < transfer:
+                transfers.append(session["id"])
+    if overlaps:
+        return "重なる: " + ", ".join(sorted(set(overlaps)))
+    if transfers:
+        return "移動注意: " + ", ".join(sorted(set(transfers)))
+    return "なし"
+
+
+def render_events(data: Any, catalog: Any, schedule: Any, root: Path) -> Path:
+    data = require_valid_events(data)
+    check_schedule(catalog, schedule)
+    zone = timezone(data["timezone"], "timezone")
+    keys = {(item["year"], item["id"]) for item in schedule["items"] if item["status"] in {"planned", "reserved"}}
+    sessions = [s for s in catalog["sessions"] if (s["year"], s["id"]) in keys]
+    lines = [GENERATED, "", "# イベント一覧", "",
+             f"編集元は `data/events.json`。確認日: {data['checked_on']}。日時は `{data['timezone']}`。"]
+    def order(entry):
+        start = parse_time(entry["starts_at"], "starts_at")
+        return (entry["date"] or "9999-99-99", start is None,
+                start.timestamp() if start else 0, entry["id"])
+    previous = object()
+    for entry in sorted(data["events"], key=order):
+        day = entry["date"]
+        if day != previous:
+            heading = "日付未定" if day is None else f"{day}（{'月火水木金土日'[date.fromisoformat(day).weekday()]}）"
+            lines.extend(["", f"## {heading}", "", "| 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |",
+                          "| --- | --- | --- | --- | --- | --- | --- | --- |"])
+            previous = day
+        start = parse_time(entry["starts_at"], "starts_at")
+        end = parse_time(entry["ends_at"], "ends_at")
+        clock = "時刻未定" if start is None else start.astimezone(zone).strftime("%H:%M")
+        if start is not None and end is not None:
+            clock += "–" + end.astimezone(zone).strftime("%H:%M")
+        title = escape_md(entry["title_ja"] or entry["title"])
+        if entry["title_ja"]:
+            title += "（" + escape_md(entry["title"]) + "）"
+        url = entry["url"].replace("<", "%3C").replace(">", "%3E")
+        cells = [clock, f"[{title}](<{url}>)", EVENT_CATEGORIES[entry["category"]], escape_md(entry["venue"] or "未確認"),
+                 EVENT_REGISTRATION[entry["registration"]], EVENT_INTENT[entry["intent"]],
+                 escape_md(event_relation(entry, sessions, schedule["transfer_minutes"])), escape_md(entry["note_ja"] or "—")]
+        lines.append("| " + " | ".join(cells) + " |")
+    lines.extend(["", "## 出典", ""])
+    for source in data["sources"]:
+        url = source["url"].replace("<", "%3C").replace(">", "%3E")
+        lines.append(f"- [{escape_md(source['label_ja'])}](<{url}>)")
+    path = root.resolve() / "docs" / "events.md"
+    if not path.resolve().is_relative_to(root.resolve()):
+        raise ValidationError(f"{path}: 出力先がリポジトリの外です")
+    if path.exists() and not path.read_text(encoding="utf-8").startswith(GENERATED_PREFIXES):
+        raise ValidationError(f"{path}: 自動生成マーカーがないため上書きしません")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    return path
+
+
 @dataclass
 class ScheduleReport:
     errors: list[str] = field(default_factory=list)
@@ -268,7 +428,7 @@ class ScheduleReport:
     checked: int = 0
 
 
-def check_schedule(catalog: Any, schedule: Any) -> ScheduleReport:
+def check_schedule(catalog: Any, schedule: Any, events: Any = None) -> ScheduleReport:
     catalog = require_valid_catalog(catalog)
     if not isinstance(schedule, dict):
         raise ValidationError("schedule: JSON オブジェクトが必要です")
@@ -310,6 +470,18 @@ def check_schedule(catalog: Any, schedule: Any) -> ScheduleReport:
             report.warnings.append(f"{display_id}: 開始・終了時刻が未確定のため時間の競合を確認できません")
             continue
         active.append((start, end, display_id, session["venue"]))
+    if events is not None:
+        events = require_valid_events(events)
+        for event in events["events"]:
+            if event["intent"] != "go" or event["starts_at"] is None:
+                continue
+            display_id = f"event:{event['id']}"
+            start = parse_time(event["starts_at"], f"{display_id}.starts_at")
+            end = parse_time(event["ends_at"], f"{display_id}.ends_at")
+            if end is None:
+                report.warnings.append(f"{display_id}: 開始・終了時刻が未確定のため時間の競合を確認できません")
+                continue
+            active.append((start, end, display_id, event["venue"]))
     active.sort(key=lambda entry: (entry[0], entry[1], entry[2]))
     report.checked = len(active)
     for i, current in enumerate(active):
@@ -344,6 +516,7 @@ def search_catalog(catalog: Any, keyword: str) -> list[dict[str, Any]]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, default=ROOT / "data" / "catalog.json")
+    parser.add_argument("--events", type=Path, default=ROOT / "data" / "events.json")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("validate", help="カタログの形式を検証")
     search = commands.add_parser("search", help="候補をキーワードで検索")
@@ -351,11 +524,22 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("render", help="カタログとセッション Markdown を再生成")
     schedule = commands.add_parser("check-schedule", help="予定の重複と移動時間を検証")
     schedule.add_argument("path", nargs="?", type=Path, default=ROOT / "planning" / "schedule.json")
+    watch = commands.add_parser("watch-events", help="公式イベント情報の差分を取得")
+    watch.add_argument("--source")
+    for command in (commands.choices["validate"], commands.choices["render"], schedule, watch):
+        command.add_argument("--events", type=Path, default=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     try:
+        if args.command == "watch-events":
+            if __package__:
+                from .event_watch import watch_events
+            else:
+                from event_watch import watch_events
+            return watch_events(require_valid_events(read_json(args.events))["sources"], source=args.source)
         catalog = require_valid_catalog(read_json(args.catalog))
+        events = require_valid_events(read_json(args.events)) if args.command != "search" else None
         if args.command == "validate":
-            print(f"OK: {len(catalog['sessions'])} セッションを検証しました")
+            print(f"OK: {len(catalog['sessions'])} セッション / {len(events['events'])} イベントを検証しました")
         elif args.command == "search":
             found = search_catalog(catalog, args.keyword)
             for session in found:
@@ -364,9 +548,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{len(found)} 件")
         elif args.command == "render":
             paths = render_catalog(catalog, ROOT)
+            paths.append(render_events(events, catalog, read_json(ROOT / "planning" / "schedule.json"), ROOT))
             print(f"OK: {len(paths)} ファイルを生成しました")
         elif args.command == "check-schedule":
-            report = check_schedule(catalog, read_json(args.path))
+            report = check_schedule(catalog, read_json(args.path), events)
             for message in report.warnings:
                 print(f"WARN: {message}")
             for message in report.errors:
