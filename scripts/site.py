@@ -36,6 +36,22 @@ WEEKDAYS = "月火水木金土日"
 TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 
+# Venue colors: (light bg, light text, dark bg, dark text). Venues pick one by name in guide.json.
+VENUE_COLORS = {
+    "violet": ("#ece3fb", "#5b2a9e", "#34224f", "#d4bdfb"),
+    "rose": ("#fbe0e6", "#9b1c3c", "#4a1d29", "#ffb3c4"),
+    "amber": ("#fbe9c7", "#7a4d00", "#4a3510", "#ffd48a"),
+    "olive": ("#e6efcf", "#4b5e12", "#303a17", "#d3e69a"),
+    "indigo": ("#e0e5fb", "#2e3f9e", "#222b52", "#b9c5ff"),
+    "green": ("#d9f0e1", "#146b3a", "#173a26", "#9fe0b7"),
+}
+VENUE_CSS = "\n".join(
+    f".c-{name}{{--pbg:{lb};--pfg:{lf}}}" for name, (lb, lf, _, _) in VENUE_COLORS.items()
+) + "\n@media (prefers-color-scheme:dark){" + "".join(
+    f".c-{name}{{--pbg:{db};--pfg:{df}}}" for name, (_, _, db, df) in VENUE_COLORS.items()
+) + "}"
+
+
 CSS = """
 :root{--venuebg:#fbe3cf;--venuefg:#8a3d06;--stnbg:#dcedf4;--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
 @media (prefers-color-scheme:dark){:root{--venuebg:#4a2c14;--venuefg:#ffc999;--stnbg:#163846;--bg:#16181c;--card:#1f2228;--fg:#e6e6e6;--mut:#9aa1ab;--line:#30343b;--acc:#f0a35e;--acc2:#6cc3e6;--warn:#ffb27a;--warnbg:#3a2717;--chip:#2a2e35;--ok:#7ed69b}}
@@ -89,7 +105,10 @@ svg.map .board .role{font-size:10.5px}
 a.pl,span.pl{display:inline-block;padding:0 .45em;margin:0 .12em;border-radius:5px;line-height:1.55;font-size:.92em;white-space:nowrap;text-decoration:none;color:var(--fg);background:var(--chip);border:1px solid var(--line)}
 a.pl:hover{border-color:currentColor}
 a.pl:focus-visible{outline:2px solid var(--acc2);outline-offset:1px}
-a.pl-v,span.pl-v{background:var(--venuebg);border-color:transparent;color:var(--venuefg);font-weight:600}
+a.pl-v,span.pl-v{background:var(--pbg,var(--venuebg));border-color:transparent;color:var(--pfg,var(--venuefg));font-weight:600}
+svg.map a[class^="c-"] circle{fill:var(--pfg)}
+svg.map a[class^="c-"] .venue{fill:var(--pfg)}
+svg.map .board .bn{fill:var(--pfg);font-weight:600}
 a.pl-st,span.pl-st{background:var(--stnbg);border-color:transparent;color:var(--acc2)}
 details.more{margin:4px 0 12px}
 details.more summary{cursor:pointer;color:var(--acc2);font-size:.9rem;padding:4px 0}
@@ -194,7 +213,7 @@ def page(title: str, head_meta: str, body: str) -> str:
         "<!doctype html>\n<html lang=\"ja\">\n<head>\n<meta charset=\"utf-8\">\n"
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
         "<meta http-equiv=\"content-security-policy\" content=\"script-src 'none'\">\n"
-        f"<title>{h(title)}</title>\n{head_meta}<style>{CSS}</style>\n</head>\n"
+        f"<title>{h(title)}</title>\n{head_meta}<style>{CSS}{VENUE_CSS}\n</style>\n</head>\n"
         f"<body><div class=\"wrap\">\n{body}\n</div></body>\n</html>\n"
     )
 
@@ -216,9 +235,12 @@ def place_index(guide: dict[str, Any] | None) -> list[tuple[str, str, str]]:
         url = maps_url(entry)
         for name in names:
             if name and name not in found:
-                found[name] = (name, PLACE_CLASSES.get(kind, "pl"), url)
+                base, _, color = (kind or "").partition(" ")
+                found[name] = (name, (PLACE_CLASSES.get(base, "pl") + f" {color}").strip(), url)
     for venue in guide.get("venues", []):
-        add([venue["name"], *venue.get("aliases", [])], "venue", venue)
+        color = venue.get("color")
+        kind = f"venue c-{color}" if color in VENUE_COLORS else "venue"
+        add([venue["name"], *venue.get("aliases", [])], kind, venue)
     for point in guide.get("map_points", []):
         if point.get("kind") == "monorail":
             query = {"name": point["name"], "maps_query": f'{point["name"]} Station, Las Vegas Monorail'}
@@ -318,7 +340,8 @@ def venue_map(guide: dict[str, Any]) -> str:
         west = venue.get("label_side") == "left"
         anchor, tx = ("end", x - 10) if west else ("start", x + 10)
         ty = y + 4 + venue.get("label_dy", 0)
-        parts.append(f'<a href="{h(maps_url(venue))}" target="_blank" rel="noopener">'
+        tone = f' class="c-{venue["color"]}"' if venue.get("color") in VENUE_COLORS else ""
+        parts.append(f'<a{tone} href="{h(maps_url(venue))}" target="_blank" rel="noopener">'
                      f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7"/>'
                      f'<text class="venue" x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}">{h(venue["name"])}</text></a>')
     hub = by_id.get((guide.get("map_board") or {}).get("to"))
@@ -337,7 +360,8 @@ def venue_map(guide: dict[str, Any]) -> str:
             ty = by + 58 + row * i
             trip = monorail_trip(guide, v, hub)
             mono = f"{trip[0]}〜{trip[0] + wait}分" if trip else "—"
-            parts.append(f'<text x="{bx + 12:.1f}" y="{ty:.1f}">{h(v["name"])}</text>'
+            tone = f' class="bn c-{v["color"]}"' if v.get("color") in VENUE_COLORS else ""
+            parts.append(f'<text{tone} x="{bx + 12:.1f}" y="{ty:.1f}">{h(v["name"])}</text>'
                          f'<text class="board-mono" x="{bx + 124:.1f}" y="{ty:.1f}">{mono}</text>'
                          f'<text class="board-walk" x="{bx + bw - 12:.1f}" y="{ty:.1f}" text-anchor="end">'
                          f'{walk_minutes(meters(v, hub))}分</text>')
@@ -422,7 +446,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         f"<nav>{nav}</nav>",
         '<div class="note">公式発表前の項目は「未確認」と書いています。'
         '過去年の情報には年を付けました。2026年は変わることがあるので、最終確認は公式ページと公式アプリで行ってください。'
-        '<br>地名は色付きのラベルにしています。<span class="pl pl-v">会場</span>は橙、<span class="pl pl-st">モノレール駅</span>は青、'
+        '<br>地名は色付きのラベルにしています。会場はホテルごとに色を分け、地図の点と同じ色にしました。<span class="pl pl-st">モノレール駅</span>は青、'
         '<span class="pl">空港やほかの場所</span>は灰色で、押すとGoogleマップが開きます。</div>',
         '<h2 id="events">日別イベント</h2>',
         f'<p class="mut">確認日は{h(events["checked_on"])}。セッション以外の全体イベントです。</p>',

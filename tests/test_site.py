@@ -103,6 +103,14 @@ class SharedPageTests(unittest.TestCase):
         self.assertIn(">Harrah&#x27;s</a>泊でも", html)
         self.assertIn("&lt;i&gt;", html)
 
+    def test_each_venue_gets_its_own_color(self):
+        g = guide()
+        g["venues"][0]["color"] = "amber"
+        html = build_shared(events(), g, "2026-10-07")
+        self.assertIn('class="pl pl-v c-amber"', html)
+        self.assertIn('<a class="c-amber" href=', html)
+        self.assertIn(".c-amber{--pbg:", html)
+
 
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):

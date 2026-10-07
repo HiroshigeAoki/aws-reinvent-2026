@@ -8,7 +8,8 @@
       "lat": 36.12944,
       "lon": -115.16488,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/faqs/",
+      "color": "violet"
     },
     {
       "id": "wynn",
@@ -17,7 +18,8 @@
       "lat": 36.12662,
       "lon": -115.1654,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/faqs/",
+      "color": "rose"
     },
     {
       "id": "venetian",
@@ -31,7 +33,8 @@
       "aliases": [
         "Venetian",
         "ベネチアン"
-      ]
+      ],
+      "color": "amber"
     },
     {
       "id": "caesars_palace",
@@ -41,7 +44,8 @@
       "lon": -115.17676,
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/faqs/",
-      "label_side": "left"
+      "label_side": "left",
+      "color": "indigo"
     },
     {
       "id": "caesars_forum",
@@ -50,7 +54,8 @@
       "lat": 36.11896,
       "lon": -115.16619,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+      "source": "https://aws.amazon.com/events/reinvent/agenda/",
+      "color": "olive"
     },
     {
       "id": "mgm_grand",
@@ -63,7 +68,8 @@
       "label_dy": -14,
       "aliases": [
         "MGM"
-      ]
+      ],
+      "color": "green"
     }
   ],
   "transport": [
