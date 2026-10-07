@@ -168,6 +168,14 @@ class PersonalPageTests(unittest.TestCase):
         self.assertIn('<span class="badge b-meal">食事</span> 昼食', html)
         self.assertIn("<td>目安</td>", html)
 
+    def test_travel_plans_get_their_own_badge(self):
+        trip = {"kind": "travel", "title_ja": "ラスベガス着", "starts_at": "2026-11-28T16:25:00-08:00", "venue": "LAS"}
+        merged = merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [trip]})
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", merged)
+        self.assertIn('<span class="badge b-trip">移動</span> ラスベガス着', html)
+        self.assertIn("<td>確定</td>", html)
+
     def test_private_plans_need_title_and_times(self):
         with self.assertRaises(ValidationError):
             merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [{"title_ja": "x", "starts_at": "nope"}]})

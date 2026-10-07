@@ -35,6 +35,8 @@ MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
 WEEKDAYS = "月火水木金土日"
 TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間", "ショー", "カジノ", "観光・買い物")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
+# Private plan kind -> (badge class, badge label, status column).
+PLAN_KINDS = {None: ("b-ev", "非公開", "行く"), "meal": ("b-meal", "食事", "目安"), "travel": ("b-trip", "移動", "確定")}
 
 # Venue colors: (light bg, light text, dark bg, dark text). Venues pick one by name in guide.json.
 VENUE_COLORS = {
@@ -74,7 +76,7 @@ td.tm{white-space:nowrap;font-variant-numeric:tabular-nums}
 .mut{color:var(--mut)}
 .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc)}
 .badge{display:inline-block;font-size:.74rem;border-radius:4px;padding:0 6px;border:1px solid currentColor;white-space:nowrap}
-.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}.b-meal{color:var(--venuefg);background:var(--venuebg)}
+.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}.b-meal{color:var(--venuefg);background:var(--venuebg)}.b-trip{color:var(--fg);background:var(--chip)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
 .c h4{font-size:.98rem;margin:0 0 4px;line-height:1.45}
@@ -623,8 +625,8 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         start = parse_time(plan["starts_at"], "starts_at")
         end = parse_time(plan.get("ends_at"), "ends_at")
         title = link(plan["url"], plan["title_ja"]) if is_text(plan.get("url")) else h(plan["title_ja"])
-        badge, state = ('<span class="badge b-meal">食事</span>', "目安") if plan.get("kind") == "meal" \
-            else ('<span class="badge b-ev">非公開</span>', "行く")
+        css, label, state = PLAN_KINDS.get(plan.get("kind"), PLAN_KINDS[None])
+        badge = f'<span class="badge {css}">{label}</span>'
         rows.append((start, f'<tr><td class="tm">{h(clock(start, end, zone))}</td>'
                             f'<td>{badge} {title}'
                             f'<br><span class="mut">{rich(plan.get("note_ja") or "", places)}</span></td>'
