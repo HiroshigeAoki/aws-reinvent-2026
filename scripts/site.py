@@ -133,6 +133,16 @@ def validate_guide(guide: Any) -> dict[str, Any]:
                 errors.append(f"{label}.year: 整数か null が必要です")
             if collection == "tips" and entry.get("category") not in TIP_CATEGORIES:
                 errors.append(f"{label}.category: {' / '.join(TIP_CATEGORIES)} のいずれかが必要です")
+    line = guide.get("monorail")
+    if line is not None:
+        stations, gaps = line.get("stations"), line.get("minutes")
+        if not (isinstance(stations, list) and isinstance(gaps, list) and len(gaps) == len(stations) - 1
+                and all(type(m) is int and m > 0 for m in gaps)):
+            errors.append("guide.monorail: stations と、その間の minutes（正の整数、駅数 −1 個）が必要です")
+        try:
+            validate_url(line.get("source"), "guide.monorail 出典")
+        except ValidationError as exc:
+            errors.append(str(exc))
     if errors:
         raise ValidationError("\n".join(errors))
     return guide
@@ -224,8 +234,10 @@ def venue_map(guide: dict[str, Any]) -> str:
         path = " ".join(f"{x:.1f},{y:.1f}" for (x, y), _ in sorted(rail, key=lambda q: q[0][1]))
         parts.append(f'<polyline class="rail" points="{path}"/>')
         for (x, y), station in rail:
-            parts.append(f'<rect class="stn" x="{x - 4:.1f}" y="{y - 4:.1f}" width="8" height="8"/>')
-            parts.append(f'<text class="stn-label" x="{x - 8:.1f}" y="{y + 4:.1f}" text-anchor="end">{h(station["name"])} 駅</text>')
+            query = {"name": station["name"], "maps_query": station.get("maps_query") or f'{station["name"]} Station, Las Vegas Monorail'}
+            parts.append(f'<a href="{h(maps_url(query))}" target="_blank" rel="noopener">'
+                         f'<rect class="stn" x="{x - 4:.1f}" y="{y - 4:.1f}" width="8" height="8"/>'
+                         f'<text class="stn-label" x="{x - 8:.1f}" y="{y + 4:.1f}" text-anchor="end">{h(station["name"])} 駅</text></a>')
     for venue in venues:
         x, y = xy(venue)
         west = venue.get("label_side") == "left"
@@ -247,20 +259,54 @@ def venue_map(guide: dict[str, Any]) -> str:
     return "\n".join(parts)
 
 
+def monorail_trip(guide: dict[str, Any], a: dict[str, Any], b: dict[str, Any]) -> tuple[int, str, str] | None:
+    """Fastest walk-ride-walk over every station pair, excluding the wait for a train."""
+    line = guide.get("monorail")
+    points = {p["id"]: p for p in guide.get("map_points", []) if has_point(p)}
+    if not line or not all(s in points for s in line["stations"]):
+        return None
+    order, gaps = line["stations"], line["minutes"]
+    best = None
+    for i, s in enumerate(order):
+        for j, t in enumerate(order):
+            if i == j:
+                continue
+            lo, hi = sorted((i, j))
+            total = walk_minutes(meters(a, points[s])) + sum(gaps[lo:hi]) + walk_minutes(meters(points[t], b))
+            if best is None or total < best[0]:
+                best = (total, points[s]["name"], points[t]["name"])
+    return best
+
+
 def distance_table(guide: dict[str, Any]) -> str:
     venues = [v for v in guide.get("venues", []) if has_point(v)]
     if len(venues) < 2:
         return ""
-    rows = ['<div class="scroll"><table><tr><th></th>' + "".join(f"<th>{h(v['name'])}</th>" for v in venues) + "</tr>"]
-    for a in venues:
-        cells = []
-        for b in venues:
-            if a is b:
-                cells.append('<td class="mut">—</td>')
+    line = guide.get("monorail") or {}
+    wait = line.get("headway_max", 0)
+    rows = ['<div class="scroll"><table><tr><th>区間</th><th>直線</th><th>徒歩</th>'
+            '<th>モノレール</th><th>シャトル</th><th>目安の手段</th></tr>']
+    for i, a in enumerate(venues):
+        for b in venues[i + 1:]:
+            d = meters(a, b)
+            walk = walk_minutes(d)
+            trip = monorail_trip(guide, a, b)
+            faster = trip is not None and trip[0] + wait / 2 < walk
+            if faster:
+                mono = (f"約{trip[0]}〜{trip[0] + wait} 分"
+                        f'<br><span class="mut">{h(trip[1])}駅→{h(trip[2])}駅</span>')
             else:
-                d = meters(a, b)
-                cells.append(f'<td class="tm">{d / 1000:.1f} km<br><span class="mut">徒歩 約{walk_minutes(d)} 分</span></td>')
-        rows.append(f"<tr><th>{h(a['name'])}</th>{''.join(cells)}</tr>")
+                mono = '<span class="mut">徒歩の方が早い</span>'
+            far = walk > 25
+            shuttle = "路線・所要は未公表" if far else '<span class="mut">—</span>'
+            if not far:
+                pick = "徒歩"
+            elif faster:
+                pick = "モノレール / シャトル"
+            else:
+                pick = "徒歩（シャトルは路線次第）"
+            rows.append(f"<tr><td>{h(a['name'])} ↔ {h(b['name'])}</td><td class=\"tm\">{d / 1000:.1f} km</td>"
+                        f'<td class="tm">約{walk} 分</td><td class="tm">{mono}</td><td>{shuttle}</td><td>{pick}</td></tr>')
     rows.append("</table></div>")
     return "\n".join(rows)
 
@@ -309,7 +355,8 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         body.append("</table></div>")
     body.append('<h2 id="map">会場マップ</h2>')
     body.append('<p class="mut">緯度経度から描いた縮尺付きの図です。会場名を押すと Google マップが開きます。'
-                '■ はモノレール駅。建物の入口から会場の部屋までの屋内移動は含みません。</p>')
+                '■ はモノレール駅で、駅名を押すと駅の場所が開きます。建物の入口から会場の部屋までの屋内移動は含みません。'
+                'シャトル乗り場は 2026 の場所が未公表のため、図にはまだ入れていません。</p>')
     body.append(venue_map(guide))
     if guide.get("venues"):
         body.append('<div class="scroll"><table><tr><th>会場</th><th>主な用途</th><th>年</th></tr>')
@@ -317,9 +364,18 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
             body.append(f'<tr><td>{link(maps_url(venue), venue["name"])}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
                         f'<td>{h(venue["role_ja"])}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
         body.append("</table></div>")
-    body.append('<h3>会場間の直線距離と徒歩の目安</h3><p class="mut">直線距離 ×1.3 を分速 75 m で割った推定です。'
-                'ホテル内の移動で 5〜10 分ほど余計にかかることが多いです。</p>')
+    body.append('<h3>会場間の距離と所要時間の目安</h3><p class="mut">徒歩は直線距離 ×1.3 を分速 75 m で割った推定です。'
+                'モノレールは「最寄り駅までの徒歩＋公式の駅間所要時間＋駅から会場までの徒歩」で、幅は電車待ち（0〜最大の運行間隔）です。'
+                'どちらもホテル内の移動（入口から会場の部屋まで 5〜15 分）は含みません。</p>')
     body.append(distance_table(guide))
+    line = guide.get("monorail")
+    if line:
+        body.append(f'<p class="mut">モノレール: 駅間 1〜4 分、全線約 15 分、{line["headway_min"]}〜{line["headway_max"]} 分間隔 '
+                    f'{year_badge(line.get("year"), year)} <span class="src">{link(line["source"], "出典")}</span></p>')
+    example = guide.get("shuttle_example")
+    if example:
+        body.append(f'<p class="mut">シャトル: 2026 の路線・所要時間は未公表（「秋に公開予定」）。参考に、{h(example["note_ja"])} '
+                    f'{year_badge(example.get("year"), year)} <span class="src">{link(example["source"], "出典")}</span></p>')
     body.append('<h2 id="move">移動</h2><div class="cards">')
     for item in guide.get("transport", []):
         body.append(f'<div class="c"><h4>{h(item["title_ja"])} {year_badge(item.get("year"), year)}</h4>'

@@ -76,6 +76,16 @@ class SharedPageTests(unittest.TestCase):
         a, b = guide()["venues"]
         self.assertAlmostEqual(meters(a, b), 2211, delta=10)  # 0.02 deg latitude
 
+    def test_monorail_estimate_and_station_links(self):
+        stations = [{"id": "s1", "kind": "monorail", "name": "North", "lat": 36.12, "lon": -115.168, "source": "https://example.com/m"},
+                    {"id": "s2", "kind": "monorail", "name": "South", "lat": 36.10, "lon": -115.168, "source": "https://example.com/m"}]
+        line = {"stations": ["s1", "s2"], "minutes": [5], "headway_min": 4, "headway_max": 8,
+                "year": 2026, "source": "https://example.com/m"}
+        html = build_shared(events(), guide(map_points=stations, monorail=line), "2026-10-07")
+        self.assertIn("North駅→South駅", html)
+        self.assertIn("query=North+Station%2C+Las+Vegas+Monorail", html)
+        self.assertIn("路線・所要は未公表", html)
+
 
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):

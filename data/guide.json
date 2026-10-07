@@ -1230,5 +1230,33 @@
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/"
     }
-  ]
+  ],
+  "monorail": {
+    "stations": [
+      "mono_mgm",
+      "mono_horseshoe",
+      "mono_flamingo",
+      "mono_linq",
+      "mono_lvcc",
+      "mono_westgate",
+      "mono_sahara"
+    ],
+    "minutes": [
+      2,
+      2,
+      1,
+      4,
+      2,
+      2
+    ],
+    "headway_min": 4,
+    "headway_max": 8,
+    "year": 2026,
+    "source": "https://www.lvmonorail.com/route-map/"
+  },
+  "shuttle_example": {
+    "note_ja": "2019年の体験談では、Venetian→ARIAでシャトル乗車が約20分。ホテル入口から会場までの屋内移動が別に10〜15分かかり、ドアtoドアで約50分だった。",
+    "year": 2019,
+    "source": "https://dev.classmethod.jp/etc/reinvent2019-session-to-session/"
+  }
 }
