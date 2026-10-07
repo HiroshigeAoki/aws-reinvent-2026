@@ -7,11 +7,13 @@ import argparse
 from datetime import date, datetime
 from html import escape
 import json
+import math
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 from typing import Any
+from urllib.parse import quote_plus
 
 if __package__:
     from .reinvent import (
@@ -30,7 +32,7 @@ OUT_DIR = ROOT / "local-data" / "site"
 CONFIG = ROOT / "local-data" / "site.json"
 MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
 WEEKDAYS = "月火水木金土日"
-TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "空き時間")
+TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
 
 CSS = """
@@ -61,11 +63,16 @@ td.tm{white-space:nowrap;font-variant-numeric:tabular-nums}
 .c h4{font-size:.98rem;margin:0 0 4px;line-height:1.45}
 .c p{margin:0;font-size:.9rem}
 .src{font-size:.76rem;color:var(--mut);margin-top:6px}
-svg.map{width:100%;max-width:520px;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
-svg.map text{fill:var(--fg);font-size:12px}
-svg.map .strip{stroke:var(--line);stroke-width:10;stroke-linecap:round}
+svg.map{display:block;width:100%;max-width:640px;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;margin:0 0 12px}
+svg.map text{fill:var(--fg);font-size:13px}
+svg.map .strip{fill:none;stroke:var(--line);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+svg.map .rail{fill:none;stroke:var(--acc2);stroke-width:2.5;stroke-dasharray:6 4}
+svg.map .stn{fill:var(--card);stroke:var(--acc2);stroke-width:2}
+svg.map .stn-label{fill:var(--acc2);font-size:10.5px}
 svg.map circle{fill:var(--acc)}
-svg.map .role{fill:var(--mut);font-size:10.5px}
+svg.map a .venue{fill:var(--acc);font-weight:700;text-decoration:underline}
+svg.map .role{fill:var(--mut);font-size:11px}
+svg.map .bar{stroke:var(--fg);stroke-width:3}
 footer{margin-top:40px;color:var(--mut);font-size:.82rem}
 """
 
@@ -98,7 +105,7 @@ def validate_guide(guide: Any) -> dict[str, Any]:
     shapes = {
         "venues": ("id", "name", "role_ja"), "transport": ("id", "title_ja", "body_ja"),
         "walk_times": ("from", "to"), "tips": ("id", "category", "title_ja", "body_ja"),
-        "links": ("title", "url", "why_ja"),
+        "links": ("title", "url", "why_ja"), "day_flow": ("time", "what_ja"),
     }
     for collection, fields in shapes.items():
         entries = guide.get(collection, [])
@@ -138,7 +145,7 @@ def merge_guides(public: Any, private: Any) -> dict[str, Any]:
         return guide
     private = validate_guide(private)
     merged = dict(guide)
-    for collection in ("venues", "transport", "walk_times", "tips", "links"):
+    for collection in ("venues", "transport", "walk_times", "tips", "links", "day_flow", "map_points"):
         merged[collection] = list(guide.get(collection, [])) + list(private.get(collection, []))
     return merged
 
@@ -161,34 +168,101 @@ def page(title: str, head_meta: str, body: str) -> str:
     )
 
 
-def venue_map(venues: list[dict[str, Any]]) -> str:
-    """Schematic north-to-south strip; positions use lat/lon when present."""
-    placed = [v for v in venues if isinstance(v.get("lat"), (int, float)) and isinstance(v.get("lon"), (int, float))]
-    if len(placed) < 2:
+def maps_url(venue: dict[str, Any]) -> str:
+    query = venue.get("maps_query") or f'{venue["name"]}, Las Vegas, NV'
+    return "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query)
+
+
+def has_point(entry: dict[str, Any]) -> bool:
+    return isinstance(entry.get("lat"), (int, float)) and isinstance(entry.get("lon"), (int, float))
+
+
+def meters(a: dict[str, Any], b: dict[str, Any]) -> float:
+    """Equirectangular distance; accurate to well under 1% across the Strip."""
+    lat0 = math.radians((a["lat"] + b["lat"]) / 2)
+    dx = (b["lon"] - a["lon"]) * 111320 * math.cos(lat0)
+    dy = (b["lat"] - a["lat"]) * 110574
+    return math.hypot(dx, dy)
+
+
+def walk_minutes(distance: float) -> int:
+    """Straight line x1.3 detour at 75 m/min; casinos add indoor walking on top."""
+    return max(1, round(distance * 1.3 / 75))
+
+
+def venue_map(guide: dict[str, Any]) -> str:
+    """To-scale map: Strip, monorail, venues (linked to Google Maps), scale bar."""
+    venues = [v for v in guide.get("venues", []) if has_point(v)]
+    points = [p for p in guide.get("map_points", []) if has_point(p)]
+    if len(venues) < 2:
         return ""
-    lats = [v["lat"] for v in placed]
-    lons = [v["lon"] for v in placed]
-    top, bottom = max(lats), min(lats)
-    west, east = min(lons), max(lons)
-    width, height, pad = 520, 60 + 56 * len(placed), 30
-    def y(lat):
-        return pad + (top - lat) / ((top - bottom) or 1) * (height - 2 * pad)
-    def x(lon):
-        return 150 + (lon - west) / ((east - west) or 1) * 60
-    parts = [f'<svg class="map" viewBox="0 0 {width} {height}" role="img" aria-label="会場の南北配置（模式図）">',
-             f'<line class="strip" x1="180" y1="{pad - 10}" x2="180" y2="{height - pad + 10}"/>',
-             f'<text x="12" y="{pad}">北 ↑</text><text x="12" y="{height - pad + 4}">南 ↓</text>']
-    last = -1e9
-    for venue in sorted(placed, key=lambda v: -v["lat"]):
-        cy = max(y(venue["lat"]), last + 34)
-        last = cy
-        cx = x(venue["lon"])
-        parts.append(f'<circle cx="{cx:.1f}" cy="{y(venue["lat"]):.1f}" r="6"/>')
-        parts.append(f'<line x1="{cx + 6:.1f}" y1="{y(venue["lat"]):.1f}" x2="236" y2="{cy:.1f}" stroke="currentColor" stroke-opacity=".3"/>')
-        parts.append(f'<text x="240" y="{cy:.1f}">{h(venue["name"])}</text>')
-        parts.append(f'<text class="role" x="240" y="{cy + 14:.1f}">{h(venue["role_ja"][:28])}</text>')
+    north, south = max(v["lat"] for v in venues) + 0.002, min(v["lat"] for v in venues) - 0.002
+    east = max(v["lon"] for v in venues) + 0.002
+    points = [p for p in points if p.get("kind") == "airport" or (south <= p["lat"] <= north and p["lon"] <= east)]
+    framed = venues + [p for p in points if p.get("kind") in {"monorail", "strip"}]
+    lat0 = math.radians(sum(v["lat"] for v in venues) / len(venues))
+    def project(entry):
+        return (entry["lon"] * 111320 * math.cos(lat0), -entry["lat"] * 110574)
+    xs, ys = zip(*(project(e) for e in framed))
+    min_x, max_x, min_y, max_y = min(xs), max(xs), min(ys), max(ys)
+    width, max_height, pad_x, pad_y = 640, 640, 150, 40
+    scale = min((width - 2 * pad_x) / ((max_x - min_x) or 1), (max_height - 2 * pad_y) / ((max_y - min_y) or 1))
+    height = round((max_y - min_y) * scale + 2 * pad_y)
+    left = (width - (max_x - min_x) * scale) / 2
+    def xy(entry):
+        px, py = project(entry)
+        return left + (px - min_x) * scale, pad_y + (py - min_y) * scale
+    parts = [f'<svg class="map" viewBox="0 0 {width} {height}" role="img" aria-label="会場の位置（縮尺あり）">']
+    strip = [xy(p) for p in points if p.get("kind") == "strip"]
+    if len(strip) >= 2:
+        path = " ".join(f"{x:.1f},{y:.1f}" for x, y in sorted(strip, key=lambda q: q[1]))
+        parts.append(f'<polyline class="strip" points="{path}"/>')
+        top = min(strip, key=lambda q: q[1])
+        parts.append(f'<text class="role" x="{top[0] + 8:.1f}" y="{top[1] + 4:.1f}">Las Vegas Blvd（ストリップ）</text>')
+    rail = [(xy(p), p) for p in points if p.get("kind") == "monorail"]
+    if len(rail) >= 2:
+        path = " ".join(f"{x:.1f},{y:.1f}" for (x, y), _ in sorted(rail, key=lambda q: q[0][1]))
+        parts.append(f'<polyline class="rail" points="{path}"/>')
+        for (x, y), station in rail:
+            parts.append(f'<rect class="stn" x="{x - 4:.1f}" y="{y - 4:.1f}" width="8" height="8"/>')
+            parts.append(f'<text class="stn-label" x="{x - 8:.1f}" y="{y + 4:.1f}" text-anchor="end">{h(station["name"])} 駅</text>')
+    for venue in venues:
+        x, y = xy(venue)
+        west = venue.get("label_side") == "left"
+        anchor, tx = ("end", x - 10) if west else ("start", x + 10)
+        ty = y + 4 + venue.get("label_dy", 0)
+        parts.append(f'<a href="{h(maps_url(venue))}" target="_blank" rel="noopener">'
+                     f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7"/>'
+                     f'<text class="venue" x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}">{h(venue["name"])}</text></a>')
+    bar = 500 * scale
+    parts.append(f'<line class="bar" x1="20" y1="{height - 20}" x2="{20 + bar:.1f}" y2="{height - 20}"/>'
+                 f'<text class="role" x="20" y="{height - 28}">500 m（徒歩 約 7〜9 分）</text>'
+                 f'<text class="role" x="{width - 20}" y="24" text-anchor="end">↑ 北</text>')
+    airport = next((p for p in points if p.get("kind") == "airport"), None)
+    if airport:
+        nearest = min(venues, key=lambda v: meters(v, airport))
+        parts.append(f'<text class="role" x="{width - 20}" y="{height - 20}" text-anchor="end">'
+                     f'空港（LAS）は {h(nearest["name"])} から南東へ約 {meters(nearest, airport) / 1000:.1f} km（図の外）</text>')
     parts.append("</svg>")
     return "\n".join(parts)
+
+
+def distance_table(guide: dict[str, Any]) -> str:
+    venues = [v for v in guide.get("venues", []) if has_point(v)]
+    if len(venues) < 2:
+        return ""
+    rows = ['<div class="scroll"><table><tr><th></th>' + "".join(f"<th>{h(v['name'])}</th>" for v in venues) + "</tr>"]
+    for a in venues:
+        cells = []
+        for b in venues:
+            if a is b:
+                cells.append('<td class="mut">—</td>')
+            else:
+                d = meters(a, b)
+                cells.append(f'<td class="tm">{d / 1000:.1f} km<br><span class="mut">徒歩 約{walk_minutes(d)} 分</span></td>')
+        rows.append(f"<tr><th>{h(a['name'])}</th>{''.join(cells)}</tr>")
+    rows.append("</table></div>")
+    return "\n".join(rows)
 
 
 def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -> str:
@@ -196,7 +270,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     zone = timezone(events["timezone"], "timezone")
     year = 2026
     nav = "".join(f'<a href="#{a}">{t}</a>' for a, t in
-                  (("events", "日別イベント"), ("map", "会場マップ"), ("move", "移動"), ("tips", "Tips"), ("links", "リンク")))
+                  (("events", "日別イベント"), ("day", "1日の流れ"), ("map", "会場マップ"), ("move", "移動"), ("tips", "Tips"), ("links", "リンク")))
     body = [
         "<h1>AWS re:Invent 2026 現地ガイド</h1>",
         f'<p class="lead">ラスベガス 2026-11-30〜12-04（受付は 11/29 から）。時刻はすべて現地時間（PST, UTC−8）。最終更新 {h(built_on)}。</p>',
@@ -227,15 +301,25 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
                 f'<td>{h(EVENT_REGISTRATION[entry["registration"]])}</td><td>{h(entry.get("public_note_ja") or "—")}</td></tr>'
             )
         body.append("</table></div>")
+    if guide.get("day_flow"):
+        body.append('<h2 id="day">1日の流れ（例）</h2><div class="scroll"><table><tr><th>時刻</th><th>内容</th><th>出典</th></tr>')
+        for step in guide["day_flow"]:
+            body.append(f'<tr><td class="tm">{h(step["time"])}</td><td>{h(step["what_ja"])}</td>'
+                        f'<td>{year_badge(step.get("year"), year)} {link(step["source"], "出典")}</td></tr>')
+        body.append("</table></div>")
     body.append('<h2 id="map">会場マップ</h2>')
-    body.append('<p class="mut">ストリップ沿いの南北の並びを示す模式図です。距離は正確ではありません。正確な地図は下の公式リンクで確認してください。</p>')
-    body.append(venue_map(guide.get("venues", [])))
+    body.append('<p class="mut">緯度経度から描いた縮尺付きの図です。会場名を押すと Google マップが開きます。'
+                '■ はモノレール駅。建物の入口から会場の部屋までの屋内移動は含みません。</p>')
+    body.append(venue_map(guide))
     if guide.get("venues"):
         body.append('<div class="scroll"><table><tr><th>会場</th><th>主な用途</th><th>年</th></tr>')
         for venue in guide["venues"]:
-            body.append(f'<tr><td>{link(venue["source"], venue["name"])}</td><td>{h(venue["role_ja"])}</td>'
-                        f'<td>{year_badge(venue.get("year"), year)}</td></tr>')
+            body.append(f'<tr><td>{link(maps_url(venue), venue["name"])}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
+                        f'<td>{h(venue["role_ja"])}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
         body.append("</table></div>")
+    body.append('<h3>会場間の直線距離と徒歩の目安</h3><p class="mut">直線距離 ×1.3 を分速 75 m で割った推定です。'
+                'ホテル内の移動で 5〜10 分ほど余計にかかることが多いです。</p>')
+    body.append(distance_table(guide))
     body.append('<h2 id="move">移動</h2><div class="cards">')
     for item in guide.get("transport", []):
         body.append(f'<div class="c"><h4>{h(item["title_ja"])} {year_badge(item.get("year"), year)}</h4>'

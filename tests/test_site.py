@@ -3,7 +3,7 @@
 import unittest
 
 from scripts.reinvent import ValidationError, check_schedule
-from scripts.site import build_personal, build_shared, merge_guides, validate_guide
+from scripts.site import build_personal, build_shared, meters, merge_guides, validate_guide
 from tests.test_reinvent import catalog, item, schedule, session
 
 
@@ -68,6 +68,13 @@ class SharedPageTests(unittest.TestCase):
         html = build_shared(events(), merged, "2026-10-07")
         self.assertIn("社内の引き継ぎ", html)
         self.assertIn("ペンを持つ", html)
+
+    def test_map_links_venues_to_google_maps_and_is_to_scale(self):
+        html = build_shared(events(), guide(), "2026-10-07")
+        self.assertIn("https://www.google.com/maps/search/?api=1&amp;query=The+Venetian%2C+Las+Vegas%2C+NV", html)
+        self.assertIn("500 m", html)
+        a, b = guide()["venues"]
+        self.assertAlmostEqual(meters(a, b), 2211, delta=10)  # 0.02 deg latitude
 
 
 class PersonalPageTests(unittest.TestCase):

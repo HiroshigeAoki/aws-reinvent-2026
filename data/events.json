@@ -31,9 +31,25 @@
   ],
   "events": [
     {
+      "id": "badge-pickup-sun",
+      "title": "Badge pickup",
+      "title_ja": "バッジ受け取り（日）",
+      "category": "other",
+      "date": "2026-11-29",
+      "starts_at": "2026-11-29T10:00:00-08:00",
+      "ends_at": "2026-11-29T20:00:00-08:00",
+      "venue": "MGM Grand / The Venetian",
+      "registration": "none",
+      "url": "https://aws.amazon.com/events/reinvent/agenda/",
+      "checked_on": "2026-10-07",
+      "note_ja": null,
+      "public_note_ja": "空港 T1・T3 でも日・月 7:00〜23:59 に受け取れる。月は 6:30〜21:00、火〜木は 6:30〜20:00",
+      "intent": null
+    },
+    {
       "id": "sunday-kickoff",
       "title": "Sunday kickoff",
-      "title_ja": "バッジ受け取り・SWAG・事前準備",
+      "title_ja": "日曜キックオフ（SWAG・事前準備）",
       "category": "other",
       "date": "2026-11-29",
       "starts_at": "2026-11-29T10:00:00-08:00",
@@ -43,7 +59,7 @@
       "url": "https://aws.amazon.com/events/reinvent/agenda/",
       "checked_on": "2026-10-07",
       "note_ja": null,
-      "public_note_ja": null,
+      "public_note_ja": "バッジ受付ではない。バッジは MGM Grand / The Venetian か空港で受け取る",
       "intent": null
     },
     {

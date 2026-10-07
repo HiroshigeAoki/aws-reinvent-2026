@@ -8,7 +8,8 @@
 
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 10:00–18:00 | [バッジ受け取り・SWAG・事前準備（Sunday kickoff）](<https://aws.amazon.com/events/reinvent/agenda/>) | その他 | Caesars Forum / The Venetian | 不要 | — | なし | — |
+| 10:00–20:00 | [バッジ受け取り（日）（Badge pickup）](<https://aws.amazon.com/events/reinvent/agenda/>) | その他 | MGM Grand / The Venetian | 不要 | — | なし | — |
+| 10:00–18:00 | [日曜キックオフ（SWAG・事前準備）（Sunday kickoff）](<https://aws.amazon.com/events/reinvent/agenda/>) | その他 | Caesars Forum / The Venetian | 不要 | — | なし | — |
 | 時刻未定 | [ハッカソン決勝の観戦（Road to re:Invent 2026: The Hackathon You Have to See to Believe）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 未確認 | 検討 | — | 日付は公式ページ上の曜日表記から推定。時刻・会場は未発表 |
 
 ## 2026-11-30（月）

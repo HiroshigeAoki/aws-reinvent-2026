@@ -5,8 +5,8 @@
       "id": "encore",
       "name": "Encore",
       "role_ja": "セッション会場。Wynnと隣接しており、徒歩で行き来できる。2025ではパートナー向けフォーラムも開催。",
-      "lat": 36.1295,
-      "lon": -115.1655,
+      "lat": 36.12944,
+      "lon": -115.16488,
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/faqs/"
     },
@@ -14,46 +14,49 @@
       "id": "wynn",
       "name": "Wynn",
       "role_ja": "セッション会場。Encoreと一体で、Venetianとは歩ける距離（過去ブログでは橋やモール経由）。",
-      "lat": 36.1267,
-      "lon": -115.1653,
+      "lat": 36.12662,
+      "lon": -115.1654,
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/faqs/"
     },
     {
       "id": "venetian",
       "name": "The Venetian",
-      "role_ja": "2026 の会場。認定の確認デスク（日・月）がある（2026 FAQ）。2025 は基調講演・Expo・バッジ受付が集まる中心会場だった。",
-      "lat": 36.1213,
-      "lon": -115.1696,
+      "role_ja": "2026はExpo(火・水10〜18時、木10〜16時)と基調講演(12/1〜3)の会場。バッジ受付(MGM Grandと並ぶ)と金曜のヘルプデスクもある。",
+      "lat": 36.12171,
+      "lon": -115.16934,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/agenda/",
+      "maps_query": "The Venetian Resort Las Vegas"
     },
     {
       "id": "caesars_palace",
       "name": "Caesars Palace",
       "role_ja": "2026 の会場。具体的な役割は未公表。",
-      "lat": 36.1162,
-      "lon": -115.1745,
+      "lat": 36.11663,
+      "lon": -115.17676,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/faqs/",
+      "label_side": "left"
     },
     {
       "id": "caesars_forum",
       "name": "Caesars Forum",
-      "role_ja": "2026 の会場。認定ラウンジ（日〜金）がある（2026 FAQ）。Venetian から歩ける範囲で、モノレール LINQ 駅が近い。",
-      "lat": 36.1168,
-      "lon": -115.1612,
+      "role_ja": "2026の会場。日曜10〜18時にVenetianと並ぶキックオフ企画がある。バッジ受付は行われない。Venetianから歩ける範囲で、LINQ駅が近い。",
+      "lat": 36.11896,
+      "lon": -115.16619,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
     {
       "id": "mgm_grand",
       "name": "MGM Grand",
-      "role_ja": "セッション会場。他会場から離れており、シャトルまたはモノレール（MGM Grand駅）で移動する。",
-      "lat": 36.1024,
-      "lon": -115.1695,
+      "role_ja": "2026の会場で、バッジ受付も実施(日10〜20時、月6:30〜21時、火〜木6:30〜20時)。他会場から離れ、シャトルかモノレール(MGM Grand駅)で移動する。",
+      "lat": 36.10279,
+      "lon": -115.1694,
       "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "source": "https://aws.amazon.com/events/reinvent/agenda/",
+      "label_dy": -14
     }
   ],
   "transport": [
@@ -74,37 +77,37 @@
     {
       "id": "monorail_hours",
       "title_ja": "モノレールの運行時間",
-      "body_ja": "2022のre:Play帰りの体験談では、金〜日は午前3時、他の日は午前2時までとされていた。2026の時刻は未確認。",
-      "year": 2022,
-      "source": "https://dev.classmethod.jp/articles/i-moved-to-the-replay-venue-by-monorail-reinvent/"
+      "body_ja": "公式サイトの営業時間は月曜7時〜24時、火〜木曜7時〜翌2時、金〜日曜7時〜翌3時。バッジ無料の時間帯は2026分が未公表。",
+      "year": 2026,
+      "source": "https://www.lvmonorail.com/perfect-compliment-uber-lyft-taxis/"
     },
     {
       "id": "airport_rideshare",
       "title_ja": "空港からUber/Lyft",
-      "body_ja": "配車の乗り場は到着ロビーから離れた駐車場棟にあり、案内がわかりにくい。標準車で22〜26ドル程度（2023時点）。アプリ上でチップ込みの決済ができる。",
-      "year": 2023,
-      "source": "https://dev.classmethod.jp/articles/lasvegas-rideshare-airport-hotel"
+      "body_ja": "Uber/Lyftの乗り場は駐車場棟内。T1は2M階、T3はバレー階(V)で、到着フロアから歩いて5〜10分ほど。2026年にはZooxやVegas Loopの乗り場もあり、こちらは0階。運賃は2023年の目安のまま未更新。",
+      "year": 2026,
+      "source": "https://lasvegasthenandnow.com/where-is-the-uber-lyft-pickup-at-mccarran-airport-in-las-vegas/"
     },
     {
       "id": "badge_pickup_airport",
-      "title_ja": "バッジ受付の場所",
-      "body_ja": "2024は空港ターミナル1と3（日・月）、MGM、Mandalay Bayにもバッジ受付があった。2026の受付場所と時刻は未確認。",
-      "year": 2024,
-      "source": "https://dev.classmethod.jp/articles/aws-reinvent-2024-registration-badge-pickup/"
+      "title_ja": "バッジ受付の場所と時間(2026)",
+      "body_ja": "公式日程では、バッジ受付はThe VenetianとMGM Grand(日10〜20時、月6:30〜21時、火〜木6:30〜20時)と、空港T1・T3(日・月7:00〜23:59)。Caesars Forumの日曜10〜18時はキックオフ企画で、バッジ受付ではない。Mandalay Bayは今年は会場外。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
     {
       "id": "replay_shuttle",
       "title_ja": "re:Playへのシャトル",
-      "body_ja": "2025は午後7時から、全re:Invent提携ホテルを回る形で運行された。2026は公式FAQでre:Play行きシャトルの運行が案内されている。",
-      "year": 2025,
-      "source": "https://www.production.club/productions/replay-2025"
+      "body_ja": "2026のre:Playは12/3(木)19:30〜23:59、Las Vegas Festival Grounds。re:Invent提携ホテルから無料シャトルが出る。路線と時刻は未公表。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
     {
       "id": "venue_scale",
       "title_ja": "会場全体の広さ",
-      "body_ja": "2022 は北端の Encore から南端の会場まで約 5km あった。地図で見るより遠い。",
-      "year": 2022,
-      "source": "https://dev.classmethod.jp/articles/how-to-survive-in-reinvent-for-people-who-is-terrible-with-directions/"
+      "body_ja": "2026は会場が北のEncoreから南のMGM Grandまで。座標からの直線距離は約3km。Mandalay Bayが外れ、5会場は北から南へ一列に並ぶ。MGM Grandだけ南に離れている。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
     }
   ],
   "walk_times": [
@@ -122,9 +125,9 @@
       "to": "wynn",
       "minutes": null,
       "mode": "walk",
-      "note_ja": "歩ける範囲だが、会場の建物が大きく、入口から部屋まで追加で歩く。所要時間の公式値は未確認。",
-      "year": 2024,
-      "source": "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/"
+      "note_ja": "2025はWynnとThe Venetianが橋でつながっていた。EncoreとWynnは館内で直結。2026の橋の開放時間は未公表で、所要分数も未確認。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
     },
     {
       "from": "venetian",
@@ -213,10 +216,11 @@
       "id": "monorail-fare",
       "category": "移動",
       "title_ja": "バッジがないときのモノレール",
-      "body_ja": "バッジでの無料乗車時間外は通常運賃（片道 6 ドル前後、オンライン購入あり）。営業は平日 7 時から深夜までという二次情報がある。",
-      "year": null,
+      "body_ja": "通常運賃は片道5〜6ドル(公式記事は5ドル、他の紹介記事は6ドルでオンライン5.50ドル)。営業は月7〜24時、火〜木7〜翌2時、金〜日7〜翌3時。",
+      "year": 2026,
       "sources": [
-        "https://lasvegaswonders.com/las-vegas-taxi-vs-monorail/"
+        "https://www.lvmonorail.com/perfect-compliment-uber-lyft-taxis/",
+        "https://www.lvmonorail.com/"
       ]
     },
     {
@@ -233,10 +237,10 @@
       "id": "t_move_cluster",
       "category": "移動",
       "title_ja": "同じ会場に予定をまとめる",
-      "body_ja": "Venetian・Wynn/Encore・Caesars Forumは近く、MGMはシャトルが要る。1日の予定を会場ごとにまとめると楽。",
-      "year": 2025,
+      "body_ja": "2026はEncore・Wynn・Venetian・Caesars Forum・Caesars Palaceが北から南へ並び、MGM Grandだけ離れる。予定は会場ごとにまとめ、MGMを挟む日は移動を長めに見る。",
+      "year": 2026,
       "sources": [
-        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+        "https://aws.amazon.com/events/reinvent/faqs/"
       ]
     },
     {
@@ -264,10 +268,10 @@
       "id": "t_move_bridge",
       "category": "移動",
       "title_ja": "連絡橋は時間帯で閉まる",
-      "body_ja": "Wynn/Encore/Caesars Forum方面の橋は、セッション時間外は閉まるという記述がある。夜は別ルートを考える。",
-      "year": 2024,
+      "body_ja": "2025はWynnとVenetianの間に橋があり、Caesars ForumとVenetianはExpo開催時間のみ仮設の通路がつながっていた。2026の運用は未公表なので、夜は別ルートも考える。",
+      "year": 2025,
       "sources": [
-        "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/"
+        "https://aws.amazon.com/events/reinvent/faqs/"
       ]
     },
     {
@@ -347,10 +351,10 @@
       "id": "t_ses_keynote",
       "category": "セッション・予約",
       "title_ja": "基調講演は早朝から並ぶ",
-      "body_ja": "良い席を狙うなら午前5時起きで並んだという体験談がある。2026の開始時刻は未確認。",
-      "year": 2025,
+      "body_ja": "2026の基調講演はThe Venetianで、12/1(火)8:30〜10:30がオープニング、12/2(水)8:30〜10:00と15:00〜16:30、12/3(木)8:30〜10:00。早朝から並ぶ体験談は2025のもの。Expoは火・水10〜18時、木10〜16時。",
+      "year": 2026,
       "sources": [
-        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+        "https://aws.amazon.com/events/reinvent/agenda/"
       ]
     },
     {
@@ -478,16 +482,6 @@
       ]
     },
     {
-      "id": "t_net_tip",
-      "category": "通信・お金",
-      "title_ja": "チップの目安",
-      "body_ja": "レストランは15〜20%程度、ハウスキーピングは1回1〜2ドル、荷物は1個1〜2ドルが一般的な目安。出典は一般的な旅行記事で、re:Invent固有ではない。",
-      "year": 2025,
-      "sources": [
-        "https://allabout.co.jp/gm/gc/7888/2/"
-      ]
-    },
-    {
       "id": "t_net_uber_tip",
       "category": "通信・お金",
       "title_ja": "配車はアプリ内でチップまで決済",
@@ -511,11 +505,11 @@
       "id": "t_night_replay_cold",
       "category": "夜・イベント",
       "title_ja": "re:Playは屋外で冷える",
-      "body_ja": "屋外会場なので防寒が必要。シャトルは混むため、時間に余裕を持つ。",
-      "year": 2025,
+      "body_ja": "2026のre:Playは12/3(木)19:30〜23:59、Las Vegas Festival Grounds。夜は冷えるので防寒し、シャトルは混むため余裕を持つ。",
+      "year": 2026,
       "sources": [
-        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/",
-        "https://www.production.club/productions/replay-2025"
+        "https://aws.amazon.com/events/reinvent/agenda/",
+        "https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/"
       ]
     },
     {
@@ -566,6 +560,401 @@
       "year": 2025,
       "sources": [
         "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "us-plug-voltage",
+      "category": "準備・荷造り",
+      "title_ja": "プラグは日本と同じ形、電圧は120V",
+      "body_ja": "アメリカのコンセントは日本と同じAタイプで、変換プラグは基本的に要らない。ただし電圧が120Vなので、充電器やPC電源は100-240V対応か表示を確認し、ドライヤーなどの高出力品は持ち込まないほうが無難。",
+      "year": null,
+      "sources": [
+        "https://www.arukikata.co.jp/areainfo/us-plug/",
+        "https://www.yodobashi.com/ec/support/beginner/item/plug/"
+      ]
+    },
+    {
+      "id": "events-app-setup",
+      "category": "準備・荷造り",
+      "title_ja": "AWS Eventsアプリを出発前に入れておく",
+      "body_ja": "iOS/Android用の公式アプリで、AWS Builder IDでログインする。セッション予約、個人カレンダーへの同期、屋内マップの道案内、シャトル時刻の確認ができる。日本で入れてログイン確認まで済ませておく。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/mobile-app/",
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "water-bottle-stations",
+      "category": "準備・荷造り",
+      "title_ja": "水筒と給水ポイントを活用",
+      "body_ja": "Venetian周辺にはHydrate & Helpの給水所が置かれた（2025）。空のボトルを持ち込んで補充すると、買い水の出費と乾燥対策を両立できる。",
+      "year": 2025,
+      "sources": [
+        "https://aws.amazon.com/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025"
+      ]
+    },
+    {
+      "id": "mpc-app",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "入国審査はMPCアプリで短縮できる",
+      "body_ja": "ESTA承認済みの日本人はCBPの無料アプリMobile Passport Controlを使える。LAXも対象空港。到着の4〜8時間前から申請でき、専用レーンに並ぶ。Global Entryのような年会費や面談登録は要らない。",
+      "year": null,
+      "sources": [
+        "https://www.cbp.gov/travel/us-citizens/mobile-passport-control",
+        "https://flylax.com/lax-customs-and-immigration"
+      ]
+    },
+    {
+      "id": "timezone-jetlag",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "時差は日本が17時間進み、早めの到着が有利",
+      "body_ja": "ラスベガスは太平洋標準時で、日本より 17 時間遅い。月曜開始の前の金・土に着き、軽く歩いて体を慣らすとよいとされる。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/agenda/",
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "badge-pickup-sunday",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "バッジ受取は日曜から（土曜到着では受け取れない）",
+      "body_ja": "2026の公式日程では、バッジ受付は日曜11/29が空港7:00〜23:59、ホテル10:00〜20:00。月曜はホテル6:30〜21:00。土曜11/28に着いても受付は始まっていない。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/agenda/"
+      ]
+    },
+    {
+      "id": "friday-departure",
+      "category": "出入国・乗り継ぎ",
+      "title_ja": "金曜夕方の便ならヘルプデスクと午前セッションで間に合う",
+      "body_ja": "金曜12/4はセッションが8:00〜12:30、ヘルプデスクが7:00〜12:30で終わる。午後は移動と空港に充てられる。LAXの乗り継ぎ時間と荷造りを逆算する。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/agenda/"
+      ]
+    },
+    {
+      "id": "mgm-resort-fee",
+      "category": "ホテル",
+      "title_ja": "MGM Grandのリゾートフィーは1泊50ドル前後",
+      "body_ja": "部屋代とは別に1泊あたり約50ドル（税別）の課金がある、という2026年の料金まとめがある。イベント用ブロックでは38ドルという別の記載もあり、予約確認書で自分の条件を見る。",
+      "year": 2026,
+      "sources": [
+        "https://lasvegaswonders.com/?p=8850"
+      ]
+    },
+    {
+      "id": "mgm-monorail-station",
+      "category": "ホテル",
+      "title_ja": "MGM Grandのモノレール駅は館内にある",
+      "body_ja": "駅の入口は2つあり、1つはNellie'sとGrand Expressの間付近、もう1つは地下のMGM Underground（ライドシェア乗り場と同じ場所）にある。2024のブログでは、会場入口からフードコート方面を抜けて行くと書かれていた。",
+      "year": 2024,
+      "sources": [
+        "https://dev.classmethod.jp/articles/aws-reinvent2024-monorail/",
+        "https://www.lvmonorail.com/?p=84261"
+      ]
+    },
+    {
+      "id": "mgm-dining-changes",
+      "category": "ホテル",
+      "title_ja": "MGM Grandの飲食店は入れ替わり中",
+      "body_ja": "2026年9月にCrush American Grillが閉店し、Nellie's Southern Kitchenとビュッフェも閉まっている。後継は未発表。フードコートの現状は未確認なので、現地で館内案内を見る。",
+      "year": 2026,
+      "sources": [
+        "https://www.casino.org/news/vegas-dining-news-crush-at-mgm-grand-and-circus-circus-food-court-close/"
+      ]
+    },
+    {
+      "id": "mgm-to-venues",
+      "category": "ホテル",
+      "title_ja": "MGM Grandから主会場までは歩けても遠い",
+      "body_ja": "2026のホテル比較記事ではMGM Grandから会議エリアまで徒歩8〜15分とされる。一方、2025の体験談ではMGM側は他会場からシャトルが必要と書かれる。余裕を見て移動する。",
+      "year": 2026,
+      "sources": [
+        "https://navan.com/blog/aws-reinvent-guide",
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "shuttle-tracking",
+      "category": "移動",
+      "title_ja": "シャトルはアプリで時刻を確認",
+      "body_ja": "公式シャトルは会議時間中は連続運行で、バッジが要る。アプリに時刻が入る。2025は運行状況のリアルタイム追跡がアプリにあった。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/",
+        "https://aws.amazon.com/events/reinvent/mobile-app/",
+        "https://aws.amazon.com/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025"
+      ]
+    },
+    {
+      "id": "rideshare-costs",
+      "category": "移動",
+      "title_ja": "空港と会場間の目安料金",
+      "body_ja": "2026の記事では、空港からStripまでライドシェアが20〜35ドル、会場の北と南の間が12〜20ドル。ピーク時は高めになる。無料シャトルが優先。",
+      "year": 2026,
+      "sources": [
+        "https://navan.com/blog/aws-reinvent-guide"
+      ]
+    },
+    {
+      "id": "session-types",
+      "category": "セッション・予約",
+      "title_ja": "セッション形式のちがい",
+      "body_ja": "チョークトークは講師とのやり取り中心で録画されない。ビルダーズセッションは小人数のハンズオンで約60分。ワークショップは約120分、GameDayは約4時間。コードトークはコード中心。",
+      "year": 2025,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/",
+        "https://dev.to/bhatiagirish/aws-reinvent-2025-2000-sessions-5-days-one-you-168e"
+      ]
+    },
+    {
+      "id": "recordings-livestream",
+      "category": "セッション・予約",
+      "title_ja": "録画と生配信",
+      "body_ja": "基調講演とブレイクアウトは後からオンデマンドで見られる。基調講演などの生配信は無料で、申し込みは後日開く。チョークトークは録画されない前提で、現地優先にする。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/",
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "session-levels",
+      "category": "セッション・予約",
+      "title_ja": "レベル表記は100〜500",
+      "body_ja": "100〜200は入門、300は中級、400は上級、500は最上級の目安。初参加で技術領域が広い人は200〜300を軸にする。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a699"
+      ]
+    },
+    {
+      "id": "meals-included",
+      "category": "食事",
+      "title_ja": "朝食・昼食・軽食はパスに含まれる",
+      "body_ja": "フルカンファレンスの日は、朝食、昼食、軽食が提供され、アレルゲン表示がある。ハラール、コーシャは事前注文制。店ごとの提供時刻は未確認。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "better-breakfast",
+      "category": "食事",
+      "title_ja": "朝食を替えたい人はWynnを選ぶ手も",
+      "body_ja": "会場の無料朝食は会場ごとに形式が違う。体験談ではWynnの朝食が評判で、有料でも上質にしたい人向け。",
+      "year": 2026,
+      "sources": [
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/"
+      ]
+    },
+    {
+      "id": "drugstore-cheap",
+      "category": "食事",
+      "title_ja": "水と軽食はドラッグストアが安い",
+      "body_ja": "ホテルの売店に比べて、街中のドラッグストアなら水や軽食が半額以下という報告がある。MGM近くにWalgreens（3767 S Las Vegas Blvd）があり、店は24時間営業、薬局窓口は早く閉まる。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a699",
+        "https://dyme.earth/blog/destinations/pharmacies-and-hospitals-near-hotels-on-las-vegas-strip"
+      ]
+    },
+    {
+      "id": "cold-indoors",
+      "category": "体調",
+      "title_ja": "会場内は寒く、屋外は乾燥する",
+      "body_ja": "会場内は外より寒いことがあり、羽織れる上着が要る。砂漠の乾燥は公式資料での数値を確認できていないが、水分を意識して取る。",
+      "year": 2025,
+      "sources": [
+        "https://www.qes.co.jp/media/aws/a699",
+        "https://aws.amazon.com/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025"
+      ]
+    },
+    {
+      "id": "pharmacy-urgent",
+      "category": "体調",
+      "title_ja": "薬局と往診の窓口",
+      "body_ja": "Strip沿いのCVSやWalgreensは店舗が24時間でも、薬局の窓口は早く閉まる。Strip付近にはホテルへ医師を派遣する24時間対応の窓口（702-677-2644）が紹介されている。保険の事前確認を。",
+      "year": null,
+      "sources": [
+        "https://www.lasvegasadvisor.com/faq-health-medical-emergency/",
+        "https://dyme.earth/blog/destinations/pharmacies-and-hospitals-near-hotels-on-las-vegas-strip"
+      ]
+    },
+    {
+      "id": "sales-tax",
+      "category": "通信・お金",
+      "title_ja": "クラーク郡の消費税は8.375%",
+      "body_ja": "州6.85%に郡1.525%が加わり、ラスベガスを含む郡全体で8.375%。棚の値段は税抜き表示が基本なので、レジで増える。",
+      "year": 2026,
+      "sources": [
+        "https://www.salestaxhandbook.com/nevada/rates/clark-county",
+        "https://trykintsugi.com/sales-tax-guides/usa/nevada/clark-county"
+      ]
+    },
+    {
+      "id": "tipping",
+      "category": "通信・お金",
+      "title_ja": "チップの目安",
+      "body_ja": "レストランは15〜20%（20%が標準的）、バーは1杯1〜2ドルか15〜20%、ホテルの清掃は1回1〜2ドルという案内がある。小額紙幣を用意しておくと楽。",
+      "year": 2025,
+      "sources": [
+        "https://jalcard.jal.co.jp/column/trip/tip2407/"
+      ]
+    },
+    {
+      "id": "venue-wifi",
+      "category": "通信・お金",
+      "title_ja": "会場のWi-Fi情報",
+      "body_ja": "公式FAQの概要にはWi-Fiの提供が書かれているが、接続方法や品質の詳細は取得できていない。重い作業用に回線を過信しない。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "expo-first-days",
+      "category": "夜・イベント",
+      "title_ja": "Expoは前半に回る",
+      "body_ja": "Expoは火・水が10:00〜18:00、木が10:00〜16:00。景品は最初の2日が多いという助言がある。ブースでは技術者に直接相談できる。",
+      "year": 2026,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/agenda/",
+        "https://ranthebuilder.cloud/blog/guide-to-aws-re-invent-2025-tips-tricks/",
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "alcohol-21",
+      "category": "英語・現地",
+      "title_ja": "飲酒とカジノは21歳以上、身分証を持つ",
+      "body_ja": "ネバダ州は飲酒もカジノのゲーミングフロアも21歳以上。見た目で聞かれやすいので、パスポートか写真付き身分証を携帯する。カジノ内でも確認がある。",
+      "year": null,
+      "sources": [
+        "https://www.shouselaw.com/nv/defense/laws/nevada-liquor-laws/",
+        "https://www.feelingvegas.com/do-las-vegas-casinos-check-id/"
+      ]
+    },
+    {
+      "id": "casino-smoking",
+      "category": "英語・現地",
+      "title_ja": "カジノフロアは喫煙・電子たばこが可",
+      "body_ja": "州法でゲーミング区域は禁煙の対象外。館内のカジノ通路は煙のにおいがすることがある。MGM Grandの扱いは公式で未確認。",
+      "year": null,
+      "sources": [
+        "https://gethealthyclarkcounty.org/wp-content/uploads/2017/03/nciaa-public.pdf",
+        "https://www.feelingvegas.com/do-las-vegas-casinos-allow-smoking/"
+      ]
+    },
+    {
+      "id": "night-safety",
+      "category": "英語・現地",
+      "title_ja": "夜は比較的安全でも荷物に注意",
+      "body_ja": "会場ガイドは比較的安全としつつ危険な地域もあると書く。2025には会場でパスポートを落として焦った体験談がある。貴重品は身につけ、夜の移動は人通りのある道を選ぶ。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/how-to-walk-lasvegas-2024/",
+        "https://blog.serverworks.co.jp/lost-passport-at-las-vegas"
+      ]
+    },
+    {
+      "id": "translation-device",
+      "category": "英語・現地",
+      "title_ja": "英語が苦手でも翻訳機で乗り切った例",
+      "body_ja": "初参加者が翻訳イヤホンを使い、英語力に自信がなくても対応できたという報告がある。GameDayでは日本語サポートがあったという体験談もある。",
+      "year": 2025,
+      "sources": [
+        "https://dev.classmethod.jp/articles/re-invent2025-preparation-for-first-participation/",
+        "https://blog.serverworks.co.jp/reinvent2025-try-and-tips"
+      ]
+    },
+    {
+      "id": "consulate-jurisdiction",
+      "category": "緊急時",
+      "title_ja": "ネバダ州の管轄はサンフランシスコ総領事館",
+      "body_ja": "ネバダ州は在サンフランシスコ総領事館の管轄で、電話は +1-415-780-6000。過去の参加者は、パスポート紛失時の渡航書をロサンゼルス総領事館で受け取っている。行く前に電話で確認する。",
+      "year": 2026,
+      "sources": [
+        "https://www.sf.us.emb-japan.go.jp/itpr_en/e_m01_02_01.html",
+        "https://blog.serverworks.co.jp/lost-passport-at-las-vegas"
+      ]
+    },
+    {
+      "id": "lost-passport-steps",
+      "category": "緊急時",
+      "title_ja": "パスポートを失くしたときの順番",
+      "body_ja": "まずre:Inventのヘルプデスク、会場のセキュリティ、日本語ツアーデスクに連絡し、落とし物窓口へ問い合わせる。見つからなければ警察の届出と、ロサンゼルスでの渡航書手続き。用意するもの：紛失届、写真45×35mm、航空券確認書、ESTA控え、戸籍謄本など。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/lost-passport-at-las-vegas",
+        "https://dev.classmethod.jp/articles/reinvent2017-report-what-do-you-do-if-you-lost-your-id/"
+      ]
+    },
+    {
+      "id": "lost-passport-prep",
+      "category": "緊急時",
+      "title_ja": "紛失に備えて書類を別に持つ",
+      "body_ja": "パスポートの写真ページのコピー、ESTA控え、航空券、証明写真を別の場所に保管する。陸路でロサンゼルスまで約6時間かかる見込みで、国内線にはパスポートが要る。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/lost-passport-at-las-vegas"
+      ]
+    },
+    {
+      "id": "us-911",
+      "category": "緊急時",
+      "title_ja": "緊急通報は911",
+      "body_ja": "警察、消防、救急は米国内共通で911。ホテル内なら館内セキュリティにも連絡し、場所を英語で伝える。公式サイトの一次ソースは今回未取得。",
+      "year": null,
+      "sources": [
+        "https://www.anzen.mofa.go.jp/"
+      ]
+    },
+    {
+      "id": "lost-badge-pc",
+      "category": "緊急時",
+      "title_ja": "バッジやPCの紛失手順は公式未掲載",
+      "body_ja": "2026のFAQにはバッジ紛失時の再発行手順が載っていない。会場のヘルプデスクに相談するのが基本。PC紛失は、2025にシアトル空港で失くして復旧に10日、費用は約4.7万円の報告がある。",
+      "year": 2025,
+      "sources": [
+        "https://aws.amazon.com/events/reinvent/faqs/",
+        "https://speakerdeck.com/tetutetu214/aws-re-invent-2025can-jia-zhi-qian-seattle-tacoma-airport-sea-niokeruhadoueafen-shi-insidentolt"
+      ]
+    },
+    {
+      "id": "dec-normals",
+      "category": "天気",
+      "title_ja": "12月の平年気温は最高約14℃・最低約4℃",
+      "body_ja": "NWSの1991〜2020平年値では12月の平均最高は56.9°F、最低は39.6°F。月初は61°F/42°F程度で、会議週は12月初旬。朝夕は冷える。",
+      "year": 2026,
+      "sources": [
+        "https://www.weather.gov/vef/1991-2020Normals",
+        "https://weatherspark.com/m/2228/12/Average-Weather-in-December-in-Las-Vegas-Nevada-United-States"
+      ]
+    },
+    {
+      "id": "dec-rain",
+      "category": "天気",
+      "title_ja": "雨の確率は低い",
+      "body_ja": "12月の降水日の確率は5〜8%程度、月の降水量は約0.5インチ（約13mm）。傘は不要で、軽い防寒着のほうが役に立つ。",
+      "year": 2026,
+      "sources": [
+        "https://weatherspark.com/m/2228/12/Average-Weather-in-December-in-Las-Vegas-Nevada-United-States"
+      ]
+    },
+    {
+      "id": "sunset-time",
+      "category": "天気",
+      "title_ja": "日没は16時25分ごろ",
+      "body_ja": "12月1日の日没は約16:26、日照は約9時間50分。夕方のレセプションは外が暗くなっている。夜のre:Playへ移動するときも足元と持ち物に注意。",
+      "year": 2026,
+      "sources": [
+        "https://weatherspark.com/m/2228/12/Average-Weather-in-December-in-Las-Vegas-Nevada-United-States",
+        "https://www.surf-life.blue/us/sunrisesunset/las-vegas-nv/202612/"
       ]
     }
   ],
@@ -624,6 +1013,222 @@
       "title": "APN Know before you go 2025",
       "url": "https://aws.amazon.com/jp/blogs/apn/know-before-you-go-an-aws-partners-guide-to-reinvent-2025/",
       "why_ja": "AWS公式ブログ。2025の会場の役割。"
+    },
+    {
+      "title": "AWS Eventsアプリ",
+      "url": "https://aws.amazon.com/events/reinvent/mobile-app/",
+      "why_ja": "予約とカレンダー同期、屋内マップ。"
+    },
+    {
+      "title": "CBP Mobile Passport Control",
+      "url": "https://www.cbp.gov/travel/us-citizens/mobile-passport-control",
+      "why_ja": "ESTA入国の列を短くする無料アプリ。"
+    },
+    {
+      "title": "海外安全ホームページ",
+      "url": "https://www.anzen.mofa.go.jp/",
+      "why_ja": "外務省の渡航情報。"
+    },
+    {
+      "title": "在サンフランシスコ総領事館",
+      "url": "https://www.sf.us.emb-japan.go.jp/itpr_ja/m02_09.html",
+      "why_ja": "ネバダ州を管轄。領事出張サービスの案内。"
+    }
+  ],
+  "map_points": [
+    {
+      "id": "mono_mgm",
+      "kind": "monorail",
+      "name": "MGM Grand",
+      "lat": 36.1024,
+      "lon": -115.1677,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_horseshoe",
+      "kind": "monorail",
+      "name": "Horseshoe/Paris",
+      "lat": 36.1121,
+      "lon": -115.1674,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_flamingo",
+      "kind": "monorail",
+      "name": "Flamingo/Caesars Palace",
+      "lat": 36.116,
+      "lon": -115.1686,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_linq",
+      "kind": "monorail",
+      "name": "Harrah's/The LINQ",
+      "lat": 36.1188,
+      "lon": -115.1685,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_lvcc",
+      "kind": "monorail",
+      "name": "Las Vegas Convention Center",
+      "lat": 36.1295,
+      "lon": -115.1544,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_westgate",
+      "kind": "monorail",
+      "name": "Westgate",
+      "lat": 36.1371,
+      "lon": -115.153,
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+    },
+    {
+      "id": "mono_sahara",
+      "kind": "monorail",
+      "name": "SAHARA",
+      "lat": 36.14251,
+      "lon": -115.15461,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Monorail+station+Las+Vegas"
+    },
+    {
+      "id": "strip1",
+      "kind": "strip",
+      "name": "Las Vegas Blvd 南端(Russell Rd付近)",
+      "lat": 36.0783,
+      "lon": -115.17288,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip2",
+      "kind": "strip",
+      "name": "Las Vegas Blvd 南部",
+      "lat": 36.08796,
+      "lon": -115.17273,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip3",
+      "kind": "strip",
+      "name": "Las Vegas Blvd MGM Grand西",
+      "lat": 36.10267,
+      "lon": -115.17312,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip4",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Tropicana〜Harmon間",
+      "lat": 36.10521,
+      "lon": -115.17279,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip5",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Venetian西",
+      "lat": 36.12071,
+      "lon": -115.17211,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip6",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Wynn付近",
+      "lat": 36.1261,
+      "lon": -115.16907,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip7",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Encore付近",
+      "lat": 36.12792,
+      "lon": -115.16778,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip8",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Sahara南",
+      "lat": 36.14066,
+      "lon": -115.15927,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "strip9",
+      "kind": "strip",
+      "name": "Las Vegas Blvd Sahara Ave付近",
+      "lat": 36.14544,
+      "lon": -115.15634,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Las+Vegas+Boulevard&bounded=1&viewbox=..."
+    },
+    {
+      "id": "las_t1",
+      "kind": "airport",
+      "name": "Harry Reid Intl T1 (Terminal 1 Valet, Level 0)",
+      "lat": 36.08537,
+      "lon": -115.14804,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Harry+Reid+International+Airport+Terminal+1"
+    },
+    {
+      "id": "las_t3",
+      "kind": "airport",
+      "name": "Harry Reid Intl T3 (Departures)",
+      "lat": 36.08688,
+      "lon": -115.13715,
+      "source": "https://nominatim.openstreetmap.org/search?format=json&q=Harry+Reid+International+Airport+Terminal+3"
+    }
+  ],
+  "day_flow": [
+    {
+      "time": "07:00",
+      "what_ja": "バッジ受付は月〜木とも6:30開始（月はホテル21:00まで、火〜木は20:00まで）。受取がまだなら朝一で。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "08:00",
+      "what_ja": "朝食を済ませてセッション開始。月・水・木は8:00、火は基調講演後の11:30から（2026）。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "08:30",
+      "what_ja": "火曜はCEO基調講演8:30〜10:30。水・木も8:30から基調講演（2026）。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "10:00",
+      "what_ja": "Expoオープン（火・水10:00〜18:00、木10:00〜16:00）。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "12:00",
+      "what_ja": "昼食。提供時刻は未確認のため、会場の案内を現地で確認。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+    },
+    {
+      "time": "15:00",
+      "what_ja": "水曜は15:00から午後の基調講演。セッションは17:30まで。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "16:30",
+      "what_ja": "水曜はExpoハッピーアワー16:30〜18:00。月はウェルカムレセプション16:00〜19:00。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
+    },
+    {
+      "time": "18:00",
+      "what_ja": "火・水のネットワーキングレセプション18:00〜20:00。木はre:Playが19:30から。",
+      "year": 2026,
+      "source": "https://aws.amazon.com/events/reinvent/agenda/"
     }
   ]
 }
