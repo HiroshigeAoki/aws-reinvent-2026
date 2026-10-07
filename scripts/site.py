@@ -74,7 +74,7 @@ td.tm{white-space:nowrap;font-variant-numeric:tabular-nums}
 .mut{color:var(--mut)}
 .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc)}
 .badge{display:inline-block;font-size:.74rem;border-radius:4px;padding:0 6px;border:1px solid currentColor;white-space:nowrap}
-.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}
+.b-ok{color:var(--ok)}.b-rev{color:var(--warn);background:var(--warnbg)}.b-ev{color:var(--acc2)}.b-meal{color:var(--venuefg);background:var(--venuebg)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
 .c h4{font-size:.98rem;margin:0 0 4px;line-height:1.45}
@@ -623,10 +623,12 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         start = parse_time(plan["starts_at"], "starts_at")
         end = parse_time(plan.get("ends_at"), "ends_at")
         title = link(plan["url"], plan["title_ja"]) if is_text(plan.get("url")) else h(plan["title_ja"])
+        badge, state = ('<span class="badge b-meal">食事</span>', "目安") if plan.get("kind") == "meal" \
+            else ('<span class="badge b-ev">非公開</span>', "行く")
         rows.append((start, f'<tr><td class="tm">{h(clock(start, end, zone))}</td>'
-                            f'<td><span class="badge b-ev">非公開</span> {title}'
+                            f'<td>{badge} {title}'
                             f'<br><span class="mut">{rich(plan.get("note_ja") or "", places)}</span></td>'
-                            f'<td>{rich(plan.get("venue") or "未確認", places)}</td><td>行く</td></tr>'))
+                            f'<td>{rich(plan.get("venue") or "未確認", places)}</td><td>{state}</td></tr>'))
     reviewing = [(item, s) for item, s in active if is_text(item.get("review_ja"))]
     shared = link(shared_url, "共有版の現地ガイド（会場マップ・移動・Tips・全体イベント）") if shared_url else "共有版: 未公開"
     body = [

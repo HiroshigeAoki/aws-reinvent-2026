@@ -159,6 +159,15 @@ class PersonalPageTests(unittest.TestCase):
         self.assertIn("非公開", html)
         self.assertNotIn("招待パーティー", build_shared(events(), merged, "2026-10-07"))
 
+    def test_meal_plans_get_their_own_badge(self):
+        meal = {"kind": "meal", "title_ja": "昼食", "starts_at": "2026-11-30T12:00:00-08:00",
+                "ends_at": "2026-11-30T13:00:00-08:00", "venue": "Venetian"}
+        merged = merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [meal]})
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", merged)
+        self.assertIn('<span class="badge b-meal">食事</span> 昼食', html)
+        self.assertIn("<td>目安</td>", html)
+
     def test_private_plans_need_title_and_times(self):
         with self.assertRaises(ValidationError):
             merge_guides(guide(), {"checked_on": "2026-10-07", "plans": [{"title_ja": "x", "starts_at": "nope"}]})
