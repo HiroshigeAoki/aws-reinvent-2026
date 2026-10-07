@@ -1329,6 +1329,11 @@
   },
   "places": [
     {
+      "name": "MGM Underground",
+      "kind": "spot",
+      "maps_query": "MGM Underground, MGM Grand, Las Vegas"
+    },
+    {
       "name": "Las Vegas Festival Grounds",
       "kind": "event"
     },

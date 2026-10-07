@@ -112,6 +112,16 @@ class SharedPageTests(unittest.TestCase):
         self.assertIn(".c-amber{--pbg:", html)
 
 
+    def test_private_stay_drives_hotel_section_and_board(self):
+        overlay = {"checked_on": "2026-10-07", "stay": {"venue": "mgm", "points_ja": ["朝食はMGM Grandで済ませる。"]}}
+        merged = merge_guides(guide(map_board={"to": "mgm"}), overlay)
+        html = build_shared(events(), merged, "2026-10-07")
+        self.assertIn("宿泊先", html)
+        self.assertIn("MGM Grand（宿泊先）から", html)
+        self.assertIn("朝食は<a class=", html)
+        self.assertNotIn("宿泊先", build_shared(events(), guide(), "2026-10-07"))
+
+
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):
         reviewed = dict(item("A101", "reserved"), review_ja="イベント次第でキャンセル")

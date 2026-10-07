@@ -110,6 +110,12 @@ svg.map a[class^="c-"] circle{fill:var(--pfg)}
 svg.map a[class^="c-"] .venue{fill:var(--pfg)}
 svg.map .board .bn{fill:var(--pfg);font-weight:600}
 a.pl-st,span.pl-st{background:var(--stnbg);border-color:transparent;color:var(--acc2)}
+.b-stay{color:var(--ok);font-weight:600}
+svg.map .stay{fill:var(--ok);font-size:11px;font-weight:600;text-decoration:none}
+.stay-box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:4px 16px 8px;margin:0 0 16px}
+.stay-box h3{margin:10px 0 4px}
+.stay-box ul{margin:0;padding-left:1.2em}
+.stay-box li{margin:4px 0}
 details.more{margin:4px 0 12px}
 details.more summary{cursor:pointer;color:var(--acc2);font-size:.9rem;padding:4px 0}
 details.more summary:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
@@ -173,6 +179,10 @@ def validate_guide(guide: Any) -> dict[str, Any]:
                 errors.append(f"{label}.year: 整数か null が必要です")
             if collection == "tips" and entry.get("category") not in TIP_CATEGORIES:
                 errors.append(f"{label}.category: {' / '.join(TIP_CATEGORIES)} のいずれかが必要です")
+    stay = guide.get("stay")
+    if stay is not None and not (isinstance(stay, dict) and is_text(stay.get("venue"))
+                                 and all(is_text(p) for p in stay.get("points_ja", []))):
+        errors.append("guide.stay: venue（会場 id）と points_ja（文字列の配列）が必要です")
     line = guide.get("monorail")
     if line is not None:
         stations, gaps = line.get("stations"), line.get("minutes")
@@ -197,6 +207,8 @@ def merge_guides(public: Any, private: Any) -> dict[str, Any]:
     merged = dict(guide)
     for collection in ("venues", "transport", "walk_times", "tips", "links", "day_flow", "map_points"):
         merged[collection] = list(guide.get(collection, [])) + list(private.get(collection, []))
+    if private.get("stay"):
+        merged["stay"] = private["stay"]
     return merged
 
 
@@ -314,6 +326,7 @@ def venue_map(guide: dict[str, Any]) -> str:
         top = min(strip, key=lambda q: q[1])
         parts.append(f'<text class="role" x="{top[0] - 12:.1f}" y="{top[1] + 4:.1f}" text-anchor="end">Las Vegas Blvd（ストリップ）</text>')
     by_id = {v["id"]: v for v in venues}
+    stay_id = (guide.get("stay") or {}).get("venue")
     for leg in guide.get("map_legs", []):
         a, b = by_id.get(leg["from"]), by_id.get(leg["to"])
         if not a or not b:
@@ -343,8 +356,8 @@ def venue_map(guide: dict[str, Any]) -> str:
         tone = f' class="c-{venue["color"]}"' if venue.get("color") in VENUE_COLORS else ""
         parts.append(f'<a{tone} href="{h(maps_url(venue))}" target="_blank" rel="noopener">'
                      f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7"/>'
-                     f'<text class="venue" x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}">{h(venue["name"])}</text></a>')
-    hub = by_id.get((guide.get("map_board") or {}).get("to"))
+                     f'<text class="venue" x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}">{h(venue["name"])}{'<tspan class="stay"> 宿泊先</tspan>' if venue["id"] == stay_id else ""}</text></a>')
+    hub = by_id.get(stay_id) or by_id.get((guide.get("map_board") or {}).get("to"))
     if hub:
         others = sorted((v for v in venues if v is not hub), key=lambda v: -v["lat"])
         bw, row = 236, 20
@@ -353,7 +366,7 @@ def venue_map(guide: dict[str, Any]) -> str:
         by = (min(xy(v)[1] for v in others[-2:]) + xy(hub)[1]) / 2 - bh / 2
         wait = (guide.get("monorail") or {}).get("headway_max", 0)
         parts.append(f'<g class="board"><rect x="{bx:.1f}" y="{by:.1f}" width="{bw}" height="{bh}" rx="8"/>'
-                     f'<text class="board-title" x="{bx + 12:.1f}" y="{by + 20:.1f}">{h(hub["name"])}まで</text>'
+                     f'<text class="board-title" x="{bx + 12:.1f}" y="{by + 20:.1f}">{h(hub["name"])}{"（宿泊先）から" if hub["id"] == stay_id else "まで"}</text>'
                      f'<text class="board-head" x="{bx + 124:.1f}" y="{by + 38:.1f}">モノレール</text>'
                      f'<text class="board-head" x="{bx + bw - 12:.1f}" y="{by + 38:.1f}" text-anchor="end">徒歩</text>')
         for i, v in enumerate(others):
@@ -445,9 +458,7 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
         f'<p class="lead">ラスベガスで2026-11-30〜12-04に開催（受付は11/29から）。時刻はすべて現地時間（PST、UTC−8）。最終更新は{h(built_on)}。</p>',
         f"<nav>{nav}</nav>",
         '<div class="note">公式発表前の項目は「未確認」と書いています。'
-        '過去年の情報には年を付けました。2026年は変わることがあるので、最終確認は公式ページと公式アプリで行ってください。'
-        '<br>地名は色付きのラベルにしています。会場はホテルごとに色を分け、地図の点と同じ色にしました。<span class="pl pl-st">モノレール駅</span>は青、'
-        '<span class="pl">空港やほかの場所</span>は灰色で、押すとGoogleマップが開きます。</div>',
+        '過去年の情報には年を付けました。2026年は変わることがあるので、最終確認は公式ページと公式アプリで行ってください。</div>',
         '<h2 id="events">日別イベント</h2>',
         f'<p class="mut">確認日は{h(events["checked_on"])}。セッション以外の全体イベントです。</p>',
     ]
@@ -499,10 +510,17 @@ def build_shared(events: dict[str, Any], guide: dict[str, Any], built_on: str) -
     if guide.get("venues"):
         body.append('<div class="scroll"><table><tr><th>会場</th><th>主な用途</th><th>年</th></tr>')
         for venue in guide["venues"]:
-            body.append(f'<tr><td>{rich(venue["name"], places)}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
+            body.append(f'<tr><td>{rich(venue["name"], places)}{' <span class="badge b-stay">宿泊先</span>' if venue["id"] == (guide.get("stay") or {}).get("venue") else ""}<br><span class="src">{link(venue["source"], "出典")}</span></td>'
                         f'<td>{rich(venue["role_ja"], places)}</td><td>{year_badge(venue.get("year"), year)}</td></tr>')
         body.append("</table></div>")
-    body.append('<h2 id="move">移動</h2><div class="cards">')
+    body.append('<h2 id="move">移動</h2>')
+    stay = guide.get("stay")
+    stay_venue = next((v for v in guide.get("venues", []) if v["id"] == (stay or {}).get("venue")), None)
+    if stay and stay_venue:
+        body.append(f'<div class="stay-box"><h3>宿泊先{rich(stay_venue["name"], places)}からの動き方</h3><ul>')
+        body.extend(f"<li>{rich(point, places)}</li>" for point in stay.get("points_ja", []))
+        body.append("</ul></div>")
+    body.append('<div class="cards">')
     for item in guide.get("transport", []):
         body.append(f'<div class="c"><h4>{rich(item["title_ja"], places)} {year_badge(item.get("year"), year)}</h4>'
                     f'<p>{rich(item["body_ja"], places)}</p><div class="src">{link(item["source"], "出典")}</div></div>')
