@@ -15,7 +15,6 @@
 | 2026 / GHJ305 | [AWS GameDay - Application Security & AI-Powered Penetration Testing](../sessions/2026/GHJ305/README.md) | Gamified learning | 300 | 2026-12-03 09:00 PST | Caesars Palace |
 | 2026 / GHJ306-S | [AWS GameDay - Service Reliability & Agentic Remediation ft\. Datadog](../sessions/2026/GHJ306-S/README.md) | Gamified learning | 300 | 2026-11-30 14:00 PST | Caesars Palace |
 | 2026 / SEC304 | [From Commit to Secure: Catch vulnerabilities at machine speed with AWS Continuum](../sessions/2026/SEC304/README.md) | Builders' session | 300 | 2026-12-01 16:30 PST | Wynn/Encore |
-| 2026 / SEC426 | [How AWS Continuum validates security findings across the SDLC](../sessions/2026/SEC426/README.md) | Chalk talk | 400 | 2026-12-03 14:30 PST | Wynn/Encore |
-| 2026 / SEC428 | [Fix a Security Hub finding once with four layers of controls](../sessions/2026/SEC428/README.md) | Chalk talk | 400 | 2026-12-03 16:00 PST | Wynn/Encore |
+| 2026 / SEC341 | [Build layered defenses for agentic AI from prompt to tool execution](../sessions/2026/SEC341/README.md) | Workshop | 300 | 2026-12-03 15:00 PST | Wynn/Encore |
 | 2026 / TNC302-R | [Agentic Powered AWS Frontier Agents](../sessions/2026/TNC302-R/README.md) | Bootcamp | 300 | 2026-12-02 08:30 PST | Caesars Palace |
 | 2026 / TNC340-R | [Resolving and Preventing Production Incidents with AWS DevOps Agent](../sessions/2026/TNC340-R/README.md) | Lab | 300 | 2026-11-30 10:00 PST | Caesars Palace |

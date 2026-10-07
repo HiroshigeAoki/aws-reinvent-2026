@@ -164,43 +164,6 @@
       "why_ja": "脆弱性の発見から修正までを実戦形式で行う。"
     },
     {
-      "id": "SEC426",
-      "year": 2026,
-      "title": "How AWS Continuum validates security findings across the SDLC",
-      "title_ja": "Continuumによる指摘の検証の仕組み",
-      "format": "Chalk talk",
-      "level": 400,
-      "venue": "Wynn/Encore",
-      "starts_at": "2026-12-03T14:30:00-08:00",
-      "ends_at": "2026-12-03T15:30:00-08:00",
-      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SEC426",
-      "checked_on": "2026-10-07",
-      "topics": [
-        "security",
-        "Continuum",
-        "review"
-      ],
-      "why_ja": "エージェントの指摘を多段で検証して誤検知を減らす設計を聞く。"
-    },
-    {
-      "id": "SEC428",
-      "year": 2026,
-      "title": "Fix a Security Hub finding once with four layers of controls",
-      "title_ja": "指摘を再発させない4層の統制",
-      "format": "Chalk talk",
-      "level": 400,
-      "venue": "Wynn/Encore",
-      "starts_at": "2026-12-03T16:00:00-08:00",
-      "ends_at": "2026-12-03T17:00:00-08:00",
-      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SEC428",
-      "checked_on": "2026-10-06",
-      "topics": [
-        "security",
-        "governance"
-      ],
-      "why_ja": "1つの指摘を4層の予防策に分解する型を学ぶ。"
-    },
-    {
       "id": "DAT438-R1",
       "year": 2026,
       "title": "Build agentic payment investigators on Aurora PostgreSQL & AgentCore",
@@ -219,6 +182,26 @@
         "hands-on"
       ],
       "why_ja": "DBの履歴を根拠に判断し、冪等に書き込むエージェントの作り方を学ぶ。"
+    },
+    {
+      "id": "SEC341",
+      "year": 2026,
+      "title": "Build layered defenses for agentic AI from prompt to tool execution",
+      "title_ja": "エージェントの多層防御を作る",
+      "format": "Workshop",
+      "level": 300,
+      "venue": "Wynn/Encore",
+      "starts_at": "2026-12-03T15:00:00-08:00",
+      "ends_at": "2026-12-03T17:00:00-08:00",
+      "url": "https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SEC341",
+      "checked_on": "2026-10-06",
+      "topics": [
+        "security",
+        "agents",
+        "Guardrails",
+        "Cedar"
+      ],
+      "why_ja": "攻撃を試しながら、エージェントの防御を1層ずつ足して効果を確かめる。"
     }
   ]
 }
