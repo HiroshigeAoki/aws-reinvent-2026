@@ -1042,7 +1042,8 @@
       "name": "MGM Grand",
       "lat": 36.1024,
       "lon": -115.1677,
-      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail"
+      "source": "https://en.wikipedia.org/wiki/Las_Vegas_Monorail",
+      "label_side": "right"
     },
     {
       "id": "mono_horseshoe",
@@ -1258,5 +1259,28 @@
     "note_ja": "2019年の体験談では、Venetian→ARIAでシャトル乗車が約20分。ホテル入口から会場までの屋内移動が別に10〜15分かかり、ドアtoドアで約50分だった。",
     "year": 2019,
     "source": "https://dev.classmethod.jp/etc/reinvent2019-session-to-session/"
+  },
+  "map_legs": [
+    {
+      "from": "encore",
+      "to": "wynn"
+    },
+    {
+      "from": "wynn",
+      "to": "venetian"
+    },
+    {
+      "from": "venetian",
+      "to": "caesars_forum"
+    },
+    {
+      "from": "venetian",
+      "to": "caesars_palace",
+      "dx": -10,
+      "dy": -8
+    }
+  ],
+  "map_board": {
+    "to": "mgm_grand"
   }
 }

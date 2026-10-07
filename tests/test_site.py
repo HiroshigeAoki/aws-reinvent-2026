@@ -86,6 +86,13 @@ class SharedPageTests(unittest.TestCase):
         self.assertIn("query=North+Station%2C+Las+Vegas+Monorail", html)
         self.assertIn("路線・所要は未公表", html)
 
+    def test_map_embeds_walking_legs_and_time_board(self):
+        g = guide(map_legs=[{"from": "venetian", "to": "mgm"}], map_board={"to": "mgm"})
+        html = build_shared(events(), g, "2026-10-07")
+        self.assertIn('class="leg"', html)
+        self.assertIn("徒歩38分", html)
+        self.assertIn("MGM Grand まで", html)
+
 
 class PersonalPageTests(unittest.TestCase):
     def test_review_flag_and_shared_link(self):
