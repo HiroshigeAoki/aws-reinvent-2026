@@ -733,10 +733,31 @@
       ]
     },
     {
+      "id": "meal-any-venue",
+      "category": "食事",
+      "title_ja": "朝食は泊まっていないホテルの会場でも食べられる",
+      "body_ja": "食事はre:Inventの会場で出るもので、宿泊先とは関係ない。2025年はHarrah's泊の参加者がCaesars Forumの会場で朝食をとっている。2026年はMGM Grandも会場なので、MGM Grand泊なら館内の会場で食べてから移動できる見込み（2026年の提供場所は未公表）。",
+      "year": 2025,
+      "sources": [
+        "https://blog.serverworks.co.jp/2025/12/03/022336",
+        "https://aws.amazon.com/events/reinvent/faqs/"
+      ]
+    },
+    {
+      "id": "meal-times",
+      "category": "食事",
+      "title_ja": "朝食は7時〜9時頃、昼食は11時〜14時頃（2024年）",
+      "body_ja": "2024年は朝食が7:00〜9:00頃、昼食が11:00〜14:00頃。食事の時間を考えずにセッションを入れると食べ損ねるので、朝8:00の枠がある日は早めに会場へ行く。2026年の時刻は未公表。",
+      "year": 2024,
+      "sources": [
+        "https://blog.serverworks.co.jp/2024/12/05/060807"
+      ]
+    },
+    {
       "id": "meals-included",
       "category": "食事",
       "title_ja": "朝食・昼食・軽食はパスに含まれる",
-      "body_ja": "フルカンファレンスの日は、朝食、昼食、軽食が提供され、アレルゲン表示がある。ハラール、コーシャは事前注文制。店ごとの提供時刻は未確認。",
+      "body_ja": "フルカンファレンスの日は、朝食、昼食、軽食が提供され、アレルゲン表示がある。ハラール、コーシャは事前注文制。2026年の提供時刻と場所は未公表。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/faqs/"
@@ -1190,6 +1211,12 @@
       "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
     {
+      "time": "07:00",
+      "what_ja": "朝食。2024年は各会場で7:00〜9:00頃に出た。泊まっているホテルとは関係なく、会場で食べられる。2026年の時刻は未公表。",
+      "year": 2024,
+      "source": "https://blog.serverworks.co.jp/2024/12/05/060807"
+    },
+    {
       "time": "08:00",
       "what_ja": "朝食を済ませてセッション開始。月・水・木は8:00、火は基調講演後の11:30から（2026）。",
       "year": 2026,
@@ -1209,9 +1236,9 @@
     },
     {
       "time": "12:00",
-      "what_ja": "昼食。提供時刻は未確認のため、会場の案内を現地で確認。",
-      "year": 2026,
-      "source": "https://aws.amazon.com/events/reinvent/faqs/"
+      "what_ja": "昼食。2024年は各会場で11:00〜14:00頃に出た。2026年の時刻は未公表で、会場の案内を現地で確認する。",
+      "year": 2024,
+      "source": "https://blog.serverworks.co.jp/2024/12/05/060807"
     },
     {
       "time": "15:00",
