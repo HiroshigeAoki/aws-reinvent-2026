@@ -41,8 +41,8 @@ class ToolScopeTests(unittest.TestCase):
 
 class ForeignUrlTests(unittest.TestCase):
     def test_new_outside_link_is_reported(self):
-        before = '{"url": "https://dev.to/old"}'
-        after = before + ' {"url": "https://evil.example/x?d=1"} {"url": "https://aws.amazon.com/events/reinvent/agenda/"}'
+        before = '["https://dev.to/old"]'
+        after = '["https://dev.to/old", "https://evil.example/x?d=1", "https://aws.amazon.com/events/reinvent/agenda/"]'
         self.assertEqual(foreign_new_urls(before, after), ["https://evil.example/x?d=1"])
 
     def test_existing_links_are_left_alone(self):
@@ -50,7 +50,22 @@ class ForeignUrlTests(unittest.TestCase):
         self.assertEqual(foreign_new_urls(text, text), [])
 
     def test_lookalike_host_is_outside(self):
-        self.assertEqual(foreign_new_urls("", "https://aws.amazon.com.evil.example/"), ["https://aws.amazon.com.evil.example/"])
+        after = '{"url": "https://aws.amazon.com.evil.example/"}'
+        self.assertEqual(foreign_new_urls("{}", after), ["https://aws.amazon.com.evil.example/"])
+
+    def test_json_escapes_and_case_do_not_hide_a_link(self):
+        for raw, url in (('https:\\/\\/evil.example\\/x', "https://evil.example/x"),
+                         ('\\u0068ttps://evil.example/', "https://evil.example/"),
+                         ("HTTPS://evil.example/", "HTTPS://evil.example/"),
+                         ("//evil.example/x", "//evil.example/x"),
+                         ("https://aws.amazon.com@evil.example/", "https://aws.amazon.com@evil.example/")):
+            self.assertEqual(foreign_new_urls("{}", '{"body_ja": "見て ' + raw + '"}'), [url], raw)
+
+    def test_official_link_with_userinfo_is_outside(self):
+        self.assertEqual(foreign_new_urls("{}", '{"u": "https://x@aws.amazon.com/"}'), ["https://x@aws.amazon.com/"])
+
+    def test_unparseable_json_blocks(self):
+        self.assertEqual(foreign_new_urls("{}", "{broken"), ["(JSONとして読めない)"])
 
 
 class ParseReportTests(unittest.TestCase):

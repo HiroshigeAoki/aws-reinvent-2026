@@ -9,8 +9,11 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "local-data" / "refresh"
@@ -45,7 +48,8 @@ CLAUDE_FLAGS = ["--restricted", "--tools", "Read,Edit,WebFetch", "--permission-m
 WATCH_LIMIT = 40_000
 # New links in data must point at these hosts, so injected text cannot publish an outside URL.
 OFFICIAL_HOSTS = ("aws.amazon.com", "docs.aws.amazon.com", "registration.awsevents.com", "event.jtbbwt.com")
-URL_PATTERN = re.compile(r"https?://([^/\s\"'<>]+)[^\s\"'<>]*")
+# Matched on decoded JSON strings, case-insensitively, with or without a scheme ("//host/...").
+URL_PATTERN = re.compile(r"(?:[a-z][a-z0-9+.-]*:)?//[^\s\"'<>]+", re.IGNORECASE)
 
 
 def classify_changes(paths: list[str]) -> tuple[list[str], list[str]]:
@@ -54,15 +58,61 @@ def classify_changes(paths: list[str]) -> tuple[list[str], list[str]]:
     return stage, [p for p in paths if p not in stage]
 
 
+def json_urls(text: str) -> set[str] | None:
+    """Every URL inside the decoded string values of a JSON document; None if it does not parse."""
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return None
+    found: set[str] = set()
+    stack = [data]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, dict):
+            stack.extend(node.keys())
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+        elif isinstance(node, str):
+            found.update(m.group(0) for m in URL_PATTERN.finditer(node))
+    return found
+
+
+def official(url: str) -> bool:
+    try:
+        parts = urlsplit(url if "://" in url else "https:" + url)
+        return parts.scheme.lower() == "https" and parts.username is None and parts.password is None \
+            and (parts.hostname or "") in OFFICIAL_HOSTS
+    except ValueError:
+        return False
+
+
 def foreign_new_urls(before: str, after: str) -> list[str]:
-    """URLs added between two versions of a data file whose host is not official."""
-    old = {m.group(0) for m in URL_PATTERN.finditer(before)}
-    return sorted(m.group(0) for m in URL_PATTERN.finditer(after)
-                  if m.group(0) not in old and m.group(1).lower() not in OFFICIAL_HOSTS)
+    """URLs added between two versions of a data file that do not point at an official host."""
+    new = json_urls(after)
+    if new is None:
+        return ["(JSONとして読めない)"]
+    return sorted(url for url in new - (json_urls(before) or set()) if not official(url))
 
 
-def run(*args: str, timeout: int = 600) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(args, cwd=ROOT, capture_output=True, text=True, timeout=timeout)
+def run(*args: str, timeout: int = 600, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+
+
+def ask_claude(prompt: str) -> subprocess.CompletedProcess[str]:
+    """Run Claude in a throwaway copy of the committed tree, so untracked or ignored files do not exist for it,
+    then copy back only the EDITABLE files."""
+    with tempfile.TemporaryDirectory(prefix="reinvent-refresh-") as work:
+        archive = subprocess.run(["git", "archive", "HEAD"], cwd=ROOT, capture_output=True, check=True)
+        subprocess.run(["tar", "-x", "-C", work], input=archive.stdout, check=True)
+        claude = run("claude", "-p", prompt, *CLAUDE_FLAGS, "--allowedTools", *ALLOWED_TOOLS,
+                     "--disallowedTools", *DENIED_TOOLS, "--model", "sonnet", "--no-session-persistence",
+                     "--output-format", "json", timeout=CLAUDE_TIMEOUT, cwd=Path(work))
+        for path in EDITABLE:
+            edited = Path(work) / path
+            if edited.read_bytes() != (ROOT / path).read_bytes():
+                shutil.copyfile(edited, ROOT / path)
+    return claude
 
 
 def changed_files() -> list[str]:
@@ -92,9 +142,7 @@ def refresh() -> dict:
         status.update(outcome="skipped", summary_ja="未commitの変更があるため、今日の自動調査は止めました。")
         return status
     watch = run("python3", "scripts/reinvent.py", "watch-events")
-    claude = run("claude", "-p", instructions(watch.stdout + watch.stderr), *CLAUDE_FLAGS,
-                 "--allowedTools", *ALLOWED_TOOLS, "--disallowedTools", *DENIED_TOOLS,
-                 "--model", "sonnet", "--no-session-persistence", "--output-format", "json", timeout=CLAUDE_TIMEOUT)
+    claude = ask_claude(instructions(watch.stdout + watch.stderr))
     (STATE / "claude-last.json").write_text(claude.stdout + claude.stderr, encoding="utf-8")
     try:
         report = parse_report(json.loads(claude.stdout).get("result") or "")

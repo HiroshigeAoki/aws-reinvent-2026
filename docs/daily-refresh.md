@@ -1,6 +1,6 @@
 # 毎朝の自動調査
 
-`scripts/daily_refresh.py` が cron から毎朝実行する。ラッパーが watch-events を実行し、その出力とこのファイルの「指示」以下を headlessのClaude に渡す。Claude はシェルを使えず、`data/events.json` と `data/guide.json` しか直せない。`private/` と `local-data/` は読めない。検証・テスト・commit・公開はラッパーが行う。
+`scripts/daily_refresh.py` が cron から毎朝実行する。ラッパーが watch-events を実行し、その出力とこのファイルの「指示」以下を headlessのClaude に渡す。Claude はシェルを使えず、`data/events.json` と `data/guide.json` しか直せない。Claude はcommit済みファイルだけを一時ディレクトリに展開したコピーで動くので、`private/`・`local-data/`・未追跡のファイルは存在しない。直した2ファイルだけを戻す。検証・テスト・commit・公開はラッパーが行う。
 
 ```cron
 30 6 * * * /usr/bin/python3 /home/aoki/dev/aws-reinvent-2026/scripts/daily_refresh.py >> /home/aoki/dev/aws-reinvent-2026/local-data/refresh/cron.log 2>&1
