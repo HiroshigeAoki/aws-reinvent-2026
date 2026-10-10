@@ -17,8 +17,12 @@ PROMPT = ROOT / "docs" / "daily-refresh.md"
 # Claude may edit only these; render regenerates RENDERED from them.
 EDITABLE = ("data/events.json", "data/guide.json")
 RENDERED = ("docs/events.md", "docs/catalog.md", "sessions/")
+# Fetched pages are untrusted input: reads stay inside non-private repo data and fetches stay on official
+# domains, so injected text can neither reach private/ or ~ nor carry anything out in a URL.
 ALLOWED_TOOLS = [
-    "Read", "Glob", "Grep", "WebFetch",
+    "Read(AGENTS.md)", "Read(data/**)", "Read(planning/**)", "Read(docs/**)", "Read(local-data/raw/events/**)",
+    "WebFetch(domain:aws.amazon.com)", "WebFetch(domain:docs.aws.amazon.com)",
+    "WebFetch(domain:registration.awsevents.com)", "WebFetch(domain:event.jtbbwt.com)",
     "Edit(data/events.json)", "Edit(data/guide.json)", "Write(local-data/refresh/report.json)",
     "Bash(python3 scripts/reinvent.py watch-events)", "Bash(python3 scripts/reinvent.py validate)",
     "mcp__awsevents__AWSEventsPublicApi-Mcp-prod___ListEvents",
