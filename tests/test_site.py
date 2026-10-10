@@ -216,6 +216,24 @@ class PersonalPageTests(unittest.TestCase):
             with self.assertRaises(ValidationError):
                 check_schedule(catalog(session()), schedule(dict(item("A101", "reserved"), prep=prep)))
 
+    def test_refresh_status_shows_on_personal_page_only(self):
+        refresh = {"ran_at": "2026-10-11T06:30:00+09:00", "outcome": "changed", "summary_ja": "基調講演の時刻が出た<b>",
+                   "changes_ja": ["12/2の基調講演を追加"], "api_ja": "カタログはまだ0件", "commit": "abc1234"}
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", refresh=refresh)
+        self.assertIn("自動調査", html)
+        self.assertIn("10/11 06:30", html)
+        self.assertIn("基調講演の時刻が出た&lt;b&gt;", html)
+        self.assertIn("<li>12/2の基調講演を追加</li>", html)
+        self.assertIn("カタログはまだ0件", html)
+        self.assertNotIn("自動調査", build_shared(events(), guide(), "2026-10-07"))
+
+    def test_failed_refresh_is_flagged(self):
+        refresh = {"ran_at": "2026-10-11T06:30:00+09:00", "outcome": "error", "summary_ja": "テストが失敗"}
+        html = build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                              None, "2026-10-07T14:00:00+09:00", "2026-10-07", refresh=refresh)
+        self.assertIn('<span class="badge b-rev">要確認</span>', html)
+
     def test_review_note_must_be_text(self):
         with self.assertRaises(ValidationError):
             check_schedule(catalog(session()), schedule(dict(item("A101", "reserved"), review_ja=3)))

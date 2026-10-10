@@ -35,6 +35,9 @@ MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
 WEEKDAYS = "月火水木金土日"
 TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間", "ショー", "カジノ", "観光・買い物")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
+REFRESH_STATUS = ROOT / "local-data" / "refresh" / "latest.json"
+# Daily refresh outcome -> label on the personal page; "error"/"skipped" get the review badge.
+REFRESH_OUTCOMES = {"unchanged": "変化なし", "changed": "更新あり", "skipped": "スキップ", "error": "失敗"}
 # Private plan kind -> (badge class, badge label, status column).
 PLAN_KINDS = {None: ("b-ev", "非公開", "行く"), "meal": ("b-meal", "食事", "目安"), "travel": ("b-trip", "移動", "確定"),
               "prep": ("b-prep", "予習", "目安")}
@@ -632,8 +635,30 @@ def prep_section(active: list[tuple[dict[str, Any], dict[str, Any]]], rows: list
     return body
 
 
+def refresh_note(refresh: dict[str, Any] | None) -> list[str]:
+    """Latest unattended refresh result (scripts/daily_refresh.py); personal page only."""
+    if not refresh or not is_text(refresh.get("ran_at")):
+        return []
+    ran = datetime.fromisoformat(refresh["ran_at"])
+    outcome = refresh.get("outcome")
+    label = REFRESH_OUTCOMES.get(outcome, "不明")
+    flag = ' <span class="badge b-rev">要確認</span>' if outcome in {"error", "skipped"} else ""
+    parts = [f'<div class="note"><b>自動調査</b>（毎朝、公式ページとEvents APIを確認）: '
+             f'{ran.month}/{ran.day} {ran.strftime("%H:%M")}（日本時間）{h(label)}{flag}']
+    if is_text(refresh.get("summary_ja")):
+        parts.append(f"<br>{h(refresh['summary_ja'])}")
+    changes = [c for c in refresh.get("changes_ja") or [] if is_text(c)]
+    if changes:
+        parts.append("<ul>" + "".join(f"<li>{h(c)}</li>" for c in changes) + "</ul>")
+    if is_text(refresh.get("api_ja")):
+        parts.append(f'<br><span class="mut">Events API: {h(refresh["api_ja"])}</span>')
+    parts.append("</div>")
+    return ["".join(parts)]
+
+
 def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: dict[str, Any],
-                   shared_url: str | None, created: str, built_on: str, guide: dict[str, Any] | None = None) -> str:
+                   shared_url: str | None, created: str, built_on: str, guide: dict[str, Any] | None = None,
+                   refresh: dict[str, Any] | None = None) -> str:
     places = place_index(guide)
     report = check_schedule(catalog, schedule, events)
     zone = timezone(schedule["timezone"], "schedule.timezone")
@@ -687,6 +712,7 @@ def build_personal(catalog: dict[str, Any], events: dict[str, Any], schedule: di
         f'<p class="lead">現地時間（PST）。最終更新は{h(built_on)}。予約{len(active)}件、見直し中{len(reviewing)}件。</p>',
         f'<div class="note">{shared}</div>',
     ]
+    body.extend(refresh_note(refresh))
     if report.errors or report.warnings:
         body.append('<div class="note"><b>予定チェック</b><ul>' + "".join(f"<li>{h(m)}</li>" for m in report.errors + report.warnings) + "</ul></div>")
     if reviewing:
@@ -737,15 +763,16 @@ def build(config: dict[str, Any]) -> tuple[Path, Path]:
     shared_path.parent.mkdir(parents=True, exist_ok=True)
     shared_path.write_text(build_shared(events, guide, built_on), encoding="utf-8")
     created = config.get("personal_created") or datetime.now().astimezone().isoformat(timespec="seconds")
-    personal_path.write_text(build_personal(catalog, events, schedule, config.get("shared_url"), created, built_on, guide),
-                             encoding="utf-8")
+    refresh = read_json(REFRESH_STATUS) if REFRESH_STATUS.exists() else None
+    personal_path.write_text(build_personal(catalog, events, schedule, config.get("shared_url"), created, built_on, guide,
+                                            refresh), encoding="utf-8")
     return shared_path, personal_path
 
 
-def publish(config: dict[str, Any], shared_path: Path, personal_path: Path) -> None:
-    if config.get("gera_id"):
+def publish(config: dict[str, Any], shared_path: Path, personal_path: Path, shared: bool = True) -> None:
+    if shared and config.get("gera_id"):
         subprocess.run(["gera", "update", config["gera_id"], str(shared_path)], check=True)
-    else:
+    elif shared:
         print("共有版は未公開です。初回は gera push で公開し、ID と URL を local-data/site.json に書いてください。")
     target = config.get("personal_path")
     if target:
@@ -759,14 +786,14 @@ def publish(config: dict[str, Any], shared_path: Path, personal_path: Path) -> N
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("build", "publish"))
+    parser.add_argument("command", choices=("build", "publish", "publish-personal"))
     args = parser.parse_args(argv)
     try:
         config = load_config()
         shared_path, personal_path = build(config)
         print(f"OK: {shared_path}\nOK: {personal_path}")
-        if args.command == "publish":
-            publish(config, shared_path, personal_path)
+        if args.command != "build":
+            publish(config, shared_path, personal_path, shared=args.command == "publish")
         return 0
     except (ValidationError, OSError, subprocess.CalledProcessError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
