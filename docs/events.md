@@ -2,7 +2,7 @@
 
 # イベント一覧
 
-編集元は `data/events.json`。確認日: 2026-10-07。日時は `America/Los_Angeles`。
+編集元は `data/events.json`。確認日: 2026-10-10。日時は `America/Los_Angeles`。
 
 ## 2026-11-29（日）
 
@@ -17,13 +17,14 @@
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 16:00–19:00 | [Expoウェルカムレセプション（Welcome reception in Expo）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | The Venetian | 不要 | 検討 | 重なる: GHJ306-S | GHJ306-S終了後の17時以降に参加 |
+| 19:30–20:45 | [開発者向け基調講演（月・夜）（Developer Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | — | なし | — |
 
 ## 2026-12-01（火）
 
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 08:30–10:30 | [CEO基調講演（Opening Keynote with Matt Garman）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | なし | 並ばずにホテルで配信を見る |
-| 18:00–20:00 | [パートナー主催の交流会（火）（Network with peers and AWS Partners）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | Caesars Palace / The Venetian / Wynn | 未確認 | — | 移動注意: SEC304 | — |
+| 08:30–10:30 | [CEO基調講演（CEO Keynote featuring Matt Garman）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | なし | 並ばずにホテルで配信を見る |
+| 18:00–20:00 | [パートナー主催の交流会（火）（Network with peers and AWS Partners）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | Caesars Palace / The Venetian | 未確認 | — | 移動注意: SEC304 | — |
 | 時刻未定 | [D&Dミニチュア作り（Dungeons and Dragons: Miniature Mixer）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 未確認 | — | — | 曜日は公式ページ上の表記から推定 |
 | 時刻未定 | [ボードゲームナイト（Game Night）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 不要 | — | — | 曜日は公式ページ上の表記から推定 |
 | 時刻未定 | [Jeff BarrのAWSクイズ大会（Trivia Night with Jeff Barr）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 未確認 | 検討 | — | 曜日は公式ページ上の表記から推定 |
@@ -32,10 +33,10 @@
 
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 08:30–10:00 | [基調講演（水・朝、講演者未発表）（Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | 未確認 | 未確認 | 見送り | 重なる: TNC302-R | TNC302-Rと重なるため配信で見る |
-| 15:00–16:30 | [基調講演（水・午後、講演者未発表）（Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | 未確認 | 未確認 | 見送り | なし | 16:30からMGMでCOM328-R1のため配信で見る |
+| 08:30–10:00 | [Data & AI基調講演（水・朝）（Data & AI Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | 重なる: TNC302-R | TNC302-Rと重なるため配信で見る |
+| 15:00–16:00 | [パートナー基調講演（水・午後）（Partner Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | 移動注意: COM328-R1, DAT410-R | 16:30からMGMでCOM328-R1のため配信で見る |
 | 16:30–18:00 | [Expoハッピーアワー（Happy hour in Expo）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | The Venetian | 不要 | — | 重なる: COM328-R1 | COM328-R1（MGM）終了後なら終盤だけ |
-| 18:00–20:00 | [パートナー主催の交流会（水）（Network with peers and AWS Partners）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | Caesars Palace / The Venetian / Wynn | 未確認 | — | 移動注意: COM328-R1 | — |
+| 18:00–20:00 | [パートナー主催の交流会（水）（Network with peers and AWS Partners）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | Caesars Palace / The Venetian / Wynn \| Encore | 未確認 | — | 移動注意: COM328-R1 | — |
 | 時刻未定 | [MTGナイト（Magic: The Gathering Night）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 未確認 | — | — | 曜日は公式ページ上の表記から推定 |
 | 時刻未定 | [5Kラン（歩きも可）（The re:Invent Run）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | Allegiant Stadium | 未確認 | 検討 | — | 時刻未発表。朝ならTNC302-Rの前で慌ただしい |
 
@@ -43,8 +44,8 @@
 
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 08:30–10:00 | [基調講演（木・朝、講演者未発表）（Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | 未確認 | 未確認 | 見送り | 重なる: GHJ305 | GHJ305と重なるため配信で見る |
-| 19:30–23:59 | [公式パーティー（re:Play）](<https://aws.amazon.com/events/reinvent/agenda/>) | パーティー | Las Vegas Festival Grounds | 不要 | 行く | なし | 各ホテルから無料シャトル |
+| 08:30–10:00 | [Technology Innovations基調講演（木・朝）（Technology Innovations Keynote）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | 重なる: GHJ305 | GHJ305と重なるため配信で見る |
+| 18:30–22:30 | [公式パーティー（re:Play）](<https://aws.amazon.com/events/reinvent/agenda/>) | パーティー | Allegiant Stadium | 不要 | 行く | なし | 各ホテルから無料シャトル |
 
 ## 日付未定
 

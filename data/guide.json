@@ -24,7 +24,7 @@
     {
       "id": "venetian",
       "name": "The Venetian",
-      "role_ja": "2026はExpo(火・水10〜18時、木10〜16時)と基調講演(12/1〜3)の会場。バッジ受付(MGM Grandと並ぶ)と金曜のヘルプデスクもある。",
+      "role_ja": "2026はExpo(火・水10〜18時、木10〜16時)と基調講演(11/30〜12/3)の会場。バッジ受付(MGM Grandと並ぶ)と金曜のヘルプデスクもある。",
       "lat": 36.12171,
       "lon": -115.16934,
       "year": 2026,
@@ -111,7 +111,7 @@
     {
       "id": "replay_shuttle",
       "title_ja": "re:Playへのシャトル",
-      "body_ja": "2026のre:Playは12/3(木)19:30〜23:59、Las Vegas Festival Grounds。re:Invent提携ホテルから無料シャトルが出る。路線と時刻は未公表。",
+      "body_ja": "2026のre:Playは12/3(木)18:30〜22:30、Allegiant Stadium。re:Invent提携ホテルから無料シャトルが出る。路線と時刻は未公表。",
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/"
     },
@@ -364,7 +364,7 @@
       "id": "t_ses_keynote",
       "category": "セッション・予約",
       "title_ja": "基調講演は早朝から並ぶ",
-      "body_ja": "2026の基調講演はThe Venetianで、12/1(火)8:30〜10:30がオープニング、12/2(水)8:30〜10:00と15:00〜16:30、12/3(木)8:30〜10:00。早朝から並ぶ体験談は2025のもの。Expoは火・水10〜18時、木10〜16時。",
+      "body_ja": "2026の基調講演はThe Venetianで、11/30(月)19:30〜20:45が開発者向け、12/1(火)8:30〜10:30がCEO、12/2(水)8:30〜10:00がData & AI、15:00〜16:00がパートナー向け、12/3(木)8:30〜10:00がTechnology Innovations。早朝から並ぶ体験談は2025のもの。Expoは火・水10〜18時、木10〜16時。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/agenda/"
@@ -517,8 +517,8 @@
     {
       "id": "t_night_replay_cold",
       "category": "夜・イベント",
-      "title_ja": "re:Playは屋外で冷える",
-      "body_ja": "2026のre:Playは12/3(木)19:30〜23:59、Las Vegas Festival Grounds。夜は冷えるので防寒し、シャトルは混むため余裕を持つ。",
+      "title_ja": "re:Playの行き帰りは冷える",
+      "body_ja": "2026のre:Playは12/3(木)18:30〜22:30、Allegiant Stadium。シャトルを待つ夜の屋外は冷えるので防寒し、シャトルは混むため余裕を持つ。",
       "year": 2026,
       "sources": [
         "https://aws.amazon.com/events/reinvent/agenda/",
@@ -1271,7 +1271,7 @@
     },
     {
       "time": "18:00",
-      "what_ja": "火・水のネットワーキングレセプション18:00〜20:00。木はre:Playが19:30から。",
+      "what_ja": "火・水のネットワーキングレセプション18:00〜20:00。木はre:Playが18:30から。",
       "year": 2026,
       "source": "https://aws.amazon.com/events/reinvent/agenda/"
     }
@@ -1332,10 +1332,6 @@
       "name": "MGM Underground",
       "kind": "spot",
       "maps_query": "MGM Underground, MGM Grand, Las Vegas"
-    },
-    {
-      "name": "Las Vegas Festival Grounds",
-      "kind": "event"
     },
     {
       "name": "Allegiant Stadium",
