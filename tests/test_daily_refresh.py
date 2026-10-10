@@ -27,6 +27,7 @@ class ToolScopeTests(unittest.TestCase):
             self.assertNotIn(bare, ALLOWED_TOOLS)
         self.assertFalse(any("private" in tool for tool in ALLOWED_TOOLS))
         self.assertTrue(all(t.startswith("WebFetch(domain:") for t in ALLOWED_TOOLS if t.startswith("WebFetch")))
+        self.assertIn("Edit(local-data/refresh/report.json)", ALLOWED_TOOLS)
 
 
 if __name__ == "__main__":

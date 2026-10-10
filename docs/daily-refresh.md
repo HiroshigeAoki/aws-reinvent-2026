@@ -24,6 +24,7 @@
    - 時刻は America/Los_Angeles のオフセット付き。
    - 直した項目の `checked_on` を今日の日付にする。
    - `intent` と `note_ja`（本人の参加意向とメモ）は変えない。
+   - 値を直したら、同じ事実を書いている箇所（`data/guide.json` の Tips・会場・場所一覧・時間割）も Read で全体を見て揃える。公式に新しく載った予定は、`data/events.json` に `intent` null で追加する。
 4. Events APIを確認する。`ListSessions`（eventId `reinvent2026`、includeAbstracts false）で最初のページの件数と totalCount を見る。`GetSchedule` で予約数を見る。予約数が `planning/schedule.json` の reserved の件数と違えば報告する。予約・お気に入り・個人の予定を変える操作はしない。
 5. 何か直したら `python3 scripts/reinvent.py validate` を実行し、通るまで直す。
 6. 最後に `local-data/refresh/report.json`をWriteで書く（UTF-8 の JSON）。

@@ -23,7 +23,8 @@ ALLOWED_TOOLS = [
     "Read(AGENTS.md)", "Read(data/**)", "Read(planning/**)", "Read(docs/**)", "Read(local-data/raw/events/**)",
     "WebFetch(domain:aws.amazon.com)", "WebFetch(domain:docs.aws.amazon.com)",
     "WebFetch(domain:registration.awsevents.com)", "WebFetch(domain:event.jtbbwt.com)",
-    "Edit(data/events.json)", "Edit(data/guide.json)", "Write(local-data/refresh/report.json)",
+    # Edit(path) rules also cover Write; a Write(path) rule is not honored.
+    "Edit(data/events.json)", "Edit(data/guide.json)", "Edit(local-data/refresh/report.json)",
     "Bash(python3 scripts/reinvent.py watch-events)", "Bash(python3 scripts/reinvent.py validate)",
     "mcp__awsevents__AWSEventsPublicApi-Mcp-prod___ListEvents",
     "mcp__awsevents__AWSEventsPublicApi-Mcp-prod___ListSessions",
