@@ -23,7 +23,7 @@
 
 | 時間 | イベント | 種類 | 会場 | 登録 | 予定 | 予約との関係 | メモ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 08:30–10:30 | [CEO基調講演（CEO Keynote featuring Matt Garman）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 見送り | なし | 並ばずにホテルで配信を見る |
+| 08:30–10:30 | [CEO基調講演（CEO Keynote featuring Matt Garman）](<https://aws.amazon.com/events/reinvent/agenda/>) | 基調講演 | The Venetian | 未確認 | 行く | なし | 現地で見る。7時頃から並び、同時通訳の受信機を取る |
 | 18:00–20:00 | [パートナー主催の交流会（火）（Network with peers and AWS Partners）](<https://aws.amazon.com/events/reinvent/agenda/>) | レセプション | Caesars Palace / The Venetian | 未確認 | — | 移動注意: SEC304 | — |
 | 時刻未定 | [D&Dミニチュア作り（Dungeons and Dragons: Miniature Mixer）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 未確認 | — | — | 曜日は公式ページ上の表記から推定 |
 | 時刻未定 | [ボードゲームナイト（Game Night）](<https://aws.amazon.com/events/reinvent/experiences/uniquely-reinvent/>) | アクティビティ | 未確認 | 不要 | — | — | 曜日は公式ページ上の表記から推定 |
