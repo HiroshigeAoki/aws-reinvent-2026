@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 from datetime import date, datetime
 from html import escape
-import json
 import math
 import re
 from pathlib import Path
@@ -31,7 +30,7 @@ else:
 
 OUT_DIR = ROOT / "local-data" / "site"
 CONFIG = ROOT / "local-data" / "site.json"
-MANIFEST_HOOK = Path.home() / ".claude" / "hooks" / "html-artifact-manifest.sh"
+GERA_SYNC = Path.home() / ".local" / "bin" / "gera-sync"
 WEEKDAYS = "月火水木金土日"
 TIP_CATEGORIES = ("準備・荷造り", "出入国・乗り継ぎ", "ホテル", "移動", "セッション・予約", "持ち物・服装", "食事", "体調", "通信・お金", "夜・イベント", "英語・現地", "天気", "緊急時", "空き時間", "ショー", "カジノ", "観光・買い物")
 PRIVATE_GUIDE = ROOT / "private" / "guide-private.json"
@@ -773,10 +772,11 @@ def publish(config: dict[str, Any], shared_path: Path, personal_path: Path, shar
     if target:
         target = Path(target).expanduser()
         shutil.copyfile(personal_path, target)
-        if MANIFEST_HOOK.exists():
-            payload = json.dumps({"tool_input": {"file_path": str(target)}})
-            subprocess.run([str(MANIFEST_HOOK)], input=payload, text=True, check=False)
         print(f"個人版を更新: {target}")
+        if GERA_SYNC.exists():
+            synced = subprocess.run([str(GERA_SYNC), "artifact", str(target)], capture_output=True, text=True)
+            print(f"個人版を gera に同期: {synced.stdout.strip()}" if synced.returncode == 0
+                  else f"個人版の gera 同期に失敗しました: {synced.stderr.strip()}")
 
 
 def main(argv: list[str] | None = None) -> int:
