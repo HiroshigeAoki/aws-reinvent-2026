@@ -111,6 +111,14 @@ class SharedPageTests(unittest.TestCase):
         self.assertIn('<a class="c-amber" href=', html)
         self.assertIn(".c-amber{--pbg:", html)
 
+    def test_pages_are_always_light(self):
+        pages = [build_shared(events(), guide(), "2026-10-07"),
+                 build_personal(catalog(session()), events(), schedule(item("A101", "reserved")),
+                                "https://example.com/shared", "2026-10-07T14:00:00+09:00", "2026-10-07")]
+        for html in pages:
+            self.assertNotIn("prefers-color-scheme", html)
+            self.assertIn("color-scheme:light", html)
+
 
     def test_private_stay_drives_hotel_section_and_board(self):
         overlay = {"checked_on": "2026-10-07", "stay": {"venue": "mgm", "points_ja": ["朝食はMGM Grandで済ませる。"]}}

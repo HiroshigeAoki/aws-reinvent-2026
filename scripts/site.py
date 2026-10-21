@@ -42,25 +42,20 @@ REFRESH_OUTCOMES = {"unchanged": "変化なし", "changed": "更新あり", "ski
 PLAN_KINDS = {None: ("b-ev", "非公開", "行く"), "meal": ("b-meal", "食事", "目安"), "travel": ("b-trip", "移動", "確定"),
               "prep": ("b-prep", "予習", "目安")}
 
-# Venue colors: (light bg, light text, dark bg, dark text). Venues pick one by name in guide.json.
+# Venue colors: (bg, text). Venues pick one by name in guide.json.
 VENUE_COLORS = {
-    "violet": ("#ece3fb", "#5b2a9e", "#34224f", "#d4bdfb"),
-    "rose": ("#fbe0e6", "#9b1c3c", "#4a1d29", "#ffb3c4"),
-    "amber": ("#fbe9c7", "#7a4d00", "#4a3510", "#ffd48a"),
-    "olive": ("#e6efcf", "#4b5e12", "#303a17", "#d3e69a"),
-    "indigo": ("#e0e5fb", "#2e3f9e", "#222b52", "#b9c5ff"),
-    "green": ("#d9f0e1", "#146b3a", "#173a26", "#9fe0b7"),
+    "violet": ("#ece3fb", "#5b2a9e"),
+    "rose": ("#fbe0e6", "#9b1c3c"),
+    "amber": ("#fbe9c7", "#7a4d00"),
+    "olive": ("#e6efcf", "#4b5e12"),
+    "indigo": ("#e0e5fb", "#2e3f9e"),
+    "green": ("#d9f0e1", "#146b3a"),
 }
-VENUE_CSS = "\n".join(
-    f".c-{name}{{--pbg:{lb};--pfg:{lf}}}" for name, (lb, lf, _, _) in VENUE_COLORS.items()
-) + "\n@media (prefers-color-scheme:dark){" + "".join(
-    f".c-{name}{{--pbg:{db};--pfg:{df}}}" for name, (_, _, db, df) in VENUE_COLORS.items()
-) + "}"
+VENUE_CSS = "\n".join(f".c-{name}{{--pbg:{bg};--pfg:{fg}}}" for name, (bg, fg) in VENUE_COLORS.items())
 
 
 CSS = """
-:root{--venuebg:#fbe3cf;--venuefg:#8a3d06;--stnbg:#dcedf4;--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
-@media (prefers-color-scheme:dark){:root{--venuebg:#4a2c14;--venuefg:#ffc999;--stnbg:#163846;--bg:#16181c;--card:#1f2228;--fg:#e6e6e6;--mut:#9aa1ab;--line:#30343b;--acc:#f0a35e;--acc2:#6cc3e6;--warn:#ffb27a;--warnbg:#3a2717;--chip:#2a2e35;--ok:#7ed69b}}
+:root{color-scheme:light;--venuebg:#fbe3cf;--venuefg:#8a3d06;--stnbg:#dcedf4;--bg:#f7f6f3;--card:#fff;--fg:#1f2328;--mut:#5f6670;--line:#e3e1dc;--acc:#b4530f;--acc2:#0f6b8f;--warn:#9a3b00;--warnbg:#fff1e5;--chip:#efece6;--ok:#1b6e3a}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.75 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
 a{color:var(--acc2)}
